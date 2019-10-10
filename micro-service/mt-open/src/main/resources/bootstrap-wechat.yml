@@ -1,0 +1,7 @@
+#微信公众号配置
+wechat:
+  mp-appId: wx80a7401a02e0f8ec
+  mp-appSecret: f2db2177474c44575f6522932db0a1f3
+  notify-url: https://xxxx/wechatPay/notify
+  #微信公众号认证url
+  inner-auth-url: https://xxxx/userInfo

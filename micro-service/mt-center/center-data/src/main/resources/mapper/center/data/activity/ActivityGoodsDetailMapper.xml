@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.activity.mapper.ActivityGoodsDetailMapper" >
+    <!-- 保存ActivityGoodsDetail -->
+    <insert id="insertActivityGoodsDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityGoodsDetail">
+        INSERT INTO activity_goods_detail (
+            id, activity_id, spu_id, spu_name, max_sell_num, create_time
+        ) VALUES (
+            #{id}, #{activity_id}, #{spu_id}, #{spu_name}, #{max_sell_num}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ActivityGoodsDetail -->
+    <delete id="deleteActivityGoodsDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityGoodsDetail">
+        DELETE FROM activity_goods_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ActivityGoodsDetail -->
+    <update id="updateActivityGoodsDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityGoodsDetail">
+        UPDATE activity_goods_detail
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ActivityGoodsDetail -->
+    <select id="getActivityGoodsDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityGoodsDetail" resultType="com.ly.mt.center.data.activity.entity.ActivityGoodsDetail">
+        SELECT * 
+        FROM activity_goods_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserPointGradeMapper" >
+    <select id="getUserPointGradeByUserId" resultType="com.ly.mt.center.data.user.entity.UserPointGrade" parameterType="com.ly.mt.center.data.user.entity.UserPointGrade" >
+        SELECT  *
+        FROM user_point_grade
+        WHERE user_id = #{user_id}
+    </select>
+    <update id="updateUserPointGradeById" parameterType="com.ly.mt.center.data.user.entity.UserPointGrade" >
+        UPDATE user_point_grade
+        SET user_score = #{user_score}, point_grade_id = #{point_grade_id}, modify_time = #{modify_time}
+        WHERE id = #{id}
+    </update>
+    <insert id="insertUserPointGrade" parameterType="com.ly.mt.center.data.user.entity.UserPointGrade" >
+        insert into user_point_grade (id, user_id, user_score, point_grade_id, create_time)
+        values (#{id}, #{user_id}, #{user_score}, #{point_grade_id}, #{create_time})
+    </insert>
+</mapper >

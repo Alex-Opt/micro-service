@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.mt.center.data.profits.mapper.ProfitsUserProfitLogsServiceMapper">
+
+    <select id="getFriendsOrderRank" parameterType="com.ly.mt.center.data.profits.entity.ProfitsUserRankVo" resultType="com.ly.mt.center.data.profits.entity.ProfitsUserRankVo">
+        SELECT p.user_id userId, IFNULL(SUM(p.profit),0) profits , u.user_name userName, u.avatar_pic_src userAvatarPicSrc
+        FROM user_profit_logs  p
+        LEFT JOIN user u ON u.id = p.user_id
+        where p.profit_type = 1 AND DATE_FORMAT(p.create_time, '%Y-%m-%d') = DATE_FORMAT(#{searchDate},'%Y-%m-%d')
+        GROUP BY p.user_id HAVING profits > 0
+    </select>
+
+    <select id="getLogs" parameterType="com.ly.mt.center.data.profits.entity.ProfitsUserProfitsLogsParam" resultType="com.ly.mt.center.data.profits.entity.ProfitsUserProfitsLogsVO">
+        SELECT l.id, l.profit_type profitType, l.profit, l.create_time createTime, u.user_name userName
+        FROM user_profit_logs l
+        LEFT  JOIN  user u ON  u.id = l.provider_id
+        WHERE l.user_id = #{userId}
+        <if test="type == 0">
+            AND l.profit_type != 5 AND l.profit_type != 7
+        </if>
+        <if test="type == 1">
+            AND l.profit_type = 5
+        </if>
+        ORDER BY l.create_time DESC
+    </select>
+</mapper>

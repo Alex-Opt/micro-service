@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>center.third</groupId>
+    <artifactId>center-third</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>mt-center-third</name>
+    <packaging>war</packaging>
+
+    <parent>
+        <artifactId>mt-center</artifactId>
+        <groupId>mt.center</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>mt.core.feign</groupId>
+            <artifactId>mt-core-feign</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--个推-->
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-http</artifactId>
+            <version>4.1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-fastjson</artifactId>
+            <version>1.0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-base</artifactId>
+            <version>4.0.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-template</artifactId>
+            <version>4.0.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <!--个推-->
+
+        <!--阿里-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.7.73.ALL</version>
+        </dependency>
+        <!--阿里-->
+
+        <!-- 不知道哪个pom依赖了15.0版本会导致启动报错，所以只能手动指定20.0版本 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-pay</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+    </dependencies>
+</project>

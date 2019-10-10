@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.order.mapper.OrdersBattleInfoMapper">
+    <!-- 查询OrderBattleInfo -->
+    <select id="getOrdersBattleInfo" parameterType="com.ly.mt.core.data.order.entity.OrdersBattleInfo" resultType="com.ly.mt.core.data.order.entity.OrdersBattleInfo">
+        SELECT *
+        FROM orders_battle_info
+        <where>
+            <if test="null != orderId and '' != orderId">AND order_id = #{orderId}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<OrdersBattleInfo> -->
+    <select id="listOrdersBattleInfo" parameterType="com.ly.mt.core.data.order.entity.OrdersBattleInfo" resultType="com.ly.mt.core.data.order.entity.OrdersBattleInfo">
+        SELECT *
+        FROM orders_battle_info
+        <where>
+            <if test="null != status and '' != status">AND status = #{status}</if>
+            <if test="null != checkedAt and '' != checkedAt">AND checked_at ${checkedAt}</if>
+        </where>
+    </select>
+
+
+    <!-- 更新OrdersBattleInfo -->
+    <update id="updateOrdersBattleInfo" parameterType="com.ly.mt.core.data.order.entity.OrdersBattleInfo">
+        UPDATE orders_battle_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != status">status = #{status},</if>
+            <if test="null != deliverymanName">deliveryman_name = #{deliverymanName},</if>
+            <if test="null != deliverymanPhone">deliveryman_phone = #{deliverymanPhone},</if>
+            <if test="null != takedAt">taked_at = #{takedAt},</if>
+            <if test="null != checkedAt">checked_at = #{checkedAt},</if>
+            <if test="null != grabedAt">grabed_at = #{grabedAt},</if>
+            <if test="null != modifyTime">modify_time = #{modifyTime},</if>
+            <if test="null != shopId">shop_id = #{shopId},</if>
+            <if test="null != userId">user_id = #{userId},</if>
+        </trim>
+        <where>
+            <if test="null != orderId and '' != orderId">AND order_id = #{orderId}</if>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </update>
+</mapper>

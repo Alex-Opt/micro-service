@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgChannelCodeMapper" >
+    <!-- 保存GzgChannelCode -->
+    <insert id="insertGzgChannelCode" parameterType="com.ly.mt.center.data.gzg.entity.GzgChannelCode">
+        INSERT INTO gzg_channel_code (
+            id, bar_code, state, six_nine_code, sku_code
+        ) VALUES (
+            #{id}, #{bar_code}, #{state}, #{six_nine_code}, #{sku_code}
+        )
+    </insert>
+
+
+    <!-- 删除GzgChannelCode -->
+    <delete id="deleteGzgChannelCode" parameterType="com.ly.mt.center.data.gzg.entity.GzgChannelCode">
+        DELETE FROM gzg_channel_code
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgChannelCode -->
+    <update id="updateGzgChannelCode" parameterType="com.ly.mt.center.data.gzg.entity.GzgChannelCode">
+        UPDATE gzg_channel_code
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgChannelCode -->
+    <select id="getGzgChannelCode" parameterType="com.ly.mt.center.data.gzg.entity.GzgChannelCode" resultType="com.ly.mt.center.data.gzg.entity.GzgChannelCode">
+        SELECT * 
+        FROM gzg_channel_code
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

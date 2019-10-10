@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgBUserMapper" >
+    <!-- 保存GzgBUser -->
+    <insert id="insertGzgBUser" parameterType="com.ly.mt.center.data.gzg.entity.GzgBUser">
+        INSERT INTO gzg_b_user (
+            id, phone, nick_name, password, header, type, hotel_id, create_time
+        ) VALUES (
+            #{id}, #{phone}, #{nick_name}, #{password}, #{header}, #{type}, #{hotel_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GzgBUser -->
+    <delete id="deleteGzgBUser" parameterType="com.ly.mt.center.data.gzg.entity.GzgBUser">
+        DELETE FROM gzg_b_user
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgBUser -->
+    <update id="updateGzgBUser" parameterType="com.ly.mt.center.data.gzg.entity.GzgBUser">
+        UPDATE gzg_b_user
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgBUser -->
+    <select id="getGzgBUser" parameterType="com.ly.mt.center.data.gzg.entity.GzgBUser" resultType="com.ly.mt.center.data.gzg.entity.GzgBUser">
+        SELECT * 
+        FROM gzg_b_user
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

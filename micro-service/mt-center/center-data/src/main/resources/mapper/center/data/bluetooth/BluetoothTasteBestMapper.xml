@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.bluetooth.mapper.BluetoothTasteBestMapper" >
+    <select id="getBluetoothTasteBestByTastId"  resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothTasteBest" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothTasteBest">
+        select * from bluetooth_taste_best  where 1=1
+        <if test="null != taste_key and '' != taste_key">AND taste_key = #{taste_key}</if>
+    </select>
+</mapper >

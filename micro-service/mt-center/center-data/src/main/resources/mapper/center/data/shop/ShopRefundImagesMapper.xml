@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopRefundImagesMapper" >
+    <!-- 保存ShopRefundImages -->
+    <insert id="insertShopRefundImages" parameterType="com.ly.mt.center.data.shop.entity.ShopRefundImages">
+        INSERT INTO shop_refund_images (
+            id, refund_id, path
+        ) VALUES (
+            #{id}, #{refund_id}, #{path}
+        )
+    </insert>
+
+
+    <!-- 删除ShopRefundImages -->
+    <delete id="deleteShopRefundImages" parameterType="com.ly.mt.center.data.shop.entity.ShopRefundImages">
+        DELETE FROM shop_refund_images
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopRefundImages -->
+    <update id="updateShopRefundImages" parameterType="com.ly.mt.center.data.shop.entity.ShopRefundImages">
+        UPDATE shop_refund_images
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopRefundImages -->
+    <select id="getShopRefundImages" parameterType="com.ly.mt.center.data.shop.entity.ShopRefundImages" resultType="com.ly.mt.center.data.shop.entity.ShopRefundImages">
+        SELECT * 
+        FROM shop_refund_images
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

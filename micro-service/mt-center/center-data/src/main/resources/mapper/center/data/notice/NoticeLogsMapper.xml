@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.notice.mapper.NoticeLogsMapper" >
+    <!-- 保存NoticeLogs -->
+    <insert id="insertNoticeLogs" parameterType="com.ly.mt.center.data.notice.entity.NoticeLogs">
+        INSERT INTO notice_logs (
+            id, notice_id, from_id, to_id, is_read, create_time
+        ) VALUES (
+            #{id}, #{notice_id}, #{from_id}, #{to_id}, #{is_read}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除NoticeLogs -->
+    <delete id="deleteNoticeLogs" parameterType="com.ly.mt.center.data.notice.entity.NoticeLogs">
+        DELETE FROM notice_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新NoticeLogs -->
+    <update id="updateNoticeLogs" parameterType="com.ly.mt.center.data.notice.entity.NoticeLogs">
+        UPDATE notice_logs
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询NoticeLogs -->
+    <select id="getNoticeLogs" parameterType="com.ly.mt.center.data.notice.entity.NoticeLogs" resultType="com.ly.mt.center.data.notice.entity.NoticeLogs">
+        SELECT * 
+        FROM notice_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

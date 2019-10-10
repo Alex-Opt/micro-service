@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetZgReplenishOrderMapper">
+    <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrder">
+        INSERT INTO cabinet_zgreplenish_order(id, phone,user_id,cabinet_code,cabinet_store_id,num, status, create_time, update_time)
+        VALUES (#{id},#{phone},#{user_id},#{cabinet_code}, #{cabinet_store_id}, #{num},#{status}, #{create_time}, #{update_time});
+    </insert>
+
+    <!--更新补货订单状态-->
+    <update id="updateCabinetZgReplenishById" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrder" >
+        update cabinet_zgreplenish_order
+        <set >
+            <if test="num != null" >
+                num = #{num},
+            </if>
+            <if test="status != null" >
+                status = #{status},
+            </if>
+            <if test="update_time != null" >
+                update_time = #{update_time},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过条件查询展柜的补货订单-->
+    <select id="getCabinetZgReplenishByCondtion" resultType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrder"
+            parameterType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrder">
+        select * from cabinet_zgreplenish_order where 1=1
+        <if test="user_id != null" >
+            AND user_id = #{user_id}
+        </if>
+        <if test="cabinet_code != null" >
+            AND cabinet_code = #{cabinet_code}
+        </if>
+        <if test="cabinet_store_id != null" >
+            AND cabinet_store_id = #{cabinet_store_id}
+        </if>
+        <if test="status != null" >
+            AND status = #{status}
+        </if>
+        group by cabinet_store_id
+        order by update_time desc
+    </select>
+</mapper>

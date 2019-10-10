@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.trade.mapper.TradeOrdersServiceMapper">
+    <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.trade.TradeOrder"
+            parameterType="java.lang.Long">
+        SELECT
+            id,
+            order_no,
+            buyer_id,
+            buyer_memo,
+            shop_id,
+            gy_warehouse_code,
+            gy_shop_code,
+            seller_id,
+            order_old_money,
+            order_money,
+            order_discount_money,
+            distribution_id,
+            logistics_code,
+            gy_logistics_code,
+            freight,
+            order_status,
+            order_source,
+            order_yn,
+            cancle_time,
+            is_refund,
+            refund_time,
+            payment_type,
+            push_status,
+            order_type,
+            address_id,
+            auto_receive_time,
+            auto_cancel_time,
+            order_snapshoot_key,
+            locked,
+            lock_time,
+            delivery_time,
+            create_time,
+            pay_time,
+            order_finish_time
+        FROM trade_orders
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByOrderNo" resultType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        SELECT
+            id,
+            order_no,
+            buyer_id,
+            buyer_memo,
+            shop_id,
+            gy_warehouse_code,
+            gy_shop_code,
+            seller_id,
+            order_old_money,
+            order_money,
+            order_discount_money,
+            distribution_id,
+            logistics_code,
+            gy_logistics_code,
+            freight,
+            order_status,
+            order_source,
+            order_yn,
+            cancle_time,
+            is_refund,
+            refund_time,
+            payment_type,
+            push_status,
+            order_type,
+            address_id,
+            auto_receive_time,
+            auto_cancel_time,
+            order_snapshoot_key,
+            locked,
+            lock_time,
+            delivery_time,
+            create_time,
+            pay_time,
+            order_finish_time
+        FROM trade_orders
+        WHERE order_no = #{orderNo}
+    </select>
+    <insert id="insert" parameterType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        INSERT INTO trade_orders (id, order_no, buyer_id, buyer_memo,
+                                  shop_id, gy_warehouse_code,gy_shop_code, seller_id,
+                                  order_old_money, order_money, order_discount_money,
+                                  distribution_id, logistics_code, gy_logistics_code,
+                                  freight, order_status, order_source,material,channel,
+                                  order_yn, is_refund, refund_time,
+                                  payment_type, push_status, order_type, address_id,
+                                  auto_receive_time, auto_cancel_time, order_snapshoot_key,
+                                  locked, create_time)
+        VALUES (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{buyerId,jdbcType=BIGINT},
+                #{buyerMemo,jdbcType=VARCHAR},
+                #{shopId,jdbcType=BIGINT}, #{gyWarehouseCode,jdbcType=VARCHAR},#{gyShopCode,jdbcType=VARCHAR}, #{sellerId,jdbcType=BIGINT},
+                #{orderOldMoney,jdbcType=DOUBLE}, #{orderMoney,jdbcType=DOUBLE}, #{orderDiscountMoney,jdbcType=DOUBLE},
+                #{distributionId,jdbcType=BIGINT}, #{logisticsCode,jdbcType=VARCHAR}, #{gyLogisticsCode,jdbcType=VARCHAR},
+                #{freight,jdbcType=DOUBLE}, #{orderStatus,jdbcType=INTEGER}, #{orderSource,jdbcType=INTEGER}, #{material},
+                #{channel},#{orderYn,jdbcType=INTEGER}, #{isRefund,jdbcType=INTEGER}, #{refundTime,jdbcType=TIMESTAMP},
+                #{paymentType,jdbcType=INTEGER}, #{pushStatus,jdbcType=VARCHAR}, #{orderType,jdbcType=INTEGER},
+                #{addressId,jdbcType=BIGINT},
+                #{autoReceiveTime,jdbcType=TIMESTAMP}, #{autoCancelTime,jdbcType=TIMESTAMP},
+                #{orderSnapshootKey,jdbcType=VARCHAR},
+                #{locked,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        UPDATE trade_orders
+        SET order_no           = #{orderNo,jdbcType=VARCHAR},
+            buyer_id             = #{buyerId,jdbcType=BIGINT},
+            buyer_memo           = #{buyerMemo,jdbcType=VARCHAR},
+            shop_id              = #{shopId,jdbcType=BIGINT},
+            gy_warehouse_code    = #{gyWarehouseCode,jdbcType=VARCHAR},
+            gy_shop_code         = #{gyShopCode,jdbcType=VARCHAR},
+            seller_id            = #{sellerId,jdbcType=BIGINT},
+            order_old_money      = #{orderOldMoney,jdbcType=DOUBLE},
+            order_money          = #{orderMoney,jdbcType=DOUBLE},
+            order_discount_money = #{orderDiscountMoney,jdbcType=DOUBLE},
+            distribution_id      = #{distributionId,jdbcType=BIGINT},
+            logistics_code         = #{logisticsCode,jdbcType=VARCHAR},
+            gy_logistics_code    = #{gyLogisticsCode,jdbcType=VARCHAR},
+            freight              = #{freight,jdbcType=DOUBLE},
+            order_status         = #{orderStatus,jdbcType=INTEGER},
+            order_source         = #{orderSource,jdbcType=INTEGER},
+            order_yn             = #{orderYn,jdbcType=INTEGER},
+            cancle_time          = #{cancleTime,jdbcType=TIMESTAMP},
+            is_refund            = #{isRefund,jdbcType=INTEGER},
+            refund_time          = #{refundTime,jdbcType=TIMESTAMP},
+            payment_type         = #{paymentType,jdbcType=INTEGER},
+            push_status          = #{pushStatus,jdbcType=VARCHAR},
+            order_type           = #{orderType,jdbcType=INTEGER},
+            address_id           = #{addressId,jdbcType=BIGINT},
+            auto_receive_time    = #{autoReceiveTime,jdbcType=TIMESTAMP},
+            auto_cancel_time     = #{autoCancelTime,jdbcType=TIMESTAMP},
+            order_snapshoot_key  = #{orderSnapshootKey,jdbcType=VARCHAR},
+            locked               = #{locked,jdbcType=INTEGER},
+            lock_time            = #{lockTime,jdbcType=TIMESTAMP},
+            delivery_time        = #{deliveryTime,jdbcType=TIMESTAMP},
+            create_time          = #{createTime,jdbcType=TIMESTAMP},
+            pay_time             = #{payTime,jdbcType=TIMESTAMP},
+            order_finish_time    = #{orderFinishTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--    查询订单列表（分页）分为三个步骤    start-->
+    <!--    	1.根据用户id查询出订单表数据。【获取到订单编号，订单状态，商品总件数要统计明细中的个数。订单应付总额】-->
+    <select id="queryListByUserId" resultType="com.ly.mt.core.base.entity.trade.TradeOrder" parameterType="java.lang.Long">
+        SELECT
+            id,
+            order_no,
+            buyer_id,
+            buyer_memo,
+            shop_id,
+            gy_warehouse_code,
+            gy_shop_code,
+            seller_id,
+            order_old_money,
+            order_money,
+            order_discount_money,
+            distribution_id,
+            logistics_code,
+            gy_logistics_code,
+            freight,
+            order_status,
+            order_source,
+            cancle_time,
+            order_yn,
+            is_refund,
+            refund_time,
+            payment_type,
+            push_status,
+            order_type,
+            address_id,
+            auto_receive_time,
+            auto_cancel_time,
+            order_snapshoot_key,
+            locked,
+            lock_time,
+            delivery_time,
+            create_time,
+            pay_time,
+            order_finish_time
+        FROM trade_orders
+        WHERE buyer_id = #{userId,jdbcType=BIGINT}
+        <if test="orderYn != null">
+            AND order_yn=#{orderYn}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+    <!--     	2.根据订单主表id查询订单明细表查询商品信息。可以得到【商品名，商品原始单价，商品购买数量，缺少商品图片地址。】-->
+    <select id="getTradeOrderItemByOrderId" resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+        SELECT
+            Id,
+            order_id,
+            spu_id,
+            spu_name,
+            sku_Id,
+            sku_name,
+            sku_price,
+            sku_num,
+            pomotion_price,
+            freight_price,
+            payment_price,
+            create_time
+        FROM trade_order_items
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+    <!--     	3.根据商品的sku_id查询商品表，得到商品的url.补全上一步信息。-->
+    <select id="getPictureUrlBySkuId" resultType="java.lang.String">
+        SELECT
+            picture_url AS pictureUrl
+        FROM goods_sku_picture
+        WHERE sku_id = #{skuId, jdbcType=BIGINT}
+        ORDER BY sort_number DESC
+                 LIMIT 1
+    </select>
+    <!--    查询订单列表（分页）    end-->
+
+
+    <!--查询单个订单详情    start-->
+    <!--收货地址信息：根据id查询收货信息-->
+    <select id="selectByAddressId" resultType="com.ly.mt.core.base.entity.user.UserAddress">
+        SELECT
+            id,
+            user_id,
+            user_name,
+            receive_name,
+            receive_phone,
+            province_code,
+            province_name,
+            city_code,
+            city_name,
+            district_code,
+            district_name,
+            user_address,
+            is_default,
+            valid_status,
+            create_time,
+            modify_time
+        FROM user_address
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--根据订单id查询订单使用的优惠信息集合-->
+    <select id="selectCouponInfoByOrderId" resultType="com.ly.mt.core.base.entity.trade.TradeOrderCoupon">
+        SELECT
+            id,
+            coupon_type,
+            coupon_activity_id,
+            discount_price,
+            discount_rate,
+            use_time
+        FROM trade_order_coupon
+        WHERE order_id = #{orderId, jdbcType=BIGINT}
+    </select>
+    <!--根据优惠活动id查询出对应的优惠活动信息-->
+    <select id="getActivityInfoById" resultType="com.ly.mt.core.base.entity.activity.ActivityInfo">
+        SELECT
+            coupon_activity_type,
+            name,
+            denomination,
+            discount_rate
+        FROM activity_info
+        WHERE id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <!--查询单个订单详情    end-->
+
+
+    <select id="batchQueryByCouponId" resultType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        SELECT
+        id, coupon_name, start_time, end_time, denomination, discount_rate,
+        limit_type,start_fee
+        FROM coupon_info
+        WHERE id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        AND start_time &lt;= #{nowTime,jdbcType=TIMESTAMP}
+        AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
+    </select>
+
+
+    <select id="batchQueryByActivityId" resultType="com.ly.mt.core.base.entity.activity.ActivityInfo">
+        SELECT
+        id, name, start_time, end_time, denomination, discount_rate,coupon_activity_type,use_channel,source,
+        start_fee, max_sell_num, goods_limit_category, status, description, creator, create_time
+        FROM activity_info
+        WHERE id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        AND start_time &lt;= #{nowTime,jdbcType=TIMESTAMP}
+        AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
+    </select>
+
+
+
+    <select id="listActivityByIds" resultType="com.ly.mt.core.base.entity.activity.ActivityInfo">
+        SELECT
+        id, name, start_time, end_time, denomination, discount_rate, coupon_activity_type,
+        use_channel, source, start_fee, max_sell_num, goods_limit_category, status, description,
+        creator, create_time
+        FROM
+        activity_info
+        WHERE id in
+        <foreach collection="idList" open="(" close=")" separator="," index="index" item="activityId">
+            #{activityId,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+    <select id="selectCouponInfoByPrimaryKey" resultType="com.ly.mt.core.base.entity.coupon.CouponInfo"
+            parameterType="java.lang.Long">
+        select
+            id,
+            coupon_name,
+            start_time,
+            end_time,
+            denomination,
+            discount_rate,
+            limit_type,
+            start_fee,
+            remark,
+            creater_id,
+            create_time
+        from coupon_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectDistributionModeByPrimaryKey"
+            resultType="com.ly.mt.core.base.entity.trade.TradeDistributionMode" parameterType="java.lang.Long">
+        SELECT
+            id,
+            distribution_name,
+            ddistribution_price
+        FROM trade_distribution_mode
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="batchInsertOrderItems">
+        insert into trade_order_items (Id, order_id, spu_id,spu_name,
+        sku_Id, sku_name, sku_price,
+        sku_num, pomotion_price, freight_price,
+        gy_spu_id, gy_spu_code, gy_sku_code,
+        payment_price, create_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.orderId,jdbcType=BIGINT},
+            #{item.spuId,jdbcType=BIGINT},#{item.spuName,jdbcType=VARCHAR},
+            #{item.skuId,jdbcType=BIGINT}, #{item.skuName,jdbcType=VARCHAR}, #{item.skuPrice,jdbcType=DOUBLE},
+            #{item.skuNum,jdbcType=INTEGER}, #{item.pomotionPrice,jdbcType=DOUBLE},
+            #{item.freightPrice,jdbcType=DOUBLE},
+            #{item.gySpuId,jdbcType=VARCHAR}, #{item.gySpuCode,jdbcType=VARCHAR}, #{item.gySkuCode,jdbcType=VARCHAR},
+            #{item.paymentPrice,jdbcType=DOUBLE}, #{item.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <insert id="batchInsertTradeOrderCoupon">
+        insert into trade_order_coupon (Id, order_id, coupon_type,
+        coupon_activity_id, discount_price, discount_rate,
+        use_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.orderId,jdbcType=BIGINT}, #{item.couponType,jdbcType=VARCHAR},
+            #{item.couponActivityId,jdbcType=BIGINT}, #{item.discountPrice,jdbcType=BIGINT},
+            #{item.discountRate,jdbcType=DOUBLE},
+            #{item.useTime,jdbcType=TIMESTAMP})
+        </foreach>
+
+    </insert>
+
+    <update id="cancleOrder">
+        UPDATE trade_orders
+        SET
+            order_yn    = 2,
+            cancle_time = #{cancleTime,jdbcType=TIMESTAMP}
+        WHERE id = #{orderId,jdbcType=BIGINT}and order_status = 10
+    </update>
+
+
+    <insert id="insertAddress" parameterType="com.ly.mt.core.base.entity.user.UserAddress">
+        INSERT INTO user_address (id, user_id, user_name,
+                                  receive_name, receive_phone, user_address,
+                                  create_time)
+        VALUES (#{id}, #{userId}, #{userName},
+                #{receiveName}, #{receivePhone},
+                #{userAddress},
+                #{createTime})
+    </insert>
+
+    <update id="updateOrderDeliveryInfoByOrderId" parameterType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        UPDATE trade_orders
+        SET
+        logistics_code = #{logisticsCode,jdbcType=BIGINT},
+        gy_logistics_code = #{gyLogisticsCode,jdbcType=VARCHAR},
+        <if test="deliveryTime != null">
+            delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+        </if>
+        order_status = #{orderStatus,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateAddress" parameterType="com.ly.mt.core.base.entity.user.UserAddress">
+        UPDATE user_address SET
+                                user_id=#{userId},
+                                user_name=#{userName},
+                                receive_name=#{receiveName},
+                                receive_phone=#{receivePhone},
+                                user_address=#{userAddress},
+                                modify_time=#{modifyTime}
+        WHERE id=#{id}
+    </update>
+    <select id="getAddress" parameterType="long" resultType="com.ly.mt.core.base.entity.user.UserAddressVo">
+      select id from user_address where user_id = #{userId}
+    </select>
+
+    <select id="getUser" parameterType="com.ly.mt.core.base.entity.user.UserMH5RegistVo" resultType="com.ly.mt.core.base.entity.user.UserMH5RegistVo">
+        SELECT  id,client_id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+        birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+        user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+        FROM user
+        WHERE 1 = 1
+        <if test="null != loginName and '' != loginName">AND login_name = #{loginName}</if>
+        <if test="null != mobile and '' != mobile">AND mobile = #{mobile}</if>
+    </select>
+
+    <select id="getSpuIdBySpuIdsAndActivityId" resultType="java.lang.String">
+        SELECT DISTINCT  spu_id as spuId
+        FROM
+        activity_goods_detail
+        WHERE activity_id = #{activityId,jdbcType = BIGINT}
+        AND spu_id IN
+        <foreach collection="list" item="item" separator="," index="index" open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getSpuIdsByCouponIdAndSpuIds" resultType="java.lang.String">
+        SELECT
+        spu_id AS spuId
+        FROM coupon_goods
+        WHERE coupon_id = #{couponId,jdbcType=BIGINT}
+        AND  spu_id IN
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item,jdbcType = BIGINT}
+        </foreach>
+    </select>
+
+    <insert id="insertActivityOrder" parameterType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        insert  into   trade_orders (
+            id, order_no, buyer_id,order_old_money, order_money, address_id,order_discount_money,distribution_id,order_type,create_time
+        )
+        values (
+                   #{id},#{orderNo},#{buyerId},#{orderOldMoney},#{orderMoney},#{addressId},#{orderDiscountMoney},#{distributionId},#{orderType},#{createTime}
+               )
+
+    </insert>
+
+    <select id="selectSkuPriceBySkuId" resultType="com.ly.mt.core.base.entity.goods.GoodsSkuPrice">
+        select sku_price,spu_id,sku_id from goods_sku_price where  sku_id= #{skuId}
+    </select>
+
+    <insert id="insertOrderItem" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+        insert into  trade_order_items
+        (
+            id,order_id,spu_id,spu_name,sku_name,sku_id,sku_price,sku_num,create_time
+        )
+        values
+        (
+            #{id},#{orderId},#{spuId},#{spuName},#{skuName},#{skuId},#{skuPrice},#{skuNum},#{createTime}
+        )
+    </insert>
+
+    <select id="selectSpuNameBySpuId" resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+        SELECT name spuName FROM goods_spu_info where id=#{spuId}
+    </select>
+
+    <update id="updateTradeOrderRefundType">
+         UPDATE trade_orders
+        SET
+        is_refund = #{isRefund,jdbcType=INTEGER},
+        refund_time = #{refundTime,jdbcType=TIMESTAMP}
+        WHERE id = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectSkuAttr" parameterType="long" resultType="com.ly.mt.core.base.entity.goods.GoodsSkuAttr">
+        SELECT id,attributes attrId FROM  goods_sku_info
+        WHERE  id = #{skuId}
+    </select>
+
+    <select id="selectGoodsAttrValueListByAttrId" parameterType="long" resultType="java.util.Map">
+        SELECT
+        ga.id,ga.attr_name,gav.attr_id,gav.attr_value
+        FROM goods_attr ga LEFT JOIN goods_attr_value gav ON ga.id = gav.attr_id
+        WHERE
+         gav.attr_status= 1
+        AND gav.id IN
+        <foreach collection="list" index="index" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="getBattleInfoByOrderId" resultType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+        SELECT
+            id, order_id, shop_id, user_id, buyer_id, deliveryman_name, deliveryman_phone, type,
+            status, grabed_num, grabed_at, checked_at, taked_at, estimate_sended_at, send_model,
+            send_com, send_no, sended_at, estimated_successed_at, successed_at, create_time,
+            modify_time
+        FROM orders_battle_info
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getUserInfoById" parameterType="java.lang.Long" resultType="com.ly.mt.core.base.entity.user.User">
+        SELECT
+            id,client_id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+            birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+            user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+        FROM user
+        WHERE id = #{id}
+    </select>
+    
+    <select id="getSkuMonthSellerNumber"  resultType="java.lang.String">
+        SELECT sum(sku_num) from trade_order_items
+        where sku_id = #{skuId}
+        and create_time BETWEEN #{startTime} AND #{endTime}
+    </select>
+
+    <select id="getCouponListByOrderId" resultType="java.lang.String" parameterType="java.lang.Long">
+        SELECT
+            coupon_activity_id
+        FROM trade_order_coupon
+        WHERE order_id = #{orderId}
+        AND coupon_type = 2
+    </select>
+
+    <update id="updateCouponCodeUserStatusByCouponIdAndUserId">
+        UPDATE
+            coupon_code
+        SET use_status = 1
+        WHERE user_id = #{userId}
+        AND coupon_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getHourCitByCityName" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT  name FROM city_one_hour WHERE name LIKE concat('%',#{cityName},'%')
+    </select>
+
+
+    <select id="getBlueToothCount" parameterType="long" resultType="int">
+        SELECT IFNULL(SUM(t.sku_num),0)
+        FROM trade_order_items t LEFT JOIN trade_orders o ON o.id= t.order_id
+        WHERE  o.buyer_id = #{userId}
+          AND t.sku_id in (124123456787,124123456788,124123456789)
+    </select>
+
+    <select id="getOrderBattleByOrderId" resultType="com.ly.mt.core.base.entity.border.OrdersBattleInfo" parameterType="java.lang.Long">
+        SELECT
+            id,order_id,shop_id,user_id,buyer_id,deliveryman_name,deliveryman_phone,status
+        FROM orders_battle_info
+        WHERE order_id = #{orderId}
+    </select>
+
+    <select id="getKD100ExpressCodeByGyExpressCode" resultType="java.util.Map">
+        SELECT
+            id,express_company_icon,kd100_express_company_code,gy_express_company_code,express_company_name,express_company_country,status
+        FROM basic_express_delivery_info
+        WHERE gy_express_company_code=#{code}
+        AND status =1
+        AND express_company_country =1
+    </select>
+
+    <insert id="saveTradeMediaInfo" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderMedia" >
+        INSERT INTO trade_order_media(
+                                      id,   order_id  ,   type  ,   material  ,   channel  ,    create_time
+                                      )
+        VALUES (
+                #{id}, #{orderId}, #{type}, #{material}, #{channel},  #{createTime}
+                )
+    </insert>
+
+    <select id="getExpressCompanyInfoByCode" parameterType="java.lang.String" resultType="com.ly.mt.core.base.entity.delivery.ExpressCompanyInfo">
+        SELECT
+               id,code,name,city,status,create_time
+        FROM express_company_info
+        WHERE code = #{code} and status =2
+    </select>
+
+</mapper>

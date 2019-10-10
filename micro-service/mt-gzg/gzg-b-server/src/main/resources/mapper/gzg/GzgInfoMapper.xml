@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="plan_id" property="planId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, hotel_id, `position`, plan_id, create_time
+  </sql>
+  <select id="selectByGzgCode" resultType="com.ly.mt.core.common.entity.gzg.GzgInfo">
+    select <include refid="Base_Column_List"/> from gzg_info where code=#{gzgCode}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gzg_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gzg_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgInfo" >
+    insert into gzg_info (id, code, hotel_id, 
+      `position`, plan_id, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{hotelId,jdbcType=BIGINT}, 
+      #{position,jdbcType=VARCHAR}, #{planId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgInfo" >
+    insert into gzg_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="position != null" >
+        `position`,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgInfo" >
+    update gzg_info
+    <set >
+      <if test="code != null" >
+        code = #{code},
+      </if>
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId},
+      </if>
+      <if test="position != null" >
+        `position` = #{position},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgInfo" >
+    update gzg_info
+    set code = #{code},
+      hotel_id = #{hotelId},
+      `position` = #{position},
+      plan_id = #{planId},
+      create_time = #{createTime}
+    where id = #{id}
+  </update>
+  <insert id="batchInsert">
+    insert into gzg_info (id, `code`, hotel_id,
+    `position`, plan_id
+    )values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id,jdbcType=BIGINT}, #{item.code,jdbcType=VARCHAR}, #{item.hotelId,jdbcType=BIGINT},
+      #{item.position,jdbcType=VARCHAR}, #{item.planId,jdbcType=BIGINT}
+      )
+    </foreach>
+  </insert>
+  <select id="findByHotelId" resultType="com.ly.mt.core.common.entity.gzg.GzgInfo">
+    select * from gzg_info where hotel_id = #{hotelId}
+  </select>
+</mapper>

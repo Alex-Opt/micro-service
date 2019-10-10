@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrderVieMapper" >
+    <!-- 保存TradeOrderVie -->
+    <insert id="insertTradeOrderVie" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderVie">
+        INSERT INTO trade_order_vie (
+            id, seller_id, order_id, vie_status
+        ) VALUES (
+            #{id}, #{seller_id}, #{order_id}, #{vie_status}
+        )
+    </insert>
+
+
+    <!-- 删除TradeOrderVie -->
+    <delete id="deleteTradeOrderVie" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderVie">
+        DELETE FROM trade_order_vie
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeOrderVie -->
+    <update id="updateTradeOrderVie" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderVie">
+        UPDATE trade_order_vie
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeOrderVie -->
+    <select id="getTradeOrderVie" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderVie" resultType="com.ly.mt.center.data.trade.entity.TradeOrderVie">
+        SELECT * 
+        FROM trade_order_vie
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

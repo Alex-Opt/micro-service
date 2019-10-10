@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.punch.mapper.PunchCardCouponMapper" >
+    <select id="getPunchCardCouponByStatus"  resultType="com.ly.mt.center.data.punch.entity.PunchCardCoupon" parameterType="com.ly.mt.center.data.punch.entity.PunchCardCoupon" >
+        SELECT  *
+        FROM  punch_card_coupon
+        WHERE status = #{status}
+    </select>
+</mapper >

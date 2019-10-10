@@ -1,0 +1,8 @@
+server:
+  port: 7072
+spring:
+  cloud:
+    config:
+      name: center-third,eureka,time,redis,mq,gy
+      profile: test
+      uri: http://10.11.10.15

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopPurchasesRefundItemMapper" >
+    <!-- 保存ShopPurchasesRefundItem -->
+    <insert id="insertShopPurchasesRefundItem" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem">
+        INSERT INTO shop_purchases_refund_item (
+            id, shop_purchases_refund_id, shop_purchases_id, sku_id, refund_num, sku_price, sku_order_price, sku_refund_price, subtract_coupon_price, subtract_freight_price, create_time
+        ) VALUES (
+            #{id}, #{shop_purchases_refund_id}, #{shop_purchases_id}, #{sku_id}, #{refund_num}, #{sku_price}, #{sku_order_price}, #{sku_refund_price}, #{subtract_coupon_price}, #{subtract_freight_price}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopPurchasesRefundItem -->
+    <delete id="deleteShopPurchasesRefundItem" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem">
+        DELETE FROM shop_purchases_refund_item
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopPurchasesRefundItem -->
+    <update id="updateShopPurchasesRefundItem" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem">
+        UPDATE shop_purchases_refund_item
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopPurchasesRefundItem -->
+    <select id="getShopPurchasesRefundItem" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem">
+        SELECT * 
+        FROM shop_purchases_refund_item
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <!-- 查询商家退货总数 -->
+    <select id="getRefundNum" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem" resultType="java.lang.String">
+        SELECT SUM(refund_num)
+        FROM shop_purchases_refund_item
+        WHERE 1 = 1
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </select>
+</mapper>

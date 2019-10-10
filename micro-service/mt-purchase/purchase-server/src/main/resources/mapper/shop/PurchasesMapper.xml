@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.purchase.server.shop.mapper.PurchaseMapper">
+
+    <select id="selectNewestPurchasesInfo" resultType="com.ly.mt.core.common.entity.purchase.ShopPurchasesVO" >
+        SELECT
+          sp.id,
+          sp.user_id,
+          sp.shop_id,
+          u.login_name,
+          sp.payed_time AS payed_time,
+          SUM(spi.sku_num) AS nums
+        FROM shop_purchases AS sp,
+          shop_purchases_items spi,
+          `user` AS u
+        WHERE sp.id = spi.shop_purchases_id
+            AND sp.user_id = u.id
+        GROUP BY sp.id
+        ORDER BY sp.payed_time DESC
+        LIMIT 0,1
+    </select>
+</mapper>

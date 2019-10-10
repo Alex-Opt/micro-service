@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetStoreEmplooyRelationshipMapper" >
+  <sql id="Base_Column_List" >
+    id, emplooy_id, store_id, `status`, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_store_emplooy_relationship
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_store_emplooy_relationship
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreEmplooyRelationship" >
+    insert into cabinet_store_emplooy_relationship (id, emplooy_id, store_id, 
+      `status`, gmt_create, gmt_modify
+      )
+    values (#{id,jdbcType=VARCHAR}, #{emplooyId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreEmplooyRelationship" >
+    insert into cabinet_store_emplooy_relationship
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="emplooyId != null" >
+        emplooy_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="emplooyId != null" >
+        #{emplooyId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreEmplooyRelationship" >
+    update cabinet_store_emplooy_relationship
+    <set >
+      <if test="emplooyId != null" >
+        emplooy_id = #{emplooyId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreEmplooyRelationship" >
+    update cabinet_store_emplooy_relationship
+    set emplooy_id = #{emplooyId,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

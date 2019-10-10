@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.hd.mapper.HdPartnerMapper">
+    <!-- 保存HdPartner -->
+    <insert id="insertHdPartner" parameterType="com.ly.mt.center.data.hd.entity.HdPartner">
+        INSERT INTO hd_partner (id, partner_name, partner_mobile, agent_city_name, agent_city_code, source, channel,
+                                reserve1, reserve2, reserve3, status, create_time)
+        VALUES (#{id}, #{partner_name}, #{partner_mobile}, #{agent_city_name}, #{agent_city_code}, #{source},
+                #{channel}, #{reserve1}, #{reserve2}, #{reserve3}, #{status}, #{create_time})
+    </insert>
+
+    <select id="queryPartnerBy" parameterType="java.lang.String" resultType="com.ly.mt.center.data.hd.entity.HdPartner">
+        SELECT
+            id,
+            partner_name,
+            partner_mobile,
+            agent_city_name,
+            agent_city_code,
+            source,
+            channel,
+            reserve1,
+            reserve2,
+            reserve3,
+            status,
+            create_time
+        FROM hd_partner
+        WHERE partner_mobile = #{partner_mobile}
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrderCouponMapper" >
+    <!-- 保存TradeOrderCoupon -->
+    <insert id="insertTradeOrderCoupon" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderCoupon">
+        INSERT INTO trade_order_coupon (
+            id, order_id, coupon_type, coupon_activity_id, discount_price, discount_rate, use_time
+        ) VALUES (
+            #{id}, #{order_id}, #{coupon_type}, #{coupon_activity_id}, #{discount_price}, #{discount_rate}, #{use_time}
+        )
+    </insert>
+
+
+    <!-- 删除TradeOrderCoupon -->
+    <delete id="deleteTradeOrderCoupon" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderCoupon">
+        DELETE FROM trade_order_coupon
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeOrderCoupon -->
+    <update id="updateTradeOrderCoupon" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderCoupon">
+        UPDATE trade_order_coupon
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeOrderCoupon -->
+    <select id="getTradeOrderCoupon" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderCoupon" resultType="com.ly.mt.center.data.trade.entity.TradeOrderCoupon">
+        SELECT * 
+        FROM trade_order_coupon
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

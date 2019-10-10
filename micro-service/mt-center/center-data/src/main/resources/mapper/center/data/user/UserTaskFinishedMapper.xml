@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserTaskFinishedMapper" >
+    <!-- 保存UserTaskFinished -->
+    <insert id="insertUserTaskFinished" parameterType="com.ly.mt.center.data.user.entity.UserTaskFinished">
+        INSERT INTO user_task_finished (
+            id, user_id, task_id, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{task_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserTaskFinished -->
+    <delete id="deleteUserTaskFinished" parameterType="com.ly.mt.center.data.user.entity.UserTaskFinished">
+        DELETE FROM user_task_finished
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserTaskFinished -->
+    <update id="updateUserTaskFinished" parameterType="com.ly.mt.center.data.user.entity.UserTaskFinished">
+        UPDATE user_task_finished
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserTaskFinished -->
+    <select id="getUserTaskFinished" parameterType="com.ly.mt.center.data.user.entity.UserTaskFinished" resultType="com.ly.mt.center.data.user.entity.UserTaskFinished">
+        SELECT * 
+        FROM user_task_finished
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

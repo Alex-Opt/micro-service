@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.trade.mapper.TradeOrderRefundMapper">
+    
+    <resultMap type="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo" id="TradeOrderRefundResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="buyerId"    column="buyer_id"    />
+        <result property="refundStatus"    column="refund_status"    />
+        <result property="refundDesc"    column="refund_desc"    />
+        <result property="refundReason"    column="refund_reason"    />
+        <result property="refundPrice"    column="refund_price"    />
+        <result property="refundFreightPrice"    column="refund_freight_price"    />
+        <result property="subtractCouponPrice"    column="subtract_coupon_price"    />
+        <result property="retundAddress"    column="retund_address"    />
+        <result property="refundType"    column="refund_type"    />
+        <result property="consignee"    column="consignee"    />
+        <result property="phone"    column="phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="finishTime"    column="finish_time"    />
+        <result property="cancelTime"    column="cancel_time"    />
+        <result property="buyerDeliveryTime"    column="buyer_delivery_time"    />
+        <result property="platformReceiveTime"    column="platform_receive_time"    />
+        <result property="deliveryNo"    column="delivery_no"    />
+        <result property="auditTime"    column="audit_time"    />
+    </resultMap>
+	
+	<sql id="selectTradeOrderRefundVo">
+        select id, order_id, buyer_id, refund_status, refund_desc, refund_reason, refund_price, refund_freight_price,
+               subtract_coupon_price, retund_address, refund_type, consignee, phone, create_time,audit_time,status,delivery_no,
+                finish_time,cancel_time,
+               buyer_delivery_time,platform_receive_time
+        from trade_order_refund
+</sql>
+
+    <sql id="getBuyerRefundsSql">
+        select tr.id refundId,
+               tr.order_id,
+               tr.buyer_id,
+               tr.refund_status,
+               tr.refund_desc,
+               tr.refund_reason,
+               tr.refund_price,
+               tr.refund_freight_price,
+               tr.subtract_coupon_price,
+               tr.retund_address,
+               tr.refund_type,
+               tr.consignee,
+               tr.phone,
+               tr.create_time,
+               tr.status,
+               ti.sku_id,
+               ti.refund_num,
+               gs.name skuName,
+               gsp.name spuName,
+               gp.picture_url
+        from trade_order_refund tr
+                 LEFT JOIN trade_order_refund_item ti ON tr.id = ti.refund_id
+                 LEFT JOIN goods_sku_info gs ON gs.id = ti.sku_id
+                 LEFT JOIN goods_spu_info gsp ON gs.spu_id = gsp.id
+                 LEFT JOIN goods_sku_picture gp ON ti.id = gp.sku_id
+    </sql>
+	
+    <select id="selectTradeOrderRefundList" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo" resultMap="TradeOrderRefundResult">
+        <include refid="selectTradeOrderRefundVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="orderId != null "> and order_id = #{orderId}</if>
+             <if test="buyerId != null "> and buyer_id = #{buyerId}</if>
+             <if test="refundStatus != null "> and refund_status = #{refundStatus}</if>
+             <if test="refundDesc != null  and refundDesc != '' "> and refund_desc = #{refundDesc}</if>
+             <if test="refundReason != null  and refundReason != '' "> and refund_reason = #{refundReason}</if>
+             <if test="refundPrice != null "> and refund_price = #{refundPrice}</if>
+             <if test="refundFreightPrice != null "> and refund_freight_price = #{refundFreightPrice}</if>
+             <if test="subtractCouponPrice != null "> and subtract_coupon_price = #{subtractCouponPrice}</if>
+             <if test="retundAddress != null  and retundAddress != '' "> and retund_address = #{retundAddress}</if>
+             <if test="refundType != null "> and refund_type = #{refundType}</if>
+             <if test="consignee != null  and consignee != '' "> and consignee = #{consignee}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="deliveryNo != null "> and delivery_no = #{deliveryNo}</if>
+            <if test="auditTime !=null">audit_time,</if>
+            <if test="finishTime !=null">finish_time,</if>
+         </where>
+    </select>
+    
+    <select id="selectTradeOrderRefundById" parameterType="Long" resultMap="TradeOrderRefundResult">
+        <include refid="selectTradeOrderRefundVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTradeOrderRefund" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo">
+        insert into trade_order_refund
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="orderId != null  ">order_id,</if>
+			<if test="buyerId != null  ">buyer_id,</if>
+			<if test="refundStatus != null  ">refund_status,</if>
+			<if test="refundDesc != null  and refundDesc != ''  ">refund_desc,</if>
+			<if test="refundReason != null  and refundReason != ''  ">refund_reason,</if>
+			<if test="refundPrice != null  ">refund_price,</if>
+			<if test="refundFreightPrice != null  ">refund_freight_price,</if>
+			<if test="subtractCouponPrice != null  ">subtract_coupon_price,</if>
+			<if test="retundAddress != null  and retundAddress != ''  ">retund_address,</if>
+			<if test="refundType != null  ">refund_type,</if>
+			<if test="consignee != null  and consignee != ''  ">consignee,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="status !=null">status,</if>
+			<if test="deliveryNo !=null">delivery_no,</if>
+			<if test="auditTime !=null">audit_time,</if>
+			<if test="finishTime !=null">finish_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="orderId != null  ">#{orderId},</if>
+			<if test="buyerId != null  ">#{buyerId},</if>
+			<if test="refundStatus != null  ">#{refundStatus},</if>
+			<if test="refundDesc != null  and refundDesc != ''  ">#{refundDesc},</if>
+			<if test="refundReason != null  and refundReason != ''  ">#{refundReason},</if>
+			<if test="refundPrice != null  ">#{refundPrice},</if>
+			<if test="refundFreightPrice != null  ">#{refundFreightPrice},</if>
+			<if test="subtractCouponPrice != null  ">#{subtractCouponPrice},</if>
+			<if test="retundAddress != null  and retundAddress != ''  ">#{retundAddress},</if>
+			<if test="refundType != null  ">#{refundType,jdbcType=INTEGER},</if>
+			<if test="consignee != null  and consignee != ''  ">#{consignee},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+            <if test="status !=null ">#{status},</if>
+            <if test="deliveryNo !=null ">#{deliveryNo},</if>
+            <if test="auditTime !=null ">#{auditTime},</if>
+            <if test="finishTime !=null ">#{finishTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTradeOrderRefund" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo">
+        update trade_order_refund
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null  ">order_id = #{orderId},</if>
+            <if test="buyerId != null  ">buyer_id = #{buyerId},</if>
+            <if test="refundStatus != null  ">refund_status = #{refundStatus},</if>
+            <if test="refundDesc != null  and refundDesc != ''  ">refund_desc = #{refundDesc},</if>
+            <if test="refundReason != null  and refundReason != ''  ">refund_reason = #{refundReason},</if>
+            <if test="refundPrice != null  ">refund_price = #{refundPrice},</if>
+            <if test="refundFreightPrice != null  ">refund_freight_price = #{refundFreightPrice},</if>
+            <if test="subtractCouponPrice != null  ">subtract_coupon_price = #{subtractCouponPrice},</if>
+            <if test="retundAddress != null  and retundAddress != ''  ">retund_address = #{retundAddress},</if>
+            <if test="refundType != null  ">refund_type = #{refundType},</if>
+            <if test="consignee != null  and consignee != ''  ">consignee = #{consignee},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="finishTime != null  ">finish_time = #{finishTime},</if>
+            <if test="auditTime != null  ">audit_time = #{auditTime},</if>
+            <if test="cancelTime != null  ">cancel_time = #{cancelTime},</if>
+            <if test="buyerDeliveryTime != null  ">buyer_delivery_time = #{buyerDeliveryTime},</if>
+            <if test="platformReceiveTime != null  ">platform_receive_time = #{platformReceiveTime},</if>
+            <if test="deliveryNo != null  ">delivery_no = #{deliveryNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteTradeOrderRefundById" parameterType="Long">
+        delete from trade_order_refund where id = #{id}
+    </delete>
+	
+    <delete id="deleteTradeOrderRefundByIds" parameterType="String">
+        delete from trade_order_refund where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getBuyerRefunds" parameterType="Long" resultType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfoVo">
+      <include refid="getBuyerRefundsSql"/>
+        where tr.buyer_id = #{buyerId}
+          and  tr.status = 1
+        ORDER BY create_time DESC
+    </select>
+
+    <update id="updateRefundStatus" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo"
+           >
+        update trade_order_refund
+        set
+        refund_status = #{refundStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateRefundInfo" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo">
+        update trade_order_refund
+        set
+        retund_address = #{retundAddress,jdbcType=VARCHAR},
+        consignee = #{consignee,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateRefundCancel">
+        update trade_order_refund
+        set
+        status =#{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getByOrderIdAndStatus" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo" resultMap="TradeOrderRefundResult">
+        <include refid="selectTradeOrderRefundVo"/>
+        where
+        order_id=#{orderId,jdbcType=BIGINT}
+        and status=#{status,jdbcType=INTEGER}
+    </select>
+</mapper>

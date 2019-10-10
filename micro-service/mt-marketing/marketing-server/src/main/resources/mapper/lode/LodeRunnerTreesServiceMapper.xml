@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.marketing.server.lode.mapper.LodeRunnerTreesServiceMapper" >
+    <select id="getNextRunnerList" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerTreesParamsVo" resultType="com.ly.mt.core.common.entity.marketing.LodeRunnerVo">
+        select
+        lrt.user_id userId, u.user_name userName, u.mobile mobile,s.id shopId,
+        CASE WHEN s.create_time2 IS NOT NULL THEN s.create_time2 ELSE lrt.create_time END createTime,
+        CASE WHEN s.status IS NOT NULL THEN'Y' ELSE 'N' END liveInState
+        FROM lode_runner_trees lrt
+        LEFT  JOIN  user u ON  u.id = lrt.user_id
+        LEFT JOIN shop_info s ON s.user_id = lrt.user_id
+        WHERE
+        <if test="userSource != null">
+            lrt.user_source = #{userSource}  AND
+        </if>
+        lrt.father_id = #{userId}
+    </select>
+
+    <!-- 查询商家的进货数量 -->
+    <select id="selectShopPurchasesCount" parameterType="java.util.List" resultType="com.ly.mt.core.common.entity.marketing.ShopPurchasesVo">
+        <if test="list != null and list.size > 0">
+            SELECT
+            a.shop_id shopId, a.cou - refund.cou cou
+            FROM
+            (
+                SELECT p.shop_id , IFNULL(SUM(pi.sku_num), 0) cou
+                from shop_purchases p
+                LEFT JOIN shop_purchases_items pi ON pi.shop_purchases_id = p.id
+                WHERE p.shop_id in
+                  <foreach collection="list" item="item" open="(" close=")" separator=",">
+                      #{item}
+                  </foreach>
+                GROUP BY p.shop_id
+            ) a
+            LEFT JOIN
+            (
+                SELECT p.shop_id , IFNULL(SUM(pri.refund_num), 0 ) cou
+                from shop_purchases p
+                LEFT JOIN shop_purchases_refund pr ON pr.shop_purchases_id = p.id AND pr.refund_status = 99
+                LEFT JOIN shop_purchases_refund_item pri ON pri.shop_purchases_refund_id = pr.id
+                WHERE p.shop_id in
+                <foreach collection="list" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+                GROUP BY p.shop_id
+            ) refund ON a.shop_id = refund.shop_id
+        </if>
+    </select>
+
+    <select id="selectShopProfits" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerProfitsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogs">
+        <if test="shopIds != null and shopIds.size > 0">
+            SELECT p.shop_id shopId, IFNULL(SUM(l.profit), 0) profit
+            FROM shop_purchases p
+            LEFT JOIN shop_profit_logs l ON l.shop_purchases_id = p.id AND l.`status` != 3 AND l.user_id = #{userId} AND l.profit_type in (8,15)
+            WHERE p.shop_id in
+            <foreach collection="shopIds" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+            GROUP BY p.shop_id;
+
+        </if>
+    </select>
+
+    <select id="selectTeamDetails" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerVo" resultType="com.ly.mt.core.common.entity.marketing.LodeRunnerVo">
+        {call getTeamDetails(#{userId,mode=IN})}
+    </select>
+
+    <!-- 查询我的淘金收益 -->
+    <select id="getMyLodeProfits" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerProfitsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.LodeRunnerProfitsParamsVo">
+        select IFNULL(lode, 0.0) profits from  shop_profits where  user_id = #{userId}
+    </select>
+
+    <!-- 查询我的淘金排名 -->
+    <select id="getLodeRankByMe" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerProfitsParamsVo" resultType="java.lang.Integer">
+      select count(1) + 1 from  shop_profits where  lode &gt; #{profits}
+    </select>
+    <!-- 查询淘金总人数 -->
+    <select id="getLodeUserCount" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerProfitsParamsVo" resultType="java.lang.Integer">
+      select count(1) from shop_profits
+    </select>
+</mapper>

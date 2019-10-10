@@ -1,0 +1,9 @@
+server:
+  port: 9291
+spring:
+  cloud:
+    config:
+      name: mt-cabinet,eureka,time,mq,redis,txc
+      profile: test
+      uri: http://39.96.191.19:8082
+

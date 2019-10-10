@@ -1,0 +1,8 @@
+server:
+  port: 9191
+spring:
+  cloud:
+    config:
+      name: mt-activity,eureka,time,mq,redis
+      profile: test
+      uri: http://10.11.10.15

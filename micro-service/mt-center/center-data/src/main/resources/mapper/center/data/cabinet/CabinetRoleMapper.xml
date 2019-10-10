@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetRoleMapper" >
+  <sql id="Base_Column_List" >
+    id, role_name, description, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetRole" >
+    insert into cabinet_role (id, role_name, description, 
+      gmt_create, gmt_modify)
+    values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetRole" >
+    insert into cabinet_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetRole" >
+    update cabinet_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetRole" >
+    update cabinet_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

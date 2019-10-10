@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopInfoMapper" >
+
+    <select id="getShopInfo" resultType="com.ly.mt.center.data.shop.entity.ShopInfo"
+            parameterType="com.ly.mt.center.data.shop.entity.ShopInfo" >
+        SELECT *  FROM shop_info  WHERE 1=1
+        <if test="id != null "> AND id=#{id}</if>
+        <if test="mobile != null"> AND mobile=#{mobile}</if>
+        <if test="null != user_id"> AND user_id=#{user_id}</if>
+    </select>
+
+    <insert id="insertShopInfo" parameterType="com.ly.mt.center.data.shop.entity.ShopInfo">
+        INSERT INTO shop_info (
+            id, user_id, mobile, status, shop_point_grade_id, shop_type, shop_name, e_shop_name,
+            e_shop_url,shop_lon,shop_lat,shop_address,shop_country,shop_province_code,shop_city_code,
+            idcard_front,idcard_back,real_name,idcard,vaild_type,vaild_start_at,vaild_end_at,invite_code,stock_num,
+            slogan,gy_warehouse_code,gy_shop_code,create_time,modify_time,operator_id)
+        VALUES (
+         #{id}, #{user_id}, #{mobile}, #{status}, #{shop_point_grade_id}, #{shop_type}, #{shop_name}, #{e_shop_name},
+         #{e_shop_url},#{shop_lon},#{shop_lat},#{shop_address},#{shop_country},#{shop_province_code},#{shop_city_code},
+         #{idcard_front},#{idcard_back},#{real_name},#{idcard},#{vaild_type},
+         #{vaild_start_at},#{vaild_end_at},#{invite_code},#{stock_num},
+         #{slogan},#{gy_warehouse_code},#{gy_shop_code},#{create_time},#{modify_time},#{operator_id})
+    </insert>
+</mapper >

@@ -1,0 +1,8 @@
+server:
+  port: 9391
+spring:
+  cloud:
+    config:
+      name: mt-home,eureka,time,mq,redis,txc
+      profile: dev
+      uri: http://39.96.191.19:8082

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.activity.server.wechat.mapper.WechatHelpSubMapper" >
+  <sql id="Base_Column_List" >
+    id, task_id, task_sub_id, `status`, help_master_id, create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from wechat_help_sub
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpSub" >
+    insert into wechat_help_sub (id, task_id, task_sub_id, 
+      `status`, help_master_id, create_time, 
+      update_time, content)
+    values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{taskSubId,jdbcType=BIGINT}, 
+      #{status,jdbcType=CHAR}, #{helpMasterId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpSub" >
+    insert into wechat_help_sub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="taskSubId != null" >
+        task_sub_id,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="helpMasterId != null" >
+        help_master_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskSubId != null" >
+        #{taskSubId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="helpMasterId != null" >
+        #{helpMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpSub" >
+    update wechat_help_sub
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskSubId != null" >
+        task_sub_id = #{taskSubId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="helpMasterId != null" >
+        help_master_id = #{helpMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpSub" >
+    update wechat_help_sub
+    set task_id = #{taskId,jdbcType=BIGINT},
+      task_sub_id = #{taskSubId,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=CHAR},
+      help_master_id = #{helpMasterId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpSub" >
+    update wechat_help_sub
+    set task_id = #{taskId,jdbcType=BIGINT},
+      task_sub_id = #{taskSubId,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=CHAR},
+      help_master_id = #{helpMasterId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

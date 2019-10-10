@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.battle.mapper.OrderBattleCheckLogsMapper" >
+    <!-- 保存OrderBattleCheckLogs -->
+    <insert id="insertOrderBattleCheckLogs" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleCheckLogs">
+        INSERT INTO order_battle_check_logs (
+            id, shop_id, orders_battle_id, order_id, sku_id, barcode, create_time
+        ) VALUES (
+            #{id}, #{shop_id}, #{orders_battle_id}, #{order_id}, #{sku_id}, #{barcode}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除OrderBattleCheckLogs -->
+    <delete id="deleteOrderBattleCheckLogs" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleCheckLogs">
+        DELETE FROM order_battle_check_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新OrderBattleCheckLogs -->
+    <update id="updateOrderBattleCheckLogs" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleCheckLogs">
+        UPDATE order_battle_check_logs
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询OrderBattleCheckLogs -->
+    <select id="getOrderBattleCheckLogs" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleCheckLogs" resultType="com.ly.mt.center.data.battle.entity.OrderBattleCheckLogs">
+        SELECT * 
+        FROM order_battle_check_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

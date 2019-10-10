@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgBannerPictureMapper" >
+
+
+    <insert id="insertGzgBannerPicture" parameterType="com.ly.mt.center.data.gzg.entity.GzgBannerPicture">
+    insert into gzg_banner_picture (id, `name`, url,
+      `state`)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{state,jdbcType=VARCHAR})
+  </insert>
+
+
+    <delete id="deleteGzgBannerPictureById" parameterType="java.lang.Integer">
+    delete from gzg_banner_picture
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateGzgBannerPictureById" parameterType="com.ly.mt.center.data.gzg.entity.GzgBannerPicture">
+    update gzg_banner_picture
+    set `name` = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="getGzgBannerPicture"  resultType="com.ly.mt.center.data.gzg.entity.GzgBannerPicture" parameterType="com.ly.mt.center.data.gzg.entity.GzgBannerPicture">
+    select id, `name`, url, `state`
+    from gzg_banner_picture
+  </select>
+    <select id="getGzgBannerPictureById" parameterType="java.lang.Integer" resultType="com.ly.mt.center.data.gzg.entity.GzgBannerPicture">
+    select id, `name`, url, `state`
+    from gzg_banner_picture
+  </select>
+
+
+
+
+</mapper >

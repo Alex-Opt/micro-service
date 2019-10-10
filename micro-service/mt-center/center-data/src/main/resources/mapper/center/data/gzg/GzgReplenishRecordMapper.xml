@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgReplenishRecordMapper" >
+    <!-- 保存GzgReplenishRecord -->
+    <insert id="insertGzgReplenishRecord" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishRecord">
+        INSERT INTO gzg_replenish_record (
+            id, replenish_code, replenish_order_id, replenish_user_id, state, invalid_type, grad_time, submit_audit_time, arrival_account_time, invalid_time, amount, audit_picture
+        ) VALUES (
+            #{id}, #{replenish_code}, #{replenish_order_id}, #{replenish_user_id}, #{state}, #{invalid_type}, #{grad_time}, #{submit_audit_time}, #{arrival_account_time}, #{invalid_time}, #{amount}, #{audit_picture}
+        )
+    </insert>
+
+
+    <!-- 删除GzgReplenishRecord -->
+    <delete id="deleteGzgReplenishRecord" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishRecord">
+        DELETE FROM gzg_replenish_record
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgReplenishRecord -->
+    <update id="updateGzgReplenishRecord" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishRecord">
+        UPDATE gzg_replenish_record
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgReplenishRecord -->
+    <select id="getGzgReplenishRecord" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishRecord" resultType="com.ly.mt.center.data.gzg.entity.GzgReplenishRecord">
+        SELECT * 
+        FROM gzg_replenish_record
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

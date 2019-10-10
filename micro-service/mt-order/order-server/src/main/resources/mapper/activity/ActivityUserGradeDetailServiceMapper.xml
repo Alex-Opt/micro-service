@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.activity.mapper.ActivityUserGradeDetailServiceMapper">
+
+    <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.activity.ActivityUserGradeDetail"
+            parameterType="java.lang.Long">
+        select
+            id,
+            activity_id,
+            grade_id,
+            grade_name,
+            spu_id,
+            spu_num,
+            create_time
+        from activity_user_grade_detail
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.ly.mt.core.base.entity.activity.ActivityUserGradeDetail">
+        insert into activity_user_grade_detail (id, activity_id, grade_id,
+                                                grade_name, spu_id, spu_num,
+                                                create_time)
+        values (#{id,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, #{gradeId,jdbcType=BIGINT},
+                #{gradeName,jdbcType=VARCHAR}, #{spuId,jdbcType=BIGINT}, #{spuNum,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.base.entity.activity.ActivityUserGradeDetail">
+        update activity_user_grade_detail
+        set activity_id = #{activityId,jdbcType=BIGINT},
+            grade_id    = #{gradeId,jdbcType=BIGINT},
+            grade_name  = #{gradeName,jdbcType=VARCHAR},
+            spu_id      = #{spuId,jdbcType=BIGINT},
+            spu_num     = #{spuNum,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <insert id="batchInsertActivityUserGradeDetail">
+        insert into activity_user_grade_detail (id, activity_id, grade_id,
+        grade_name, spu_id, spu_num,
+        create_time)
+        values
+        <foreach collection="list" item="item" separator="," index="index">
+            (#{item.id,jdbcType=BIGINT}, #{item.activityId,jdbcType=BIGINT}, #{item.gradeId,jdbcType=BIGINT},
+            #{item.gradeName,jdbcType=VARCHAR}, #{item.spuId,jdbcType=BIGINT}, #{item.spuNum,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+
+    </insert>
+
+    <select id="getUserGradeByUserId" resultType="com.ly.mt.core.base.entity.user.UserPointGrade">
+      select
+          id,user_id, user_score,point_grade_id
+      from user_point_grade
+      where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getUserGradeNameByGradId" resultType="com.ly.mt.core.base.entity.point.PointGrade">
+        select
+            id, title,icon,score,create_time
+        from point_grade
+        where id = #{gradId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

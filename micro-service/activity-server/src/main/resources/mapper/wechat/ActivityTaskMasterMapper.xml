@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.activity.server.wechat.mapper.ActivityTaskMasterMapper" >
+  <sql id="Base_Column_List" >
+    id, task_name, task_msg, task_status, activity_id, create_time, update_time
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from activity_task_master
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.hd.ActivityTaskMaster" >
+    insert into activity_task_master (id, task_name, task_msg, 
+      task_status, activity_id, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{taskMsg,jdbcType=VARCHAR}, 
+      #{taskStatus,jdbcType=CHAR}, #{activityId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.hd.ActivityTaskMaster" >
+    insert into activity_task_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="taskMsg != null" >
+        task_msg,
+      </if>
+      <if test="taskStatus != null" >
+        task_status,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskMsg != null" >
+        #{taskMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null" >
+        #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.hd.ActivityTaskMaster" >
+    update activity_task_master
+    <set >
+      <if test="taskName != null" >
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskMsg != null" >
+        task_msg = #{taskMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null" >
+        task_status = #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.hd.ActivityTaskMaster" >
+    update activity_task_master
+    set task_name = #{taskName,jdbcType=VARCHAR},
+      task_msg = #{taskMsg,jdbcType=VARCHAR},
+      task_status = #{taskStatus,jdbcType=CHAR},
+      activity_id = #{activityId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

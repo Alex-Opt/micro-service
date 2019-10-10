@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.activity.mapper.ActivitySecurityCodeMapper">
+    <!-- 新增ActivitySecurityCode -->
+    <select id="insertActivitySecurityCode" parameterType="com.ly.mt.core.data.activity.entity.ActivitySecurityCode">
+        INSERT INTO activity_security_code (
+            security_code, money, profile, create_time
+        ) VALUES (
+            #{securityCode}, #{money}, #{profile}, #{createTime}
+        )
+    </select>
+
+
+    <!-- 查询ActivitySecurityCode -->
+    <select id="getActivitySecurityCode" parameterType="com.ly.mt.core.data.activity.entity.ActivitySecurityCode" resultType="com.ly.mt.core.data.activity.entity.ActivitySecurityCode">
+        SELECT id, security_code, money, profile, create_time
+        FROM activity_security_code
+        WHERE security_code = #{securityCode}
+    </select>
+</mapper>

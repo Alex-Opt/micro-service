@@ -1,0 +1,9 @@
+server:
+  port: 8081
+eureka:
+  client:
+    register-with-eureka: false #不注册自己的信息
+    fetch-registry: false #不获取eureka服务器注册表上的注册信息
+  server:
+    enable-self-preservation: false #关闭自我保护
+    eviction-interval-timer-in-ms: 100 # 清理间隔（单位毫秒，默认是60*1000）

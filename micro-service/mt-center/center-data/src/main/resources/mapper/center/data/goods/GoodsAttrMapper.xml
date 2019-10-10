@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsAttrMapper" >
+    <!-- 保存GoodsAttr -->
+    <insert id="insertGoodsAttr" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttr">
+        INSERT INTO goods_attr (
+            id, cid, attr_name, attr_status, sort_num, create_time
+        ) VALUES (
+            #{id}, #{cid}, #{attr_name}, #{attr_status}, #{sort_num}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GoodsAttr -->
+    <delete id="deleteGoodsAttr" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttr">
+        DELETE FROM goods_attr
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GoodsAttr -->
+    <update id="updateGoodsAttr" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttr">
+        UPDATE goods_attr
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GoodsAttr -->
+    <select id="getGoodsAttr" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttr" resultType="com.ly.mt.center.data.goods.entity.GoodsAttr">
+        SELECT * 
+        FROM goods_attr
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

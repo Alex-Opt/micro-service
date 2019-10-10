@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrderRefundItemMapper" >
+    <!-- 保存TradeOrderRefundItem -->
+    <insert id="insertTradeOrderRefundItem" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefundItem">
+        INSERT INTO trade_order_refund_item (
+            id, refund_id, order_id, sku_id, refund_num, sku_price, sku_order_price, sku_refund_price, subtract_coupon_price, subtract_freight_price, create_time, status
+        ) VALUES (
+            #{id}, #{refund_id}, #{order_id}, #{sku_id}, #{refund_num}, #{sku_price}, #{sku_order_price}, #{sku_refund_price}, #{subtract_coupon_price}, #{subtract_freight_price}, #{create_time}, #{status}
+        )
+    </insert>
+
+
+    <!-- 删除TradeOrderRefundItem -->
+    <delete id="deleteTradeOrderRefundItem" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefundItem">
+        DELETE FROM trade_order_refund_item
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeOrderRefundItem -->
+    <update id="updateTradeOrderRefundItem" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefundItem">
+        UPDATE trade_order_refund_item
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeOrderRefundItem -->
+    <select id="getTradeOrderRefundItem" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefundItem" resultType="com.ly.mt.center.data.trade.entity.TradeOrderRefundItem">
+        SELECT * 
+        FROM trade_order_refund_item
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

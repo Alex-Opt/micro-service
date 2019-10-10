@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.coupon.mapper.CouponGoodsServiceMapper">
+
+    <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.coupon.CouponGoods"
+            parameterType="java.lang.Long">
+        SELECT
+            id,
+            coupon_id,
+            sku_id,
+            create_time
+        FROM coupon_goods
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByCouponIdAndSpuIds" resultType="com.ly.mt.core.base.entity.coupon.CouponGoods">
+        SELECT
+          id, coupon_id, spu_id, create_time
+        FROM coupon_goods
+        WHERE
+        spu_id in
+        <foreach collection="spuIdList" index="index" item="spuId" open="(" separator="," close=")">
+            #{spuId,jdbcType=BIGINT}
+        </foreach>
+        <if test="couponId != null">
+            AND coupon_id = #{couponId,jdbcType=BIGINT}
+        </if>
+
+    </select>
+</mapper>

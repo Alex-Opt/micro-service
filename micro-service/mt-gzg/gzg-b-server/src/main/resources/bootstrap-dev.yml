@@ -1,0 +1,20 @@
+server:
+  port: 8012
+spring:
+  cloud:
+    config:
+      name: eureka,time,db-redis,db-mysql,oss,sms,gy,mq
+      profile: dev
+      uri: http://39.96.191.19:8082
+
+
+asyn:
+  executor:
+    maxPoolSize: 60
+    queueCapacity: 30
+    corePoolSize: 40
+
+
+logging:
+  level:
+    com.ly.mt.gzg.b.server.gzgb.mapper: DEBUG

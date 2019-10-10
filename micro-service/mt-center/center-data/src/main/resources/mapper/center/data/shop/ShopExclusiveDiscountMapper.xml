@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopExclusiveDiscountMapper" >
+
+    <select id="getShopExclusiveDiscount" resultType="com.ly.mt.center.data.shop.entity.ShopExclusiveDiscount">
+        SELECT * FROM shop_exclusive_discount
+        WHERE 1=1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </select>
+</mapper >

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.coupon.mapper.CouponInfoServiceMapper">
+    <sql id="Base_Column_List">
+        id,coupon_name,start_time, end_time,validity_day,denomination,discount_rate,limit_type, start_fee,
+        coupon_use_system,coupon_type,remark, creater_id,create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.coupon.CouponInfo" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from coupon_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from coupon_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        insert into coupon_info (id, coupon_name, start_time, end_time,validity_day, denomination, discount_rate, limit_type,
+                                 start_fee,coupon_use_system,coupon_type, remark, creater_id, create_time)
+        values (#{id,jdbcType=BIGINT}, #{couponName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP},
+                #{endTime,jdbcType=TIMESTAMP},#{validityDay}, #{denomination,jdbcType=DOUBLE}, #{discountRate,jdbcType=DOUBLE},
+                #{limitType,jdbcType=CHAR},#{startFee,jdbcType=DOUBLE}, #{couponUseSystem},#{couponType},
+                #{remark,jdbcType=VARCHAR}, #{createrId,jdbcType=BIGINT},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        insert into coupon_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="couponName != null">
+                coupon_name,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="validityDay != null">
+                validity_day,
+            </if>
+            <if test="denomination != null">
+                denomination,
+            </if>
+            <if test="limitType != null">
+                limit_type,
+            </if>
+            <if test="discountRate != null">
+                discount_rate,
+            </if>
+            <if test="startFee != null">
+                start_fee,
+            </if>
+            <if test="couponUseSystem != null">
+                coupon_use_system,
+            </if>
+            <if test="couponType != null">
+                coupon_type,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createrId != null">
+                creater_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="couponName != null">
+                #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="validityDay != null">
+                #{validityDay},
+            </if>
+            <if test="denomination != null">
+                #{denomination,jdbcType=DOUBLE},
+            </if>
+            <if test="discountRate != null">
+                #{discountRate,jdbcType=DOUBLE},
+            </if>
+            <if test="limitType != null">
+                #{limitType,jdbcType=CHAR},
+            </if>
+            <if test="startFee != null">
+                #{startFee,jdbcType=DOUBLE},
+            </if>
+            <if test="couponUseSystem != null">
+                #{couponUseSystem},
+            </if>
+            <if test="couponType != null">
+                #{couponType},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createrId != null">
+                #{createrId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        update coupon_info
+        <set>
+            <if test="couponName != null">
+                coupon_name = #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="denomination != null">
+                denomination = #{denomination,jdbcType=DOUBLE},
+            </if>
+            <if test="discountRate != null">
+                discount_rate = #{discountRate,jdbcType=DOUBLE},
+            </if>
+            <if test="limitType !=null">
+                limit_type = #{limitType,jdbcType=CHAR},
+            </if>
+            <if test="startFee != null">
+                start_fee = #{startFee,jdbcType=DOUBLE},
+            </if>
+            <if test="couponUseSystem != null">
+                coupon_use_system = #{couponUseSystem},
+            </if>
+            <if test="couponType != null">
+                coupon_type = #{couponType},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createrId != null">
+                creater_id = #{createrId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        update coupon_info
+        set coupon_name   = #{couponName,jdbcType=VARCHAR},
+            start_time    = #{startTime,jdbcType=TIMESTAMP},
+            end_time      = #{endTime,jdbcType=TIMESTAMP},
+            denomination  = #{denomination,jdbcType=DOUBLE},
+            discount_rate = #{discountRate,jdbcType=DOUBLE},
+            start_fee     = #{startFee,jdbcType=DOUBLE},
+            coupon_use_system = #{couponUseSystem},
+            coupon_type = #{couponType},
+            remark        = #{remark,jdbcType=VARCHAR},
+            creater_id    = #{createrId,jdbcType=BIGINT},
+            create_time   = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!-- 根据优惠券id和用户id查询用户已领取数据-->
+    <select id="queryCouponCodeByCouponIdAndUserId" resultType="com.ly.mt.core.base.entity.coupon.CouponCode">
+        SELECT id,
+               coupon_id,
+               coupon_code,
+               user_id,
+               pull_status,
+               pull_time,
+               use_status,
+               use_time,
+               create_time
+        FROM coupon_code
+        WHERE coupon_id = #{couponId}
+        AND user_id = #{userId} limit 1
+    </select>
+    <!--保存用户领取优惠券数据 -->
+    <insert id="saveCouponCode" parameterType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        insert into coupon_code (id, coupon_id, coupon_code, user_id, pull_status, pull_time, use_status, use_time,
+                                 create_time)
+        values (#{id,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT}, #{couponCode,jdbcType=VARCHAR},
+                #{userId,jdbcType=BIGINT}, #{pullStatus,jdbcType=INTEGER}, #{pullTime,jdbcType=TIMESTAMP},
+                #{useStatus,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="batchQueryByCouponId" resultType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        SELECT
+        id, coupon_name, start_time, end_time, denomination, discount_rate,
+        limit_type,start_fee,coupon_use_system,coupon_type, remark, creater_id,create_time
+        FROM coupon_info
+        WHERE id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        AND start_time &lt;= #{nowTime,jdbcType=TIMESTAMP}
+        AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
+        AND coupon_use_system=10
+    </select>
+
+    <select id="queryCouponCodeListByCouponIdList" resultType="com.ly.mt.core.base.entity.coupon.CouponCode">
+        select
+               id, coupon_id, coupon_code, user_id,pull_time, pull_status,Invalid_time,use_status,create_time
+        from coupon_code
+        where coupon_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        AND Invalid_time &gt; #{nowTime,jdbcType=TIMESTAMP}
+        AND user_id= #{userId}
+        and use_status = 1
+    </select>
+
+    <insert id="batchInsertCouponCode">
+        INSERT INTO coupon_code (id, coupon_id, coupon_code, user_id, pull_status,use_status,create_time)
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{item.id,jdbcType=BIGINT}, #{item.couponId,jdbcType=BIGINT}, #{item.couponCode,jdbcType=VARCHAR},
+            #{item.userId,jdbcType=BIGINT}, #{item.pullStatus,jdbcType=INTEGER}, #{item.useStatus,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+
+    <update id="updateConponUserInfoByCouponCode">
+        UPDATE coupon_code
+        SET
+            user_id     = #{userId,jdbcType=BIGINT},
+            pull_status = 2,
+            pull_time   = #{pullTime,jdbcType=TIMESTAMP}
+        WHERE coupon_code = #{couponCode,jdbcType=VARCHAR}
+          AND pull_status = 1
+    </update>
+
+    <select id="getCouponInfoByUserId" resultType="com.ly.mt.core.base.entity.coupon.CouponInfo">
+        SELECT
+            id,
+            coupon_name,
+            start_time,
+            end_time,
+            denomination,
+            discount_rate,
+            limit_type,
+            start_fee,
+            coupon_use_system,
+            coupon_type,
+            remark,
+            creater_id,
+            create_time
+        FROM coupon_info
+        WHERE
+                id IN (SELECT coupon_id FROM coupon_code WHERE user_id = #{userId,jdbcType = BIGINT} AND use_status = 1)
+          AND start_time &lt;= #{nowTime,jdbcType=TIMESTAMP}
+          AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
+          AND coupon_use_system=10
+    </select>
+
+    <select id="getCouponIdsByLimitType" resultType="java.lang.String">
+        SELECT
+        id
+        FROM coupon_info
+        WHERE
+            limit_type = 1
+        AND start_time &lt;= #{nowDate,jdbcType=TIMESTAMP}
+        AND end_time &gt;= #{nowDate,jdbcType=TIMESTAMP}
+        AND coupon_use_system=10
+        AND coupon_type =30
+    </select>
+
+</mapper>

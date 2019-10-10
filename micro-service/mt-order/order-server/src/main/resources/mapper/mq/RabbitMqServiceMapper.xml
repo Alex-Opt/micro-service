@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.mq.mapper.RabbitMqServiceMapper" >
+    <select id="getTradeOrderById" resultType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        SELECT
+            id,order_no, buyer_id, buyer_memo, shop_id, gy_warehouse_code,gy_shop_code,seller_id,order_old_money,
+            order_money,order_discount_money,distribution_id,logistics_code,gy_logistics_code,freight,
+            order_status,order_source,order_yn,cancle_time, is_refund,refund_time, payment_type,
+            push_status,order_type,address_id,auto_receive_time, auto_cancel_time, order_snapshoot_key,locked,lock_time,
+            delivery_time,create_time,pay_time,order_finish_time
+        FROM trade_orders
+        WHERE id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getTradeOrderByOrderNo" resultType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        SELECT
+            id,order_no, buyer_id, buyer_memo, shop_id, gy_warehouse_code,gy_shop_code,seller_id,order_old_money,
+            order_money,order_discount_money,distribution_id,logistics_code,gy_logistics_code,freight,
+            order_status,order_source,order_yn,cancle_time, is_refund,refund_time, payment_type,
+            push_status,order_type,address_id,auto_receive_time, auto_cancel_time, order_snapshoot_key,locked,lock_time,
+            delivery_time,create_time,pay_time,order_finish_time
+        FROM trade_orders
+        WHERE order_no=#{orderNo,jdbcType=BIGINT}
+        AND distribution_id = #{distributionId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertOrderBattle" parameterType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+        INSERT INTO orders_battle_info (id, order_id, shop_id, buyer_id, type, status, grabed_num, create_time)
+        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT},
+                #{buyerId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+                #{grabedNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="getBuyerAddressById" resultType="com.ly.mt.core.base.entity.user.UserAddress"
+            parameterType="java.lang.Long">
+        SELECT
+            lat,
+            lon,
+            user_address
+        FROM user_address
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getShopAddressByLonAndLatRange" resultType="com.ly.mt.core.base.entity.shop.ShopAddress">
+        SELECT
+            address.id, address.shop_id,address.user_id,address.user_name,
+            address.receive_name, address.receive_phone,address.province_code,
+            address.province_name,address.city_code, address.city_name,
+            address.district_code,address.district_name,address.user_address,
+            address.is_default,address.send_lon,address.send_lat,address.valid_status
+        FROM  shop_info shop LEFT  JOIN shop_address address  ON address.shop_id =shop.id
+        WHERE address.is_default = 1
+        AND address.valid_status = 1
+        AND address.send_lon BETWEEN #{minLon,jdbcType=VARCHAR} AND #{maxLon,jdbcType=VARCHAR}
+        AND address.send_lat BETWEEN #{minLat,jdbcType=VARCHAR} AND #{maxLat,jdbcType=VARCHAR}
+        AND shop.shop_type = 4
+        AND shop.status = 0
+    </select>
+
+    <select id="getShopInfoByLonAndLatRange" resultType="com.ly.mt.core.base.entity.shop.ShopInfo">
+        SELECT
+            id,user_id,mobile,shop_type,shop_name,shop_lon,shop_lat,shop_address,shop_province_code,
+            shop_city_code,real_name,gy_warehouse_code,gy_shop_code
+        FROM shop_info
+        WHERE status = 0
+          AND shop_lon BETWEEN #{minLon,jdbcType=VARCHAR} AND #{maxLon,jdbcType=VARCHAR}
+          AND shop_lat BETWEEN #{minLat,jdbcType=VARCHAR} AND #{maxLat,jdbcType=VARCHAR}
+          AND shop_type = 5
+    </select>
+
+    <select id="getBlackList" resultType="java.lang.String">
+        select
+            shop_id
+        from shop_grab_black_list
+    </select>
+
+    <insert id="batchInsertOrderBattleShop">
+        INSERT INTO order_battle_shop (id, orders_battle_id, order_id,shop_id, status, user_id, create_time)
+        VALUES
+        <foreach collection="list" item="item" separator="," index="index">
+            (
+            #{item.id,jdbcType=BIGINT}, #{item.ordersBattleId,jdbcType=BIGINT}, #{item.orderId,jdbcType=BIGINT},
+            #{item.shopId,jdbcType=BIGINT},#{item.status,jdbcType=BIGINT}, #{item.userId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getClientIdByUserId" resultType="java.lang.String">
+        select client_id
+        from user
+        where id in
+        <foreach collection="list" item="item" separator="," open="(" close=")" index="index">
+            #{item.userId}
+        </foreach>
+    </select>
+
+    <update id="updateOrderPushStatusById">
+        UPDATE trade_orders
+        SET
+        push_status    = 2
+        WHERE id in
+        <foreach collection="list" index="index" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getBattleInfoByOrderId" resultType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+        SELECT
+            id, order_id, shop_id, user_id, buyer_id, deliveryman_name, deliveryman_phone, type,
+            status, grabed_num, grabed_at, checked_at, taked_at, estimate_sended_at, send_model,
+            send_com, send_no, sended_at, estimated_successed_at, successed_at, create_time,
+            modify_time
+        FROM orders_battle_info
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getClientIdById" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT client_id FROM user WHERE id =#{userId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateOrderStatusById">
+        UPDATE trade_orders
+        SET
+        <if test="finishTime != null">
+            order_finish_time= #{finishTime,jdbcType=TIMESTAMP},
+        </if>
+        order_status = #{status}
+        WHERE id = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBattleOrderDeliveryStatus" parameterType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+        UPDATE orders_battle_info
+        SET
+        status = #{status,jdbcType=INTEGER},
+        <if test="deliverymanName != null">
+            deliveryman_name = #{deliverymanName,jdbcType=VARCHAR},
+        </if>
+        <if test="deliverymanPhone != null">
+            deliveryman_phone = #{deliverymanPhone,jdbcType=VARCHAR},
+        </if>
+        <if test="takedAt != null">
+            taked_at = #{takedAt,jdbcType=TIMESTAMP},
+        </if>
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertOrderBattleExpress" parameterType="com.ly.mt.core.base.entity.border.OrderBattleExpresses" >
+        INSERT INTO order_battle_expresses (id, orders_battle_id, order_id,shop_id, user_id, state,create_time, data
+        )
+        VALUES (#{id,jdbcType=BIGINT}, #{ordersBattleId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+                #{shopId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT},
+                #{createTime,jdbcType=TIMESTAMP}, #{data,jdbcType=LONGVARCHAR}
+               )
+    </insert>
+
+    <select id="getAddressByOrderId" resultType="com.ly.mt.core.base.entity.user.UserAddress">
+        SELECT
+            address.id, address.user_id,address.user_name, address.receive_name, address.receive_phone,
+            address.province_code, address.province_name, address.city_code,
+            address.city_name, address.district_code, address.district_name, address.lat,
+            address.lon, address.user_address,address.is_default
+        FROM trade_orders trade
+        LEFT JOIN user_address address  ON trade.address_id = address.id
+        WHERE trade.id = #{orderId}
+    </select>
+
+
+    <update id="updateBattleInfoById" parameterType="com.ly.mt.core.base.entity.border.OrdersBattleInfo" >
+        update orders_battle_info
+        set
+            shop_id = #{shopId},
+            user_id = #{userId},
+            status = #{status},
+            modify_time = #{modifyTime}
+        where id = #{id}
+    </update>
+
+    <update id="updateShopIdIntoTradeOrders" >
+        update trade_orders
+        set shop_id = #{shopId,jdbcType = BIGINT},
+            seller_id = #{sellerId,jdbcType = BIGINT},
+            order_status = 30
+        where id = #{id,jdbcType= BIGINT}
+    </update>
+
+    <select id="getOrderNoByOrderId" resultType="java.lang.String" parameterType="java.lang.Long">
+        SELECT
+            order_no
+        FROM
+            trade_orders
+        WHERE id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getOrderIdByOrderNo" resultType="java.lang.String" parameterType="java.lang.Long">
+        SELECT
+            id
+        FROM
+            trade_orders
+        WHERE order_no= #{orderNo,jdbcType=BIGINT}
+        limit 1
+    </select>
+
+<!--    <update id="updateTradeOrdersDefaultShopInfoById" parameterType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        UPDATE trade_orders
+        SET gy_shop_code = #{gyShopCode},
+            gy_warehouse_code = #{gyWarehouseCode},
+            shop_id = #{shopId},
+            seller_id = #{sellerId},
+            is_agree = 1
+        WHERE id = #{id,jdbcType= BIGINT}
+    </update>-->
+
+    <update id="updateTradeOrdersDefaultShopInfoById" parameterType="com.ly.mt.core.base.entity.trade.TradeOrder">
+        UPDATE trade_orders
+        SET
+            is_agree = 1
+        WHERE id = #{id,jdbcType= BIGINT}
+    </update>
+
+    <select id="getShopDefaultByOrderId"  parameterType="java.lang.Long" resultType="com.ly.mt.core.base.entity.shop.ShopInfo">
+        SELECT
+            shop.id,shop.user_id,shop.mobile,shop.shop_type,shop.shop_name,shop.shop_lon,shop.shop_lat,shop.shop_address,shop.shop_province_code,
+            shop.shop_city_code,shop.real_name,shop.gy_warehouse_code,shop.gy_shop_code
+        FROM trade_orders trade
+        LEFT JOIN user_address ua ON trade.address_id = ua.id
+        LEFT JOIN shop_info shop ON shop.shop_province_code = ua.province_code AND shop.shop_city_code = ua.city_code AND shop.shop_type=5 AND shop.status=0
+        WHERE trade.id=#{orderId}
+    </select>
+
+    <update id="updateTradeOrdersDeliveryTypeById" parameterType="java.lang.Long">
+        UPDATE trade_orders
+        SET distribution_id = 2,
+            is_agree = 2,
+            agree_time = now()
+        WHERE id = #{id,jdbcType= BIGINT}
+    </update>
+
+    <update id="updateTradeOrderByOrderNo" >
+        UPDATE trade_orders
+        SET order_status = #{status},
+            payment_type = #{paymentType}
+        Where order_no = #{orderNo}
+    </update>
+
+    <select id="getBuyerInfoByOrderId" resultType="com.ly.mt.core.base.entity.user.User" parameterType="java.lang.Long">
+        SELECT
+            usr.mobile,usr.client_id,usr.user_name,usr.wx_open_id
+        FROM trade_orders trade left join user usr on trade.buyer_id=usr.id
+        where trade.id=#{orderId}
+    </select>
+
+    <select id="getTradeOrderItemsByOrderId" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT
+               sum(sku_num) from trade_order_items
+        where order_id=#{orderId}
+    </select>
+
+    <select id="getTradeOrderItemByOrderId" resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+        SELECT
+            Id,
+            order_id,
+            spu_id,
+            spu_name,
+            sku_Id,
+            sku_name,
+            sku_price,
+            sku_num,
+            pomotion_price,
+            freight_price,
+            payment_price,
+            create_time
+        FROM trade_order_items
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgSkuPictureMapper" >
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gzg_sku_picture
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture">
+    insert into gzg_sku_picture (id, sku_id, bar_code,
+      big_pic_url, small_pic_url, sort_number,
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, #{barCode,jdbcType=BIGINT},
+      #{bigPicUrl,jdbcType=VARCHAR}, #{smallPicUrl,jdbcType=VARCHAR}, #{sortNumber,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture">
+    update gzg_sku_picture
+    set sku_id = #{skuId,jdbcType=BIGINT},
+      bar_code = #{barCode,jdbcType=BIGINT},
+      big_pic_url = #{bigPicUrl,jdbcType=VARCHAR},
+      small_pic_url = #{smallPicUrl,jdbcType=VARCHAR},
+      sort_number = #{sortNumber,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="getGzgSkuPictureById" parameterType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture" resultType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture">
+    select id, sku_id, bar_code, big_pic_url, small_pic_url, sort_number, create_time
+    from gzg_sku_picture
+    where id = #{id}
+  </select>
+
+
+  <select id="getGzgSkuPicture" parameterType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture" resultType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture">
+    select id, sku_id, bar_code, big_pic_url, small_pic_url, sort_number, create_time
+    from gzg_sku_picture
+    where sku_id = #{sku_id,jdbcType=VARCHAR}
+  </select>
+
+    <select id="selectAll" resultType="com.ly.mt.center.data.gzg.entity.GzgSkuPicture">
+    select id, sku_id, bar_code, big_pic_url, small_pic_url, sort_number, create_time
+    from gzg_sku_picture
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper >

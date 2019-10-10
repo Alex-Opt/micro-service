@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.gzg.mapper.GzgOrderMapper">
+    <!-- 查询GzgOrder -->
+    <select id="getGzgOrder" parameterType="com.ly.mt.core.data.gzg.entity.GzgOrder" resultType="com.ly.mt.core.data.gzg.entity.GzgOrder">
+        SELECT *
+        FROM gzg_order
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<GzgOrder> -->
+    <select id="listGzgOrder" parameterType="com.ly.mt.core.data.gzg.entity.GzgOrder" resultType="com.ly.mt.core.data.gzg.entity.GzgOrder">
+        SELECT *
+        FROM gzg_order
+        <where>
+            <if test="null != hotelId and '' != hotelId">AND hotel_id LIKE '%${hotelId}%'</if>
+            <if test="null != id and '' != id">AND id LIKE '%${id}%'</if>
+            <if test="null != code and '' != code">AND code LIKE '%${code}%'</if>
+            <if test="null != paymentType and '' != paymentType and '-1' != paymentType">AND payment_type = #{paymentType}</if>
+            <if test="null != orderStatus and '' != orderStatus and '-1' != orderStatus">AND order_status = #{orderStatus}</if>
+            <if test="null != createTime and '' != createTime">AND create_time ${createTime}</if>
+            <if test="null != orderMoney and '' != orderMoney">AND order_money ${orderMoney}</if>
+        </where>
+    </select>
+</mapper>

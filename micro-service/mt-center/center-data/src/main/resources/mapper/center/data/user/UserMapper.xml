@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserMapper" >
+    <insert id="insertUser" parameterType="com.ly.mt.center.data.user.entity.User">
+        INSERT INTO user (
+            id, client_id, user_name, mobile, email, wx_open_id, qq_open_id, login_name,
+            password, id_card, sex, birthday, province_code, city_code, district_code,
+            user_type, nick_name, valid_status, user_status, shop_id, auditor, audit_remark,
+            quick_type, data_source, material, channel, avatar_pic_src, notice_config, create_time,project_type
+        ) VALUES (
+            #{id}, #{client_id}, #{user_name}, #{mobile}, #{email}, #{wx_open_id}, #{qq_open_id}, #{login_name},
+            #{password}, #{id_card}, #{sex}, #{birthday}, #{province_code}, #{city_code}, #{district_code},
+            #{user_type}, #{nick_name}, #{valid_status}, #{user_status}, #{shop_id}, #{auditor}, #{audit_remark},
+            #{quick_type}, #{data_source},#{material},#{channel},#{avatar_pic_src}, #{notice_config}, #{create_time},
+            #{project_type}
+        )
+    </insert>
+
+
+
+    <delete id="deleteUser" parameterType="com.ly.mt.center.data.user.entity.User">
+        UPDATE user
+        SET valid_status = 0
+        WHERE 1 = 1
+            <if test="null != id and '' != id">AND id = #{id}</if>
+            <if test="null != mobile and '' != mobile">AND mobile = #{mobile}</if>
+            <if test="null != login_name and '' != login_name">AND login_name = #{login_name}</if>
+    </delete>
+
+
+
+    <update id="updateUser" parameterType="com.ly.mt.center.data.user.entity.User">
+        UPDATE user
+            <set>
+                <if test="null != user_name">user_name = #{user_name},</if>
+                <if test="null != mobile">mobile = #{mobile},</if>
+                <if test="null != email">email = #{email},</if>
+                <if test="null != wx_open_id">wx_open_id = #{wx_open_id},</if>
+                <if test="null != qq_open_id">qq_open_id = #{qq_open_id},</if>
+                <if test="null != login_name">login_name = #{login_name},</if>
+                <if test="null != password">password = #{password},</if>
+                <if test="null != id_card">id_card = #{id_card},</if>
+                <if test="null != sex">sex = #{sex},</if>
+                <if test="null != birthday">birthday = #{birthday},</if>
+                <if test="null != province_code">province_code = #{province_code},</if>
+                <if test="null != city_code">city_code = #{city_code},</if>
+                <if test="null != district_code">district_code = #{district_code},</if>
+                <if test="null != user_type">user_type = #{user_type},</if>
+                <if test="null != nick_name">nick_name = #{nick_name},</if>
+                <if test="null != shop_id">shop_id = #{shop_id},</if>
+                <if test="null != auditor">auditor = #{auditor},</if>
+                <if test="null != audit_remark">audit_remark = #{audit_remark},</if>
+                <if test="null != avatar_pic_src">avatar_pic_src = #{avatar_pic_src},</if>
+                <if test="null != notice_config">notice_config = #{notice_config},</if>
+                <if test="null != first_login">first_login = #{first_login},</if>
+                <if test="null != client_id">client_id = #{client_id},</if>
+                <if test="null != project_type">project_type = #{project_type},</if>
+            </set>
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != mobile and '' != mobile">AND mobile = #{mobile}</if>
+              <if test="null != login_name and '' != login_name">AND login_name = #{login_name}</if>
+    </update>
+
+    <update id="updateUserById" parameterType="com.ly.mt.center.data.user.entity.User">
+        UPDATE user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != user_name">user_name = #{user_name},</if>
+            <if test="null != mobile">mobile = #{mobile},</if>
+            <if test="null != email">email = #{email},</if>
+            <if test="null != wx_open_id">wx_open_id = #{wx_open_id},</if>
+            <if test="null != qq_open_id">qq_open_id = #{qq_open_id},</if>
+            <if test="null != login_name">login_name = #{login_name},</if>
+            <if test="null != password">password = #{password},</if>
+            <if test="null != id_card">id_card = #{id_card},</if>
+            <if test="null != sex">sex = #{sex},</if>
+            <if test="null != birthday">birthday = #{birthday},</if>
+            <if test="null != province_code">province_code = #{province_code},</if>
+            <if test="null != city_code">city_code = #{city_code},</if>
+            <if test="null != district_code">district_code = #{district_code},</if>
+            <if test="null != user_type">user_type = #{user_type},</if>
+            <if test="null != nick_name">nick_name = #{nick_name},</if>
+            <if test="null != shop_id">shop_id = #{shop_id},</if>
+            <if test="null != auditor">auditor = #{auditor},</if>
+            <if test="null != audit_remark">audit_remark = #{audit_remark},</if>
+            <if test="null != avatar_pic_src">avatar_pic_src = #{avatar_pic_src},</if>
+            <if test="null != notice_config">notice_config = #{notice_config},</if>
+        </trim>
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+    <select id="getUser" parameterType="com.ly.mt.center.data.user.entity.User" resultType="com.ly.mt.center.data.user.entity.User">
+        SELECT *
+        FROM user
+        WHERE 1 = 1
+              <if test="null != id and '' != id"> AND id = #{id}</if>
+              <if test="null != mobile and '' != mobile"> AND mobile = #{mobile}</if>
+              <if test="null != login_name and '' != login_name">AND login_name = #{login_name}</if>
+              <if test="null != wx_open_id and '' != wx_open_id">AND wx_open_id = #{wx_open_id}</if>
+        LIMIT 1
+    </select>
+
+
+    <select id="getUserById" parameterType="com.ly.mt.center.data.user.entity.User" resultType="com.ly.mt.center.data.user.entity.User">
+        SELECT *
+        FROM user
+        WHERE 1 = 1
+        <if test="null != id and '' != id"> AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <select id="getUserByCondtions" parameterType="com.ly.mt.center.data.user.entity.User" resultType="com.ly.mt.center.data.user.entity.User">
+        SELECT *
+        FROM user
+        <where>
+            user_status = 10
+            <if test="login_name!= null ">
+                and login_name = #{login_name}
+            </if>
+            <if test="mobile!= null ">
+                and mobile = #{mobile}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="quick_type != null">
+                and quick_type = #{quick_type}
+            </if>
+            <if test="project_type != null">
+                and project_type = #{project_type}
+            </if>
+        </where>
+    </select>
+
+    <update id="setPassword">
+        UPDATE user SET password=#{password} WHERE id=#{id}
+    </update>
+
+    <select id="getByPhoneNo" parameterType="java.lang.String" resultType="com.ly.mt.center.data.user.entity.User">
+        select * from user where mobile=#{phone} and project_type=101
+    </select>
+</mapper >

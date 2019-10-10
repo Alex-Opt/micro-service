@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsSpuPictureMapper" >
+    <select id="getGoodsSpuPictureBySpuId"  resultType="com.ly.mt.center.data.goods.entity.GoodsSpuPicture" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuPicture" >
+        SELECT *
+        FROM goods_spu_picture
+        WHERE spu_id=#{spu_id}
+        order by sort_number asc
+    </select>
+</mapper >

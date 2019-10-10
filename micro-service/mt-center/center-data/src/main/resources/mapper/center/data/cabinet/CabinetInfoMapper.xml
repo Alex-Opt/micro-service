@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetInfoMapper" >
+  <sql id="Base_Column_List" >
+    id, imei, store_id, create_status, `status`, `type`, creator, creator_phone, gmt_create, 
+    gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!--查询bd下的格子柜详细信息-->
+  <select id="findByInfoDefaults" resultType="com.ly.mt.center.data.cabinet.dto.CabinetInfoDefaultsDto" parameterType="com.ly.mt.center.data.cabinet.requestdto.SquareCabinatRequestDto">
+			SELECT ci.id,ci.imei,ci.create_status,ci.`status`,ci.type,ci.`store_id`,cbc.owner_name,cbc.owner_phone,CONCAT(cs.address,cs.detail_address)as store_address ,cs.`name` as store_name ,ccr.`gmt_create` as last_time FROM
+            (SELECT * FROM cabinet_info where store_id in (SELECT store_id FROM cabinet_bussiness_coorperation WHERE bd_phone = #{phoneNo})
+						and `type` in (1,3) ORDER BY `status` ASC, `type` ASC) ci
+			LEFT JOIN cabinet_bussiness_coorperation cbc ON ci.store_id = cbc.store_id
+			LEFT JOIN (
+							SELECT  cabinet_info_id,MAX(gmt_create) AS gmt_create,status FROM cabinet_create_record WHERE cabinet_info_id IN (
+									SELECT id FROM cabinet_info where store_id in (SELECT store_id FROM cabinet_bussiness_coorperation WHERE bd_phone = #{phoneNo}) and `type` in (1,3)
+																																											) GROUP BY cabinet_info_id
+							) ccr on ci.id = ccr.cabinet_info_id and ci.status = ccr.status
+			LEFT JOIN cabinet_store cs on ci.store_id = cs.id
+  </select>
+  <!--查询指定格子柜信息-->
+  <select id="findCoopDefault" resultType="java.util.Map">
+	SELECT ci.id,ci.imei,ci.create_status,ci.`status`,ci.type,cs.`name`,cs.address,cs.detail_address,cs.belong_circle,csp.store_type,csp.forcast_flow,
+					csp.decorate_type ,csp.is_chain,csp.per_capita_expense,csp.use_area,cbc.owner_name,cbc.owner_phone,cbc.bd_name,cbc.bd_phone,
+					cbc.is_deposit,cbc.deposit_amount,cbc.divide_scale,cbc.is_sign_contract,ccon.take_effect_datetime,ccon.lose_efficacy_datetime,
+					cbc.description,ccon.contract_pic,cbc.coorperation_pic
+	FROM cabinet_info ci
+		LEFT JOIN cabinet_store cs ON ci.store_id = cs.id
+		LEFT JOIN cabinet_store_property csp ON  cs.id = cabinet_store_id
+		LEFT JOIN cabinet_bussiness_coorperation cbc ON cs.id = cbc.store_id
+		LEFT JOIN cabinet_contract ccon ON ccon.id = cbc.contract_id
+		WHERE ci.imei = #{imei} AND	cbc.bd_phone = #{phone} and ci.type in(1,3);
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetInfo" >
+    insert into cabinet_info (id, imei, store_id, programme_name,
+      create_status, `status`, `type`, 
+      creator, creator_phone, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{store_id,jdbcType=VARCHAR},#{programme_name,jdbcType=VARCHAR},
+      #{create_status,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER},
+      #{creator,jdbcType=VARCHAR}, #{creator_phone,jdbcType=VARCHAR}, #{gmt_create,jdbcType=TIMESTAMP},
+      #{gmt_modify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetInfo" >
+    insert into cabinet_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="store_id != null" >
+        store_id,
+      </if>
+      <if test="create_status != null" >
+        create_status,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creator_phone != null" >
+        creator_phone,
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create,
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify,
+      </if>
+      <if test="create_type != null">
+        create_type
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="store_id != null" >
+        #{store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_status != null" >
+        #{create_status,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creator_phone != null" >
+        #{creator_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gmt_create != null" >
+        #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_type != null" >
+        #{create_type,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetInfo" >
+    update cabinet_info
+    <set >
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="store_id != null" >
+        store_id = #{store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_status != null" >
+        create_status = #{create_status,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creator_phone != null" >
+        creator_phone = #{creator_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetInfo" >
+    update cabinet_info
+    <set >
+      <if test="store_id != null" >
+        store_id = #{store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="programme_name != null" >
+        programme_name = #{programme_name,jdbcType=VARCHAR},
+      </if>
+
+      <if test="create_status != null" >
+        create_status = #{create_status,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creator_phone != null" >
+        creator_phone = #{creator_phone,jdbcType=VARCHAR},
+      </if>
+
+      <if test="gmt_modify != null" >
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <!-- 查询目前格子柜所有配货方案 -->
+  <select id="getCabinetProgrammeList" resultType="java.lang.String">
+        select `name`  from gzg_programme GROUP BY `name`
+
+  </select>
+    <!--查询展柜详情信息-->
+    <select id="findShowcaseCabinetsDefaults" resultType="com.ly.mt.center.data.cabinet.dto.CabinetInfoDefaultsDto" parameterType="com.ly.mt.center.data.cabinet.requestdto.SquareCabinatRequestDto">
+		  SELECT ci.id,ci.imei,ci.create_status,ci.`status`,ci.type,ci.`store_id`,cbc.owner_name,cbc.owner_phone,CONCAT(cs.address,cs.detail_address)as store_address ,cs.`name` as store_name ,ccr.`gmt_create` as last_time FROM
+            (SELECT * FROM cabinet_info where store_id in (SELECT store_id FROM cabinet_bussiness_coorperation WHERE bd_phone = #{phoneNo})
+						and `type` in (2) ORDER BY `status` ASC, `type` ASC) ci
+			LEFT JOIN cabinet_bussiness_coorperation cbc ON ci.store_id = cbc.store_id
+			LEFT JOIN (
+							SELECT  cabinet_info_id,MAX(gmt_create) AS gmt_create,status FROM cabinet_create_record WHERE cabinet_info_id IN (
+									SELECT id FROM cabinet_info where store_id in (SELECT store_id FROM cabinet_bussiness_coorperation WHERE bd_phone = #{phoneNo}) and `type` in (2)
+																																											) GROUP BY cabinet_info_id
+							) ccr on ci.id = ccr.cabinet_info_id and ci.status = ccr.status
+			LEFT JOIN cabinet_store cs on ci.store_id = cs.id
+    </select>
+  <!--查询指定展柜合作信息-->
+  <select id="findShowcaseCoopDefault" resultType="java.util.Map">
+    SELECT ci.id,ci.imei,ci.create_status,ci.`status`,ci.type,cs.`name`,cs.address,cs.detail_address,cs.belong_circle,csp.store_type,csp.forcast_flow,
+					csp.decorate_type ,csp.is_chain,csp.per_capita_expense,csp.use_area,cbc.owner_name,cbc.owner_phone,cbc.bd_name,cbc.bd_phone,
+					cbc.is_deposit,cbc.deposit_amount,cbc.divide_scale,cbc.is_sign_contract,ccon.take_effect_datetime,ccon.lose_efficacy_datetime,
+					cbc.description,ccon.contract_pic,cbc.coorperation_pic
+	FROM cabinet_info ci
+		LEFT JOIN cabinet_store cs ON ci.store_id = cs.id
+		LEFT JOIN cabinet_store_property csp ON  cs.id = cabinet_store_id
+		LEFT JOIN cabinet_bussiness_coorperation cbc ON cs.id = cbc.store_id
+		LEFT JOIN cabinet_contract ccon ON ccon.id = cbc.contract_id
+		WHERE ci.imei = #{imei} AND	cbc.bd_phone = #{phone} and ci.type in(2);
+  </select>
+
+  <select id="getCabinetInfoByImei" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetInfo" resultType="com.ly.mt.center.data.cabinet.entity.CabinetInfo">
+      select *
+      from cabinet_info
+      where imei = #{imei,jdbcType=VARCHAR} order by gmt_modify desc limit 1
+  </select>
+
+</mapper>

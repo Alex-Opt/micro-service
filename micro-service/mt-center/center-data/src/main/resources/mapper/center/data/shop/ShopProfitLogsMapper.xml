@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopProfitLogsMapper" >
+    <!-- 保存ShopProfitLogs -->
+    <insert id="insertShopProfitLogs" parameterType="com.ly.mt.center.data.shop.entity.ShopProfitLogs">
+        INSERT INTO shop_profit_logs (
+            id, order_id, shop_purchases_id, shop_id, user_id, provider_shop_id, provider_id, profit_type, profit, status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{order_id}, #{shop_purchases_id}, #{shop_id}, #{user_id}, #{provider_shop_id}, #{provider_id}, #{profit_type}, #{profit}, #{status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopProfitLogs -->
+    <delete id="deleteShopProfitLogs" parameterType="com.ly.mt.center.data.shop.entity.ShopProfitLogs">
+        DELETE FROM shop_profit_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopProfitLogs -->
+    <update id="updateShopProfitLogs" parameterType="com.ly.mt.center.data.shop.entity.ShopProfitLogs">
+        UPDATE shop_profit_logs
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopProfitLogs -->
+    <select id="getShopProfitLogs" parameterType="com.ly.mt.center.data.shop.entity.ShopProfitLogs" resultType="com.ly.mt.center.data.shop.entity.ShopProfitLogs">
+        SELECT * 
+        FROM shop_profit_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

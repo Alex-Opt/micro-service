@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.redis.mapper.RedisRefreshMapper">
+    <!-- 查询List<RedisRefresh> -->
+    <select id="listRedisRefresh" parameterType="com.ly.mt.core.data.redis.entity.RedisRefresh" resultType="com.ly.mt.core.data.redis.entity.RedisRefresh">
+        SELECT *
+        FROM redis_refresh
+        <where>
+            <if test="null != refreshStatus and '' != refreshStatus">AND refresh_status = #{refreshStatus}</if>
+        </where>
+        LIMIT 100
+    </select>
+
+
+    <!-- 更新List<RedisRefresh> -->
+    <select id="updateRedisRefreshList" parameterType="List">
+        UPDATE redis_refresh
+        SET refresh_status = CASE id
+                <foreach collection="list" item="r" separator=" ">
+                    WHEN #{r.id} THEN #{r.refreshStatus}
+                </foreach>
+            END
+        WHERE id IN (
+            <foreach collection="list" item="r" separator=",">#{r.id}</foreach>
+        )
+    </select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.wxshop.mapper.WxShopMapper" >
+    <!-- 保存WxShop -->
+    <insert id="insertWxShop" parameterType="com.ly.mt.center.data.wxshop.entity.WxShop">
+        INSERT INTO wx_shop (
+            shop_id, name, mobile, shop_name, main_business, shop_address, business_hours, supply_channels, photo_url, wx_open_id, auth_status, coordinate,city_name,create_time, update_time
+        ) VALUES (
+            #{shop_id}, #{name}, #{mobile}, #{shop_name}, #{main_business}, #{shop_address}, #{business_hours}, #{supply_channels}, #{photo_url}, #{wx_open_id}, #{auth_status}, #{coordinate},  #{city_name},#{create_time}, #{update_time}
+        )
+    </insert>
+    <!-- 查询WxShop -->
+    <select id="getWxShopList" parameterType="com.ly.mt.center.data.wxshop.entity.WxShop" resultType="com.ly.mt.center.data.wxshop.entity.WxShop">
+        SELECT * 
+        FROM wx_shop
+        WHERE 1 = 1
+              <if test="null != coordinate and '' != coordinate">AND coordinate = #{coordinate}</if>
+              <if test="null != shop_name and '' != shop_name">AND shop_name like '%${shop_name}%'</if>
+              <if test="null != auth_status and '' != auth_status">AND auth_status = #{auth_status}</if>
+              <if test="null != city_name and '' != city_name">AND city_name like '%${city_name}%'</if>
+        order by update_time desc
+    </select>
+</mapper>

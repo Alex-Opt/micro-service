@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.gzg.mapper.GzgOrdersMapper">
+
+
+    <insert id="insertGzgOrders" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrder">
+    insert into gzg_order (
+        id,
+        payment_no,
+         buyer_id,
+        order_old_money,
+         order_money,
+        order_discount_money,
+        is_refund,
+        refund_time,
+        payment_type,
+        order_source,
+        imei,
+        hotel_id,
+        order_status,
+       create_time,
+      order_finish_time
+      )
+    values (
+        #{id},
+        #{payment_no},
+        #{buyer_id},
+        #{order_old_money},
+         #{order_money},
+        #{order_discount_money},
+        #{is_refund},
+        #{refund_time},
+         #{payment_type},
+        #{order_source},
+         #{imei},
+        #{hotel_id},
+        #{order_status},
+         #{create_time},
+        #{order_finish_time}
+
+        )
+  </insert>
+
+    <delete id="deleteGzgOrders" parameterType="java.lang.Long">
+    delete from gzg_order
+    where id = #{id}
+  </delete>
+
+
+    <update id="updateGzgOrders" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrder">
+    update gzg_order
+    <set>
+      <if test="payment_no != null">
+    payment_no = #{payment_no},
+      </if>
+
+      <if test="buyer_id != null">
+      buyer_id = #{buyer_id},
+         </if>
+
+      <if test="order_old_money != null">
+      order_old_money = #{order_old_money},
+      </if>
+      <if test="order_money != null">
+      order_money = #{order_money},
+      </if>
+      <if test="order_discount_money != null">
+      order_discount_money = #{order_discount_money},
+      </if>
+
+      <if test="is_refund != null">
+      is_refund = #{is_refund},
+      </if>
+      <if test="refund_time != null">
+      refund_time = #{refund_time},
+      </if>
+
+
+      <if test="payment_type != null">
+      payment_type = #{payment_type},
+      </if>
+
+      <if test="order_source != null">
+      order_source = #{order_source},
+      </if>
+
+      <if test="imei != null">
+        code = #{imei},
+      </if>
+
+      <if test="hotel_id != null">
+      hotel_id = #{hotel_id},
+      </if>
+
+      <if test="order_status != null">
+      order_status = #{order_status},
+      </if>
+
+
+      <if test="create_time != null">
+      create_time = #{create_time},
+      </if>
+
+        <if test="pay_time != null">
+            pay_time = #{pay_time},
+        </if>
+
+      <if test="order_finish_time != null">
+      order_finish_time = #{order_finish_time},
+      </if>
+
+
+    </set>
+    where id = #{id}
+  </update>
+
+
+    <select id="getGzgOrdersById" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrder"
+            resultType="com.ly.mt.center.data.gzg.entity.GzgOrder">
+    select *
+    from gzg_order
+    where id = #{id}
+  </select>
+
+
+
+  <select id="getGzgOrdersList" resultType="com.ly.mt.center.data.gzg.entity.GzgOrder" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrder">
+    select *
+    from gzg_order
+    where buyer_id = #{buyer_id}  order by create_time desc
+  </select>
+    <!--店铺管理员查询订单-->
+    <select id="findOrdersByOwner" resultType="com.ly.mt.center.data.cabinet.response.Orders">
+    SELECT goi.sku_name,(goi.sku_price * goi.sku_num) AS price ,go.order_status,goi.create_time FROM gzg_order_item goi
+			INNER JOIN (
+				 	SELECT imei FROM cabinet_info WHERE  `status` = 0 AND  store_id IN(SELECT store_id FROM cabinet_bussiness_coorperation WHERE `status` = 0
+				 	<if test="imei != null and imei!=''" >
+                        and  imei = #{imei}
+                    </if>
+				 	AND owner_phone = #{phoneNo})
+			) im ON goi.imei = im.imei
+			INNER JOIN gzg_order go ON goi.order_id = go.id
+			WHERE	 1=1
+            <if test="status != null and status != ''">
+                AND  go.order_status = #{status}
+            </if>
+         and goi.create_time BETWEEN #{startTime} and #{endTime}
+	ORDER BY goi.create_time DESC
+    </select>
+</mapper>

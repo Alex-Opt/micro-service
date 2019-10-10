@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetCashRecordMapper" >
+  <sql id="Base_Column_List" >
+    id, user_id,open_id, withdrawal_amount, status, type, create_time, update_time,detail_id,remark,payment_time,reason
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from cabinet_cash_record
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cabinet_cash_record
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    insert into cabinet_cash_record (id, user_id,open_id, withdrawal_amount, status, type, create_time, update_time,detail_id,remark,payment_time,reason)
+    values (#{id}, #{user_id},#{open_id}, #{withdrawal_amount},#{status}, #{type},#{create_time}, #{update_time},#{detail_id}, #{remark}, #{payment_time}, #{reason})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    insert into cabinet_cash_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="open_id != null" >
+        open_id,
+      </if>
+      <if test="withdrawal_amount != null" >
+        withdrawal_amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="detail_id != null" >
+        detail_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="payment_time != null" >
+        payment_time,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="user_id != null" >
+        #{user_id},
+      </if>
+      <if test="open_id != null" >
+        #{open_id},
+      </if>
+      <if test="withdrawal_amount != null" >
+        #{withdrawal_amount},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="create_time != null" >
+        #{create_time},
+      </if>
+      <if test="update_time != null" >
+        #{update_time},
+      </if>
+      <if test="detail_id != null" >
+        #{detail_id},
+      </if>
+      <if test="remark != null" >
+        #{remark},
+      </if>
+      <if test="payment_time != null" >
+        #{payment_time},
+      </if>
+      <if test="reason != null" >
+        #{reason},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    update cabinet_cash_record
+    <set >
+      <if test="user_id != null" >
+        user_id = #{user_id},
+      </if>
+      <if test="withdrawal_amount != null" >
+        withdrawal_amount = #{withdrawal_amount},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time},
+      </if>
+      <if test="detail_id != null" >
+        detail_id = #{detail_id},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="payment_time != null" >
+        payment_time = #{payment_time},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    update cabinet_cash_record
+    set user_id = #{user_id},
+        withdrawal_amount = #{withdrawal_amount},
+        status = #{status},
+        type = #{type},
+        update_time = #{update_time},
+        detail_id = #{detail_id},
+        remark = #{remark},
+        payment_time = #{payment_time},
+        reason = #{reason},
+    where id = #{id}
+  </update>
+  <update id="updateById" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    update cabinet_cash_record
+    <set >
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time},
+      </if>
+      <if test="detail_id != null" >
+        detail_id = #{detail_id},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="payment_time != null" >
+        payment_time = #{payment_time},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason},
+      </if>
+    </set>
+    where id = #{id}
+   </update>
+  <select id="selectRecordByUserIdToday"  resultType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    SELECT *
+    FROM cabinet_cash_record
+    WHERE status !=3  AND  create_time &gt;#{todayStartTime} AND create_time  &lt;#{todayEndTime}
+      <if test="userId != null" >
+         AND user_id = #{userId}
+      </if>
+      order by create_time desc
+  </select>
+  <select id="selectRecordByStatus" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord"  resultType="com.ly.mt.center.data.cabinet.entity.CabinetCashRecord">
+    SELECT *
+    FROM cabinet_cash_record
+    WHERE status = #{status}
+    order by create_time asc
+  </select>
+</mapper>

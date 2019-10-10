@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mt.core.wechat</groupId>
+    <artifactId>mt-core-wechat</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>mt-core-wechat</name>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.base</groupId>
+            <artifactId>mt-core-base</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 微信认证登录操作三方sdk -->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+    </dependencies>
+
+    <!-- 私服配置 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-central</id>
+            <name>libs-releases</name>
+            <url>http://116.196.118.85:8082/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>libs-snapshots</name>
+            <url>http://116.196.118.85:8082/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>com/ly/mt/core/wechat/config/20366D508A564BDCB13E7E2B5A46B6EA.p12</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.6.RELEASE</version>
+                <configuration>
+                    <classifier>exe</classifier>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)http://www.17sucai.com/preview/685103/2017-11-21/article/index.html -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+
+        ng\:form {
+            display: block;
+        }
+
+        .ng-animate-shim {
+            visibility: hidden;
+        }
+
+        .ng-anchor {
+            position: absolute;
+        }
+    </style>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>店铺详情</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrapd.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styleDetail.css">
+
+</head>
+<body ng-app="App" ng-controller="mainController" class="ng-scope">
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+
+<script>
+    var urlText = window.location.href;
+    var urldata = urlText.split("="); //截取 url中的“=”,获得“=”后面的参数
+    var shopId = decodeURI(urldata[1]); //decodeURI解码
+
+    var tokenQJ =$.cookie('tokenQJ');//全局token
+    var userIdQJ=$.cookie('userIdQJ');;//全局userId
+    $("#shopId").val(shopId);
+    $(function () {
+        $.ajax({
+            //请求类型，这里为POST
+            type: 'POST',
+            //你要请求的api的URL
+            url:"bluetooth/web/wxshop/getWxshop",
+            //是否使用缓存
+            cache: false,
+            //数据类型，这里我用的是json
+            dataType: "json",
+            //必要的时候需要用JSON.stringify() 将JSON对象转换成字符串
+            data: {shopId: shopId}, //data: {key:value},
+            //添加额外的请求头
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", tokenQJ);
+                XMLHttpRequest.setRequestHeader("userId", userIdQJ);
+            },
+            //请求成功的回调函数
+            success: function (data) {
+                //函数参数 "data" 为请求成功服务端返回的数据
+                console.log(data);
+                if (data.code == 0) {
+                    var result = data.result;
+                    var jsonObj = JSON.parse(result);
+                    $("#shopId").val(jsonObj.shopId);
+                    $("#name").val(jsonObj.name);
+                    $("#mobile").val(jsonObj.mobile);
+                    $("#shopName").val(jsonObj.shopName);
+                    $("#mainBusiness").val(jsonObj.mainBusiness);
+                    $("#shopAddress").val(jsonObj.shopAddress);
+                    $("#businessHours").val(jsonObj.businessHours);
+                    $("#supplyChannels").val(jsonObj.supplyChannels);
+                    $("#wxOpenId").val(jsonObj.wxOpenId);
+                    $("#coordinate").val(jsonObj.coordinate);
+                    $("#cityName").val(jsonObj.cityName);
+                    $("#createTime").val(jsonObj.createTime);
+                    $("#updateTime").val(jsonObj.updateTime);
+                    $('#shopPh').attr('src',jsonObj.photoUrl);
+                }else if(data.code == 3) {
+                    alert("请您登陆后,在操作!");
+                    location.href = "index.html";
+                }else if(data.code == 5) {
+                    alert("您的账号在异地登录,请您重新登录");
+                    location.href = "index.html";
+                } else{
+                    alert(data.msg);
+
+                }
+            },error:function () {
+                alert("网络出错啦，请稍后再试试!");
+            },
+        });
+    });
+
+    function updateShop() {
+        var shopId = $.trim($("#shopId").val());
+        var name = $.trim($("#name").val());
+        var mobile = $.trim($("#mobile").val());
+        var shopName = $.trim($("#shopName").val());
+        var mainBusiness = $.trim($("#mainBusiness").val());
+        var shopAddress = $.trim($("#shopAddress").val());
+        var businessHours = $.trim($("#businessHours").val());
+        var supplyChannels = $.trim($("#supplyChannels").val());
+        var coordinate = $.trim($("#coordinate").val());
+        var cityName = $.trim($("#cityName").val());
+        if (shopId == "" || name == "" || mobile == "" || shopName == "" || mainBusiness == "" || shopAddress == "" || businessHours == "" || shopAddress == "" || businessHours == "" || supplyChannels == "" || coordinate == "" || cityName == "") {
+            alert("请检查表单项,不能为空!");
+            return;
+        }
+        var data = {
+            shopId: shopId,
+            name: name,
+            mobile: mobile,
+            shopName: shopName,
+            mainBusiness: mainBusiness,
+            businessHours: businessHours,
+            shopAddress: shopAddress,
+            businessHours: businessHours,
+            supplyChannels: supplyChannels,
+            coordinate: coordinate,
+            cityName: cityName
+        };
+
+        $.ajax({
+            //请求类型，这里为POST
+            type: 'POST',
+            //你要请求的api的URL
+            url:"bluetooth/web/wxshop/updateWxshop",
+            //是否使用缓存
+            cache: false,
+            //添加额外的请求头
+            contentType: 'application/json',
+            //数据类型，这里我用的是json
+            dataType: "json",
+            //添加额外的请求头
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", tokenQJ);
+                XMLHttpRequest.setRequestHeader("userId", userIdQJ);
+            },
+            //必要的时候需要用JSON.stringify() 将JSON对象转换成字符串
+            data: JSON.stringify(data), //data: {key:value},
+            //请求成功的回调函数
+            success: function (data) {
+                //函数参数 "data" 为请求成功服务端返回的数据
+                if (data.code == 0) {
+                    alert("修改成功");
+                    location.href = "shopManager.html";
+                } else if(data.code == 5) {
+                    alert("您的账号在异地登录,请您重新登录");
+                    location.href = "index.html";
+                }else {
+                    alert(data.msg);
+                }
+            },error:function () {
+            alert("网络出错啦，请稍后再试试!");
+        }
+        });
+    }
+</script>
+
+<div class="cat_add">
+    <div class="cat_add_header">
+        <div class="icon"></div>
+        <div class="title">店铺详情</div>
+    </div>
+    <div class="cat_add_form">
+        <form class="form-horizontal ng-pristine ng-valid">
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">门店名称</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="shopName" name="cat_add" value=""
+                           placeholder="请输入门店名称">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入50个字的以内的中文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">主营业务</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="mainBusiness" name="cat_add" value=""
+                           placeholder="请输入主营业务">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入100个字的以内的中文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">门店地址</label>
+                <div class="col-md-3">
+                    <textarea class="form-control" rows="5" id="shopAddress" name="cat_add" placeholder="门店地址"
+                              style="margin-left: -17px;"></textarea>
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain" style="margin-top: 52px;">请输入50字的以内的中文字符</label>
+            </div>
+            <input type="hidden" name="id" value="233">
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">姓名</label>
+                <div class="col-md-3">
+                    <input type="hidden" id="shopId" value=""/>
+                    <input class="form-control input-lg" type="text" id="name" name="cat_add" value=""
+                           placeholder="请输入姓名">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入5个字的以内的中文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">手机号</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="mobile" name="cat_add" value=""
+                           placeholder="请输入手机号">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入11位数字</label>
+            </div>
+
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">授权状态</label>
+                <div class="col-md-3">
+                    <label class="checkbox-inline" style="margin-left:-34px;width:81px;">
+                        未授权
+                    </label>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">营业时间</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="businessHours" name="cat_add" value=""
+                           placeholder="请输入营业时间">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入100个字的以内的中文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">门店照片</label>
+                <div class="col-md-3">
+                    <div class="file image-preview ng-isolate-scope" style="margin-left:-15px" name="goods_img"
+                         size="160x95" rate="0.8" type="text" value="">
+                        <div class="thumbnail" style="width:270px;">
+                            <img id="shopPh" src="">
+                                <!--<div ng-class="cls" style="width:270px;height:176px; background-image:https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565264526641&di=b802ee0be677ac15250b84f0fcfa7fb9&imgtype=0&src=http%3A%2F%2Fwww.tobaccochina.com%2Fuploadfiles%2Fpic%2F20140724104732737A.jpg" cls="thumbnail-image" image="src"-->
+                                     <!--size="" rate="0.8" empty="160x95" class="ng-isolate-scope thumbnail-image">-->
+                                    <!--<img ng-show="flag" width="128" height="76" class="ng-hide" style="display: none;">-->
+                                    <!--&lt;!&ndash; ngIf: info &ndash;&gt;</div>-->
+                        </div>
+                    </div>
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请上传一张图片，格式jpg，尺寸640*384，大小在30k之内</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">进货渠道</label>
+                <div class="col-md-3">
+                    <textarea class="form-control" rows="5" id="supplyChannels" name="cat_add" placeholder="请输入门店地址"
+                              style="margin-left: -17px;"></textarea>
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain" style="margin-top: 52px;">请输入150字的以内的中文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">微信openID</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="wxOpenId" name="cat_add" value=""
+                           placeholder="" disabled>
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入150字的以内的中英文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">地图坐标</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="coordinate" name="cat_add" value=""
+                           placeholder="请输入地图坐标">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入图形地图坐标 纬度,经度</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">城市</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="cityName" name="cat_add" value=""
+                           placeholder="请输入城市">
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">请输入150字的以内的中英文字符</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">创建时间</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="createTime" name="cat_add" value="" disabled>
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">系统时间</label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="control-label col-md-1">更新时间</label>
+                <div class="col-md-3">
+                    <input class="form-control input-lg" type="text" id="updateTime" name="cat_add" value="" disabled>
+                </div>
+                <span class="glyphicon glyphicon-asterisk star"></span>
+                <label class="explain">最新更新时间</label>
+            </div>
+            <div class="form-group form-group-sm" style="margin-top: 30px;">
+                <div class="col-md-3 col-md-offset-2">
+                    <div class="btn-group">
+                        <button style="margin-right: 10px;" type="button" class="btn btn-default btn-sm"
+                                onclick="history.back()" title="返回"><i class="glyphicon"></i> 返回
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" title="添加" onclick="updateShop()"><i
+                                class="glyphicon"></i> 编辑
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgCouponInfoMapper" >
+
+
+
+    <insert id="insertGzgCouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+    insert into coupon_info (id, coupon_name, start_time,
+      end_time, validity_day, denomination,
+      discount_rate, limit_type, start_fee,
+      remark, creater_id, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{coupon_name,jdbcType=VARCHAR}, #{start_time,jdbcType=TIMESTAMP},
+      #{end_time,jdbcType=TIMESTAMP}, #{validity_day,jdbcType=INTEGER}, #{denomination,jdbcType=DOUBLE},
+      #{discount_rate,jdbcType=DOUBLE}, #{limit_type,jdbcType=CHAR}, #{start_fee,jdbcType=DOUBLE},
+      #{remark,jdbcType=VARCHAR}, #{creater_id,jdbcType=BIGINT}, #{create_time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+    <delete id="deleteGzgCouponInfoById" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+    delete from coupon_info
+    where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateGzgCouponInfoById" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+    update coupon_info
+    set coupon_name = #{coupon_name,jdbcType=VARCHAR},
+      start_time = #{start_time,jdbcType=TIMESTAMP},
+      end_time = #{end_time,jdbcType=TIMESTAMP},
+      validity_day = #{validity_day,jdbcType=INTEGER},
+      denomination = #{denomination,jdbcType=DOUBLE},
+      discount_rate = #{discount_rate,jdbcType=DOUBLE},
+      limit_type = #{limit_type,jdbcType=CHAR},
+      start_fee = #{start_fee,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      creater_id = #{creater_id,jdbcType=BIGINT},
+      create_time = #{create_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="getGzgCouponInfoById" resultType="com.ly.mt.center.data.coupon.entity.CouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+    select id, coupon_name, start_time, end_time, validity_day, denomination, discount_rate,
+    limit_type, start_fee, remark, creater_id, create_time
+    from coupon_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="getGzgCouponInfo" resultType="com.ly.mt.center.data.coupon.entity.CouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+    select id, coupon_name, start_time, end_time, validity_day, denomination, discount_rate,coupon_use_system,
+    limit_type, start_fee, remark, creater_id, create_time
+    from coupon_info
+    where id = #{id}
+  </select>
+
+
+</mapper >

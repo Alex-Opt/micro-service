@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.bluetooth.mapper.BluetoothUserTasteMapper" >
+    <insert id="insertBluetoothUserTaste" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothUserTaste">
+    INSERT INTO bluetooth_user_taste (
+        id, user_id, taste_key, add_time,mac_address, create_time
+    ) VALUES (
+                 #{id}, #{user_id}, #{taste_key}, #{add_time},#{mac_address}, #{create_time}
+             )
+</insert>
+
+    <select id="getBluetoothUserTaste"  resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothUserTaste" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothUserTaste">
+        select t.add_time,t1.taste,t.taste_key,t1.icon_url from bluetooth_user_taste t left join bluetooth_taste_info t1
+        on t.taste_key=t1.taste_key where 1=1
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != mac_address and '' != mac_address">AND mac_address = #{mac_address}</if>
+        ORDER BY add_time DESC LIMIT 1
+    </select>
+</mapper >

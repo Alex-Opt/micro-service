@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.payment.mapper.PaymentDetailMapper" >
+
+  <sql id="Base_Column_List" >
+    id, order_no, payee, payer, money, trade_type, trade_status, payment_type, payment_no, 
+    create_time, remark
+  </sql>
+
+  <insert id="insertPaymentDetail" parameterType="com.ly.mt.center.data.payment.entity.PaymentDetail" >
+    insert into payment_detail(
+      id, order_no, payee, payer, money, trade_type, trade_status, payment_type, payment_no,
+      create_time, remark
+    ) VALUES(
+                  #{id}, #{order_no}, #{payee}, #{payer}, #{money}, #{trade_type}, #{trade_status}, #{payment_type}, #{payment_no},
+                  #{create_time}, #{remark}
+      )
+  </insert>
+
+</mapper>

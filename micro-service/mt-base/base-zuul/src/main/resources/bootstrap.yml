@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: base-zuul
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.core.data.basic.mapper.BasicFuncMapper" >
+    <!-- 新增BasicFunc -->
+    <insert id="insertBasicFunc" parameterType="List">
+        INSERT INTO basic_func (
+            id, name, parent_id, code,
+            url, icon, func_type, func_level, project_type, sort,
+            create_time, create_user, update_time, update_user, valid_status
+        ) VALUES
+        <foreach collection="list" item="func" index="index" separator=",">
+        (
+            #{func.id}, #{func.name}, #{func.parentId}, #{func.code}, #{func.url},
+            #{func.icon}, #{func.funcType}, #{func.funcLevel}, #{func.projectType}, #{func.sort},
+            #{func.createTime}, #{func.createUser}, #{func.updateTime}, #{func.updateUser}, #{func.validStatus}
+        )
+        </foreach>
+    </insert>
+
+
+    <!-- 更新BasicFunc -->
+    <insert id="updateBasicFunc" parameterType="com.ly.mt.core.data.basic.entity.BasicFunc">
+        UPDATE basic_func
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != name">name = #{name},</if>
+            <if test="null != code">code = #{code},</if>
+            <if test="null != url">url = #{url},</if>
+            <if test="null != icon">icon = #{icon},</if>
+            <if test="null != sort">sort = #{sort},</if>
+            <if test="null != validStatus">valid_status = #{validStatus},</if>
+            <if test="null != updateTime">update_time = #{updateTime},</if>
+            <if test="null != updateUser">update_user = #{updateUser},</if>
+        </trim>
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </insert>
+
+
+    <!-- 查询BasicFunc -->
+    <select id="getBasicFunc" parameterType="com.ly.mt.core.data.basic.entity.BasicFunc" resultType="com.ly.mt.core.data.basic.entity.BasicFunc">
+        SELECT *
+        FROM basic_func
+        WHERE valid_status = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<BasicFunc> -->
+    <select id="listBasicFunc" parameterType="com.ly.mt.core.data.basic.entity.BasicFunc" resultType="com.ly.mt.core.data.basic.entity.BasicFunc">
+        SELECT *
+        FROM basic_func
+        WHERE valid_status = 1
+          <if test="null != funcLevel and '' != funcLevel">AND func_level = #{funcLevel}</if>
+          <if test="null != parentId and '' != parentId">AND parent_id = #{parentId}</if>
+          <if test="null != projectType and '' != projectType">AND project_type = #{projectType}</if>
+        ORDER BY func_level, parent_id, sort
+    </select>
+
+
+    <!-- 根据parent_id查询最大sort -->
+    <select id="getMaxSortByParentId" parameterType="String" resultType="String">
+        SELECT MAX(sort)
+        FROM basic_func
+        WHERE parent_id = #{_parameter}
+    </select>
+</mapper>

@@ -1,0 +1,4 @@
+spring:
+  redis:
+    host: r-2zeeda0952072e44.redis.rds.aliyuncs.com
+    password: 3ZG&#OnTFzn3ZUiW

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.coupon.mapper.CouponCodeServiceMapper">
+
+    <select id="selectCouponIdByUserIdAndUseStatus" resultType="com.ly.mt.core.base.entity.coupon.CouponCode">
+        SELECT
+            coupon_id,
+            pull_time,
+            use_status,
+            use_time
+        FROM coupon_code
+        WHERE pull_status = 2
+          AND use_status = #{useStatus,jdbcType=INTEGER}
+          AND user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+    <update id="updateByCouponIdAndUserId">
+        UPDATE coupon_code
+        SET
+            pull_status = 2,
+            use_status  = 2,
+            use_time    = #{useTime,jdbcType=TIMESTAMP}
+        WHERE coupon_id = #{couponId,jdbcType=VARCHAR}
+        AND user_id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertUsedCouponCodeHistory" parameterType="com.ly.mt.core.base.entity.coupon.CouponCode">
+        INSERT INTO coupon_code (id, coupon_id, user_id, pull_status, pull_time,  use_status, use_time, create_time)
+        VALUES (#{id},#{couponId},#{userId},2,now(),2,now(),now())
+    </insert>
+</mapper>

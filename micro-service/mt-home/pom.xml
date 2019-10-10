@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mt.home</groupId>
+    <artifactId>mt-home</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>mt-home</name>
+    <packaging>war</packaging>
+
+    <parent>
+        <artifactId>ly-mt</artifactId>
+        <groupId>ly.mt</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>mt.core.base</groupId>
+            <artifactId>mt-core-base</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.feign</groupId>
+            <artifactId>mt-core-feign</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.mq</groupId>
+            <artifactId>mt-core-mq</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.redis</groupId>
+            <artifactId>mt-core-redis</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.swagger</groupId>
+            <artifactId>mt-core-swagger</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.txc</groupId>
+            <artifactId>mt-core-txc</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-pay</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+    </dependencies>
+</project>

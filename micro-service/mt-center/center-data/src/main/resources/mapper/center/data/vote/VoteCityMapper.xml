@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.vote.mapper.VoteCityMapper" >
+    <!-- 保存VoteCity -->
+    <insert id="insertVoteCity" parameterType="com.ly.mt.center.data.vote.entity.VoteCity">
+        INSERT INTO vote_city (
+        id, area_id, user_id, create_time
+        ) VALUES (
+        #{id}, #{area_id}, #{user_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除VoteCity -->
+    <delete id="deleteVoteCity" parameterType="com.ly.mt.center.data.vote.entity.VoteCity">
+        DELETE FROM vote_city
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新VoteCity -->
+    <update id="updateVoteCity" parameterType="com.ly.mt.center.data.vote.entity.VoteCity">
+        UPDATE vote_city
+        SET
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询VoteCity -->
+    <select id="getVoteCity" parameterType="com.ly.mt.center.data.vote.entity.VoteCity" resultType="com.ly.mt.center.data.vote.entity.VoteCity">
+        SELECT *
+        FROM vote_city
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <!--查询区域投票数-->
+    <select id="findCountArea" resultType="java.util.Map">
+        SELECT area_id,COUNT(`area_id`) as `cou`
+        FROM  vote_city
+        where 1=1
+        <if test="areaId != null and areaId != 0 ">
+            and area_id = #{areaId}
+        </if>
+        GROUP BY area_id
+    </select>
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.shopuser.mapper.LoderRunnerCodesServiceMapper" >
+  
+
+  <select id="selectByPrimaryKey" resultType="LoderRunnerCodes" parameterType="java.lang.Long" >
+    select 
+     user_id, shop_id, code, nums, create_time, modify_time
+    from lode_runner_codes
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lode_runner_codes
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="LoderRunnerCodes" >
+    insert into lode_runner_codes (user_id, shop_id, code, 
+      nums, create_time, modify_time
+      )
+    values (#{userId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{code,jdbcType=CHAR}, 
+      #{nums,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="LoderRunnerCodes" >
+    insert into lode_runner_codes (
+        user_id,
+        shop_id,
+        code,
+        nums,
+        create_time,
+        modify_time
+		)
+	VALUES(
+        #{userId,jdbcType=BIGINT},
+        #{shopId,jdbcType=BIGINT},
+        #{nums,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP}
+		)
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="LoderRunnerCodes" >
+    update lode_runner_codes
+    SET
+        shop_id = #{shopId,jdbcType=BIGINT},
+        code = #{code,jdbcType=CHAR},
+        nums = #{nums,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="LoderRunnerCodes" >
+    update lode_runner_codes
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      code = #{code,jdbcType=CHAR},
+      nums = #{nums,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

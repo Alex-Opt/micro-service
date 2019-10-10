@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrderRefundMapper" >
+    <!-- 保存TradeOrderRefund -->
+    <insert id="insertTradeOrderRefund" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefund">
+        INSERT INTO trade_order_refund (
+            id, order_id, buyer_id, refund_status, refund_desc, refund_reason, refund_price, refund_freight_price, subtract_coupon_price, retund_address, refund_type, status, consignee, phone, create_time
+        ) VALUES (
+            #{id}, #{order_id}, #{buyer_id}, #{refund_status}, #{refund_desc}, #{refund_reason}, #{refund_price}, #{refund_freight_price}, #{subtract_coupon_price}, #{retund_address}, #{refund_type}, #{status}, #{consignee}, #{phone}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除TradeOrderRefund -->
+    <delete id="deleteTradeOrderRefund" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefund">
+        DELETE FROM trade_order_refund
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeOrderRefund -->
+    <update id="updateTradeOrderRefund" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefund">
+        UPDATE trade_order_refund
+        <set >
+            <if test="order_id != null" >
+                order_id = #{order_id},
+            </if>
+            <if test="buyer_id != null" >
+                buyer_id = #{buyer_id},
+            </if>
+            <if test="refund_status != null" >
+                refund_status = #{refund_status},
+            </if>
+            <if test="refund_reason != null" >
+                refund_reason = #{refund_reason},
+            </if>
+            <if test="refund_price != null" >
+                refund_price = #{refund_price},
+            </if>
+            <if test="refund_freight_price != null" >
+                refund_freight_price = #{refund_freight_price},
+            </if>
+            <if test="subtract_coupon_price != null" >
+                subtract_coupon_price = #{subtract_coupon_price},
+            </if>
+            <if test="retund_address != null" >
+                retund_address = #{retund_address},
+            </if>
+            <if test="refund_type != null" >
+                refund_type = #{refund_type},
+            </if>
+            <if test="consignee != null" >
+                consignee = #{consignee},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone},
+            </if>
+            <if test="create_time != null" >
+                create_time = #{create_time},
+            </if>
+        </set>
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeOrderRefund -->
+    <select id="getTradeOrderRefund" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderRefund" resultType="com.ly.mt.center.data.trade.entity.TradeOrderRefund">
+        SELECT * 
+        FROM trade_order_refund
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

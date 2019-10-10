@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.battle.mapper.OrderBattleExpressesMapper" >
+    <!-- 保存OrderBattleExpresses -->
+    <insert id="insertOrderBattleExpresses" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleExpresses">
+        INSERT INTO order_battle_expresses (
+            id, orders_battle_id, order_id, shop_id, user_id, state, data, create_time, modify_time
+        ) VALUES (
+            #{id}, #{orders_battle_id}, #{order_id}, #{shop_id}, #{user_id}, #{state}, #{data}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除OrderBattleExpresses -->
+    <delete id="deleteOrderBattleExpresses" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleExpresses">
+        DELETE FROM order_battle_expresses
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新OrderBattleExpresses -->
+    <update id="updateOrderBattleExpresses" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleExpresses">
+        UPDATE order_battle_expresses
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询OrderBattleExpresses -->
+    <select id="getOrderBattleExpresses" parameterType="com.ly.mt.center.data.battle.entity.OrderBattleExpresses" resultType="com.ly.mt.center.data.battle.entity.OrderBattleExpresses">
+        SELECT * 
+        FROM order_battle_expresses
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

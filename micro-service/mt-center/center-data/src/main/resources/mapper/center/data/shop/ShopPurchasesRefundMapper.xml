@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopPurchasesRefundMapper" >
+    <!-- 保存ShopPurchasesRefund -->
+    <insert id="insertShopPurchasesRefund" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefund">
+        INSERT INTO shop_purchases_refund (
+            id, shop_purchases_id, user_id, shop_id, refund_status, refund_reason, refund_price, refund_freight_price, subtract_coupon_price, retund_address, refund_type, consignee, phone, create_time
+        ) VALUES (
+            #{id}, #{shop_purchases_id}, #{user_id}, #{shop_id}, #{refund_status}, #{refund_reason}, #{refund_price}, #{refund_freight_price}, #{subtract_coupon_price}, #{retund_address}, #{refund_type}, #{consignee}, #{phone}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopPurchasesRefund -->
+    <delete id="deleteShopPurchasesRefund" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefund">
+        DELETE FROM shop_purchases_refund
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopPurchasesRefund -->
+    <update id="updateShopPurchasesRefund" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefund">
+        UPDATE shop_purchases_refund
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopPurchasesRefund -->
+    <select id="getShopPurchasesRefund" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefund" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefund">
+        SELECT * 
+        FROM shop_purchases_refund
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

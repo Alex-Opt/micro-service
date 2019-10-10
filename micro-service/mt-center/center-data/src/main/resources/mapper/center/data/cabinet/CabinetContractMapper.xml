@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetContractMapper" >
+  <sql id="Base_Column_List" >
+    id, take_effect_datetime, lose_efficacy_datetime,contract_pic, `status`, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_contract
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_contract
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetContract" >
+    insert into cabinet_contract (id, take_effect_datetime, lose_efficacy_datetime, 
+      `status`, gmt_create, gmt_modify,contract_pic
+      )
+    values (#{id,jdbcType=VARCHAR}, #{take_effect_datetime,jdbcType=TIMESTAMP}, #{lose_efficacy_datetime,jdbcType=TIMESTAMP},
+      #{status,jdbcType=INTEGER}, #{gmt_create,jdbcType=TIMESTAMP}, #{gmt_modify,jdbcType=TIMESTAMP},#{contract_pic}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetContract" >
+    insert into cabinet_contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="take_effect_datetime != null and take_effect_datetime != ''" >
+        take_effect_datetime,
+      </if>
+      <if test="lose_efficacy_datetime != null and lose_efficacy_datetime != ''" >
+        lose_efficacy_datetime,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="gmt_create != null and gmt_create != ''" >
+        gmt_create,
+      </if>
+      <if test="gmt_modify != null and gmt_modify != ''" >
+        gmt_modify,
+      </if>
+      <if test="contract_pic != null">
+        contract_pic
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="take_effect_datetime != null and take_effect_datetime != ''" >
+        #{take_effect_datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lose_efficacy_datetime != null and lose_efficacy_datetime != ''" >
+        #{lose_efficacy_datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmt_create != null and gmt_create != ''" >
+        #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null and gmt_modify != ''" >
+        #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contract_pic != null">
+        #{contract_pic}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetContract" >
+    update cabinet_contract
+    <set >
+      <if test="take_effect_datetime != null and take_effect_datetime != ''" >
+        take_effect_datetime = #{take_effect_datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lose_efficacy_datetime != null and lose_efficacy_datetime != ''" >
+        lose_efficacy_datetime = #{lose_efficacy_datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmt_create != null and gmt_create != ''" >
+        gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null and gmt_modify != ''" >
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contract_pic != null">
+        contract_pic = #{contract_pic}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetContract" >
+    update cabinet_contract
+    set take_effect_datetime = #{take_effect_datetime,jdbcType=TIMESTAMP},
+      lose_efficacy_datetime = #{lose_efficacy_datetime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
+      gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

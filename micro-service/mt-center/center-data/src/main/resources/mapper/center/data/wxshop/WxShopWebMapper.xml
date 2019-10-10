@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.wxshop.mapper.WxShopWebMapper" >
+    <!-- 删除WxShop -->
+    <delete id="deleteWxShop" parameterType="com.ly.mt.center.data.wxshop.entity.WxShop">
+        DELETE FROM wx_shop
+        WHERE 1 = 1
+              <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </delete>
+
+
+    <!-- 更新WxShop -->
+    <update id="updateWxShop" parameterType="com.ly.mt.center.data.wxshop.entity.WxShop">
+        UPDATE wx_shop
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != name">name = #{name},</if>
+            <if test="null != mobile">mobile = #{mobile},</if>
+            <if test="null != shop_name">shop_name = #{shop_name},</if>
+            <if test="null != main_business">main_business = #{main_business},</if>
+            <if test="null != shop_address">shop_address = #{shop_address},</if>
+            <if test="null != main_business">main_business = #{main_business},</if>
+            <if test="null != business_hours">business_hours = #{business_hours},</if>
+            <if test="null != supply_channels">supply_channels = #{supply_channels},</if>
+            <if test="null != photo_url">photo_url = #{photo_url},</if>
+            <if test="null != auth_status">auth_status = #{auth_status},</if>
+            <if test="null != coordinate">coordinate = #{coordinate},</if>
+            <if test="null != coordinate">city_name = #{city_name},</if>
+            <if test="null != update_time">update_time = #{update_time},</if>
+
+        </trim>
+        WHERE 1=1
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </update>
+
+
+    <!-- 查询WxShop -->
+    <select id="getWxShopList" parameterType="com.ly.mt.center.data.wxshop.entity.WxShop" resultType="com.ly.mt.center.data.wxshop.entity.WxShop">
+        SELECT * 
+        FROM wx_shop
+        WHERE 1 = 1
+              <if test="null != shop_name and '' != shop_name">AND shop_name like '%${shop_name}%'</if>
+              <if test="null != auth_status and '' != auth_status">AND auth_status = #{auth_status}</if>
+              <if test="null != city_name and '' != city_name">AND city_name like '%${city_name}%'</if>
+              <if test="null != shop_address and '' != shop_address">AND shop_address like '%${shop_address}%'</if>
+        order by update_time desc
+    </select>
+
+    <!-- 查询WxShop -->
+    <select id="getWxShop" parameterType="java.lang.String" resultType="com.ly.mt.center.data.wxshop.entity.WxShop">
+        SELECT *
+        FROM wx_shop
+        WHERE 1 = 1
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </select>
+</mapper>

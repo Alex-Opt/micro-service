@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>网站后台管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!--可无视-->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<!--主要样式-->
+<link type="text/css" href="/css/style.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js" ></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+
+<script>
+$(function(){
+	$(document).keydown(function(event){
+		if(event.keyCode==13){
+            CheckLogin();
+		}
+	});
+})
+function CheckLogin(){
+    var userName=$("#username").val();
+    var password=$("#password").val();
+
+    if(userName=='')
+	{
+		alert('请输入用户名');
+		return;
+	}
+	if(password=='')
+	{
+		alert('请输入登录密码');
+		return;
+	}
+	//请求调用登录
+    $.post("bluetooth/web/login/nameLogin", {"loginName": userName, "password": password},
+        function(data){
+            console.log(data);
+            if(data.code==0){
+				 var result = data.result;
+                var jsonObj = JSON.parse(result);
+                $.cookie('tokenQJ',jsonObj.token,{expires:7,path: '/'});
+                $.cookie('userIdQJ',jsonObj.userId,{expires:7,path: '/'});
+                $.cookie('userName',userName,{expires:7,path: '/'});
+                window.location.href = "shopManager.html";
+            }else{
+                alert(data.msg);
+            }
+    });
+}
+</script>
+
+
+</head>
+<body>
+
+<div class="container" align="center">
+	<div class="col-md-6" style="margin-top: 20%;">
+		<div class="inset">
+			<form name="login" id="login">
+				<input type="hidden" name="enews" value="login">
+				<div>
+					<h2>后台管理系统</h2>
+					<span style="text-align: left;text-indent: 0.4em;"><label>用户名</label></span>
+					<span><input type="text" id="username" class="textbox" ></span>
+				</div>
+				<div>
+					<span style="text-align: left;text-indent: 0.4em;"><label>密码</label></span>
+					<span><input  id="password" type="password" class="password"></span>
+				</div>
+				<div class="sign">
+					<input type="reset"  class="submit" value="重置"/>
+					<input type="button" value="登录" class="submit" onclick="CheckLogin()"/>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+
+</script>
+
+</body>
+</html>

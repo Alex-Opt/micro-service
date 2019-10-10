@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.goods.mapper.GoodsSpuConfigurationMapper">
+    <select id="querySpuIdListBySystemUserType" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT spu_id
+        FROM goods_spu_configuration
+        WHERE system_user_type = #{system_user_type}
+    </select>
+
+</mapper>

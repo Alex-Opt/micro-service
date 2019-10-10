@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserConnectionsMapper" >
+    <!-- 保存UserConnections -->
+    <insert id="insertUserConnections" parameterType="com.ly.mt.center.data.user.entity.UserConnections">
+        INSERT INTO user_connections (
+            id, user_id, mobile, name, position, work, advantage, relation, photo, is_anonymous, status, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{mobile}, #{name}, #{position}, #{work}, #{advantage}, #{relation}, #{photo}, #{is_anonymous}, #{status}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserConnections -->
+    <delete id="deleteUserConnections" parameterType="com.ly.mt.center.data.user.entity.UserConnections">
+        DELETE FROM user_connections
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserConnections -->
+    <update id="updateUserConnections" parameterType="com.ly.mt.center.data.user.entity.UserConnections">
+        UPDATE user_connections
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserConnections -->
+    <select id="getUserConnections" parameterType="com.ly.mt.center.data.user.entity.UserConnections" resultType="com.ly.mt.center.data.user.entity.UserConnections">
+        SELECT * 
+        FROM user_connections
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

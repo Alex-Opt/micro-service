@@ -1,0 +1,10 @@
+server:
+  port: 7071
+spring:
+  cloud:
+    config:
+      name: center-data,eureka,mq,redis,txc
+      profile: dev
+      #uri: http://localhost:8082
+      uri: http://39.96.191.19:8082
+

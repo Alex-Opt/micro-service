@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetReplenishRewardMapper">
+
+    <insert id="insertOne" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetReplenishReward">
+        INSERT INTO cabinet_replenish_reward(id, user_id, wx_open_id, cumulative_reward_amount, may_withdrawal_amount,
+                                            pending_settlement_amount, cumulative_withdrawal_amount, type,version, create_time)
+        VALUES (#{id}, #{user_id}, #{wx_open_id}, #{cumulative_reward_amount}, #{may_withdrawal_amount}, #{pending_settlement_amount},
+                #{cumulative_withdrawal_amount}, #{type}, #{version}, #{create_time});
+    </insert>
+
+    <select id="queryUserCabinetRewardByUserId" resultType="com.ly.mt.center.data.cabinet.entity.CabinetReplenishReward">
+        SELECT * FROM cabinet_replenish_reward
+        WHERE user_id = #{user_id}
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+    </select>
+
+    <select id="queryCabinetRewardById" resultType="com.ly.mt.center.data.cabinet.entity.CabinetReplenishReward">
+        SELECT * FROM cabinet_replenish_reward WHERE id = #{id}
+    </select>
+
+    <update id="updateRewardById" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetReplenishReward">
+        UPDATE cabinet_replenish_reward
+        SET
+        <if test="cumulative_reward_amount != null">
+            cumulative_reward_amount = #{cumulative_reward_amount},
+        </if>
+        <if test="may_withdrawal_amount != null">
+            may_withdrawal_amount = #{may_withdrawal_amount},
+        </if>
+        <if test="pending_settlement_amount != null">
+            pending_settlement_amount = #{pending_settlement_amount},
+        </if>
+        <if test="cumulative_withdrawal_amount != null">
+            cumulative_withdrawal_amount = #{cumulative_withdrawal_amount},
+        </if>
+            update_time = #{update_time},
+            version = version+1
+        WHERE id = #{id} and version = #{version}
+    </update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

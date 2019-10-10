@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopShareLogMapper" >
+    <!-- 保存ShopShareLog -->
+    <insert id="insertShopShareLog" parameterType="com.ly.mt.center.data.shop.entity.ShopShareLog">
+        INSERT INTO shop_share_log (
+            id, user_id, shop_id, share_type, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{shop_id}, #{share_type}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopShareLog -->
+    <delete id="deleteShopShareLog" parameterType="com.ly.mt.center.data.shop.entity.ShopShareLog">
+        DELETE FROM shop_share_log
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopShareLog -->
+    <update id="updateShopShareLog" parameterType="com.ly.mt.center.data.shop.entity.ShopShareLog">
+        UPDATE shop_share_log
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopShareLog -->
+    <select id="getShopShareLog" parameterType="com.ly.mt.center.data.shop.entity.ShopShareLog" resultType="com.ly.mt.center.data.shop.entity.ShopShareLog">
+        SELECT * 
+        FROM shop_share_log
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

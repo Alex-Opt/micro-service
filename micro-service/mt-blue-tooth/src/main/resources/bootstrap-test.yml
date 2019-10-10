@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config:
+      name: mt-bluetooth,eureka,time,mq,redis
+      profile: test
+      uri: http://10.11.10.15

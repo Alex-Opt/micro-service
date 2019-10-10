@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgCabinetMapper" >
+  <sql id="Base_Column_List" >
+    id,cabinet_no as cabinetNo,gzg_code as gzgCode,gmt_create as gmtCreate,gmt_modify as gmtModify,status
+  </sql>
+
+  <select id="selectByCodeAndCabinetCode" resultType="com.ly.mt.gzg.b.server.base.constant.GzgCabinet">
+        select <include refid="Base_Column_List"/> from gzg_cabinet where gzg_code=#{gzgCode} and cabinet_no=#{cabinetNo}
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.gzg.b.server.base.constant.GzgCabinet">
+    update gzg_cabinet set status=#{status},gmt_modify=#{gmtModify} where gzg_code=#{gzgCode} and cabinet_no=#{cabinetNo}
+  </update>
+</mapper>

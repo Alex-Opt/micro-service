@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsSkuPictureMapper" >
+    <select id="getGoodsSkuPictureBySkuId" resultType="com.ly.mt.center.data.goods.entity.GoodsSkuPicture" parameterType="com.ly.mt.center.data.goods.entity.GoodsSkuPicture" >
+        SELECT  *
+        FROM goods_sku_picture
+        WHERE sku_id = #{sku_id} order by sort_number asc
+    </select>
+
+    <select id="getSkuPictureBySkuId" resultType="com.ly.mt.center.data.goods.entity.GoodsSkuPicture" parameterType="com.ly.mt.center.data.goods.entity.GoodsSkuPicture" >
+        SELECT  *
+        FROM goods_sku_picture
+        WHERE sku_id = #{sku_id}
+    </select>
+</mapper >

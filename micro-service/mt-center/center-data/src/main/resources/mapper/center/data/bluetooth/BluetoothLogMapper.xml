@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.bluetooth.mapper.BluetoothLogMapper">
+
+    <!--计算每小时抽烟数据-->
+    <select id="countBluetoothLogSmokingDataHour" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothLog"
+            resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothCountLog">
+        SELECT
+        a.x,
+        ifnull(b.y, 0) y
+        FROM
+        (
+        SELECT
+        0 x
+        UNION ALL
+        SELECT
+        1 x
+        UNION ALL
+        SELECT
+        2 x
+        UNION ALL
+        SELECT
+        3 x
+        UNION ALL
+        SELECT
+        4 x
+        UNION ALL
+        SELECT
+        5 x
+        UNION ALL
+        SELECT
+        6 x
+        UNION ALL
+        SELECT
+        7 x
+        UNION ALL
+        SELECT
+        8 x
+        UNION ALL
+        SELECT
+        9 x
+        UNION ALL
+        SELECT
+        10 x
+        UNION ALL
+        SELECT
+        11 x
+        UNION ALL
+        SELECT
+        12 x
+        UNION ALL
+        SELECT
+        13 x
+        UNION ALL
+        SELECT
+        14 x
+        UNION ALL
+        SELECT
+        15 x
+        UNION ALL
+        SELECT
+        16 x
+        UNION ALL
+        SELECT
+        17 x
+        UNION ALL
+        SELECT
+        18 x
+        UNION ALL
+        SELECT
+        19 x
+        UNION ALL
+        SELECT
+        20 x
+        UNION ALL
+        SELECT
+        21 x
+        UNION ALL
+        SELECT
+        22 x
+        UNION ALL
+        SELECT
+        23 x
+        ) a
+        LEFT JOIN (SELECT
+        HOUR (e.time_stamp) AS x,
+        count(*) AS y
+        FROM
+        bluetooth_log e
+        WHERE 1=1
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != mac_address and '' != mac_address">AND mac_address = #{mac_address}</if>
+        <if test="null != query_start_time and '' != query_start_time">AND time_stamp &gt;= #{query_start_time}</if>
+        <if test="null != query_end_time and '' != query_end_time">AND time_stamp&lt;= #{query_end_time}</if>
+        GROUP BY HOUR(e.time_stamp)
+        ORDER BY HOUR(e.time_stamp)
+        )b ON a.x = b.x
+        ORDER BY
+        x
+    </select>
+
+    <!--计算按天抽烟数据-连续-->
+    <select id="countBluetoothLogSmokingDataDay" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothLog"
+            resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothCountLog">
+        SELECT x,
+        count(*) - 1 as y
+        FROM
+        (
+        SELECT
+        DATE_FORMAT(datelist,'%m-%d') x
+        FROM bluetooth_calendar e
+        where 1=1
+        <if test="null != query_start_time and '' != query_start_time">AND datelist &gt;= #{query_start_time}</if>
+        <if test="null != query_end_time and '' != query_end_time">AND datelist &lt;= #{query_end_time}</if>
+        UNION ALL
+        SELECT
+        DATE_FORMAT(time_stamp,'%m-%d') x
+        FROM bluetooth_log where 1=1
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != mac_address and '' != mac_address">AND mac_address = #{mac_address}</if>
+        <if test="null != query_start_time and '' != query_start_time">AND time_stamp &gt;= #{query_start_time}</if>
+        <if test="null != query_end_time and '' != query_end_time">AND time_stamp&lt;= #{query_end_time}</if>
+        ) a
+        GROUP BY x
+    </select>
+
+    <!--计算有抽烟数据的天数-不连续天-->
+    <select id="countBluetoothLogSmokingHaveDataDay" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothLog"
+            resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothCountLog">
+        SELECT DATE_FORMAT(time_stamp,'%m-%d') x ,count(*) y FROM bluetooth_log where 1=1
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != mac_address and '' != mac_address">AND mac_address = #{mac_address}</if>
+        GROUP BY x
+    </select>
+    <!--累计抽烟总口数-->
+    <select id="totalBluetoothLogSmokingMonthNumber" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothLog" resultType="int">
+        SELECT count(*) as count
+        FROM bluetooth_log WHERE 1=1
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != mac_address and '' != mac_address">AND mac_address = #{mac_address}</if>
+        <if test="null != query_start_time and '' != query_start_time">AND time_stamp &gt;= #{query_start_time}</if>
+        <if test="null != query_end_time and '' != query_end_time">AND time_stamp&lt;= #{query_end_time}</if>
+    </select>
+
+    <insert id="insertBluetoothLog" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT INTO bluetooth_log (
+        id, user_id, mac_address, time_stamp,power,time,remaining_battery,create_time
+        ) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.user_id},
+            #{item.mac_address},
+            #{item.time_stamp},
+            #{item.power},
+            #{item.time},
+            #{item.remaining_battery},
+            #{item.create_time}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

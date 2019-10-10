@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.cabinet.mapper.CabinetPlanMapper">
+    <!-- 查询CabinetPlan -->
+    <select id="getCabinetPlan" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetPlan" resultType="com.ly.mt.core.data.cabinet.entity.CabinetPlan">
+        SELECT *
+        FROM cabinet_plan
+        <where>
+            <if test="null != cabinetCategroyId and '' != cabinetCategroyId and '-1' != cabinetCategroyId">AND cabinet_categroy_id = #{cabinetCategroyId}</if>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+            <if test="null != updateName and '' != updateName">AND update_name LIKE '%${updateName}%'</if>
+            <if test="null != planName and '' != planName">AND plan_name LIKE '%${planName}%'</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<CabinetPlan> -->
+    <select id="listCabinetPlan" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetPlan" resultType="com.ly.mt.core.data.cabinet.entity.CabinetPlan">
+        SELECT *
+        FROM cabinet_plan
+        <where>
+            <if test="null != cabinetCategroyId and '' != cabinetCategroyId and '-1' != cabinetCategroyId">AND cabinet_categroy_id = #{cabinetCategroyId}</if>
+            <if test="null != updateName and '' != updateName">AND update_name LIKE '%${updateName}%'</if>
+            <if test="null != planName and '' != planName">AND plan_name LIKE '%${planName}%'</if>
+        </where>
+    </select>
+</mapper>

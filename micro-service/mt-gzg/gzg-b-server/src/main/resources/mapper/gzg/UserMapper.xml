@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.user.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="client_id" property="clientId"/>
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="wx_open_id" property="wxOpenId" jdbcType="VARCHAR" />
+    <result column="qq_open_id" property="qqOpenId" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="district_code" property="districtCode" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="valid_status" property="validStatus" jdbcType="INTEGER" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="auditor" property="auditor" jdbcType="BIGINT" />
+    <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="quick_type" property="quickType" jdbcType="INTEGER" />
+    <result column="avatar_pic_src" property="avatarPicSrc" jdbcType="VARCHAR" />
+    <result column="notice_config" property="noticeConfig" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,client_id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, `password`, id_card,
+    sex, birthday, province_code, city_code, district_code, user_type, nick_name, valid_status, 
+    user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.user.User" >
+    insert into user (id,client_id, user_name, mobile,
+      email, wx_open_id, qq_open_id, 
+      login_name, `password`, id_card, 
+      sex, birthday, province_code, 
+      city_code, district_code, user_type, 
+      nick_name, valid_status, user_status, 
+      shop_id, auditor, audit_remark, 
+      quick_type, avatar_pic_src, notice_config, 
+      create_time)
+    values (#{id,jdbcType=BIGINT},#{clientId}, #{userName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{wxOpenId,jdbcType=VARCHAR}, #{qqOpenId,jdbcType=VARCHAR}, 
+      #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{cityCode,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
+      #{nickName,jdbcType=VARCHAR}, #{validStatus,jdbcType=INTEGER}, #{userStatus,jdbcType=INTEGER}, 
+      #{shopId,jdbcType=BIGINT}, #{auditor,jdbcType=BIGINT}, #{auditRemark,jdbcType=VARCHAR}, 
+      #{quickType,jdbcType=INTEGER}, #{avatarPicSrc,jdbcType=VARCHAR}, #{noticeConfig,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.user.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="clientId != null">
+        client_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="wxOpenId != null" >
+        wx_open_id,
+      </if>
+      <if test="qqOpenId != null" >
+        qq_open_id,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="password != null" >
+        `password`,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="districtCode != null" >
+        district_code,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="validStatus != null" >
+        valid_status,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark,
+      </if>
+      <if test="quickType != null" >
+        quick_type,
+      </if>
+      <if test="avatarPicSrc != null" >
+        avatar_pic_src,
+      </if>
+      <if test="noticeConfig != null" >
+        notice_config,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="clientId != null">
+        #{clientId},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null" >
+        #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenId != null" >
+        #{qqOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="validStatus != null" >
+        #{validStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=BIGINT},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="quickType != null" >
+        #{quickType,jdbcType=INTEGER},
+      </if>
+      <if test="avatarPicSrc != null" >
+        #{avatarPicSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeConfig != null" >
+        #{noticeConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.user.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null" >
+        wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenId != null" >
+        qq_open_id = #{qqOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        district_code = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="validStatus != null" >
+        valid_status = #{validStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=BIGINT},
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="quickType != null" >
+        quick_type = #{quickType,jdbcType=INTEGER},
+      </if>
+      <if test="avatarPicSrc != null" >
+        avatar_pic_src = #{avatarPicSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeConfig != null" >
+        notice_config = #{noticeConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientId != null">
+        client_id=#{clientId,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.user.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      qq_open_id = #{qqOpenId,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      district_code = #{districtCode,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      valid_status = #{validStatus,jdbcType=INTEGER},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      auditor = #{auditor,jdbcType=BIGINT},
+      audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      quick_type = #{quickType,jdbcType=INTEGER},
+      avatar_pic_src = #{avatarPicSrc,jdbcType=VARCHAR},
+      notice_config = #{noticeConfig,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      client_id=#{clientId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByMobile" resultType="com.ly.mt.core.common.entity.user.User">
+    select * from user where mobile = #{phone} and user_status = 10
+  </select>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.user.mapper.UserAddressMapper">
+    <!--获取用户的默认地址-->
+    <select id="getDefaultUserAddressByUserId" resultType="com.ly.mt.center.data.user.entity.UserAddress">
+        SELECT *
+        FROM user_address
+        WHERE valid_status = 1
+          AND user_id = #{user_id}
+          AND is_default = 1
+        ORDER BY create_time
+    </select>
+    <insert id="insertUserAddress" parameterType="com.ly.mt.center.data.user.entity.UserAddress">
+        INSERT INTO user_address (id, user_id, user_name, receive_name, receive_phone, province_code,
+                                  province_name, city_code, city_name, district_code, district_name, lon, lat,
+                                  picker_value,
+                                  user_address, is_default, valid_status, create_time)
+        VALUES (#{id}, #{user_id}, #{user_name}, #{receive_name}, #{receive_phone}, #{province_code},
+                #{province_name}, #{city_code}, #{city_name}, #{district_code}, #{district_name}, #{lon}, #{lat},
+                #{picker_value},
+                #{user_address}, #{is_default}, #{valid_status}, #{create_time})
+    </insert>
+    <select id="getUserAddressByUserId" parameterType="com.ly.mt.center.data.user.entity.UserAddress"
+            resultType="com.ly.mt.center.data.user.entity.UserAddress">
+        SELECT *
+        FROM user_address
+        WHERE valid_status = 1
+          AND user_id = #{user_id}
+        ORDER BY create_time
+    </select>
+    <!--<update id="updateUserAddressDefaultByUserId" parameterType="com.ly.mt.center.data.user.entity.UserAddress">
+        UPDATE user_address
+        SET is_default  = #{is_default},
+            modify_time = #{modify_time}
+        WHERE user_id = #{user_id}
+          and valid_status = 1
+    </update>
+    <update id="updateUserAddressDefaultById" parameterType="com.ly.mt.center.data.user.entity.UserAddress">
+        UPDATE user_address
+        SET is_default  = 1,
+            modify_time = #{modify_time}
+        WHERE id = #{id}
+          and valid_status = 1
+    </update>-->
+    <update id="updateUserAddress" parameterType="com.ly.mt.center.data.user.entity.UserAddress">
+        UPDATE user_address SET
+        <if test="is_default != null">
+            is_default = #{is_default},
+        </if>
+        <if test="valid_status != null">
+            valid_status = #{valid_status},
+        </if>
+        modify_time = #{modify_time}
+        WHERE 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="user_id != null">
+            and user_id = #{user_id} and valid_status = 1
+        </if>
+    </update>
+    <update id="updateUserAddressById" parameterType="com.ly.mt.center.data.user.entity.UserAddress">
+        UPDATE user_address
+        SET receive_name  = #{receive_name},
+            receive_phone = #{receive_phone},
+            province_code = #{province_code},
+            province_name = #{province_name},
+            city_code     = #{city_code},
+            city_name     = #{city_name},
+            lon           = #{lon},
+            lat           = #{lat},
+            district_code = #{district_code},
+            district_name = #{district_name},
+            picker_value  = #{picker_value},
+            user_address  = #{user_address},
+            modify_time   = #{modify_time}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getUserAddressById" parameterType="java.lang.Long"
+            resultType="com.ly.mt.center.data.user.entity.UserAddress">
+        SELECT *
+        FROM user_address
+        WHERE id = #{id}
+    </select>
+
+
+    <!--<update id="updateValidStatusById" parameterType="com.ly.mt.center.data.user.entity.UserAddress">
+        UPDATE user_address
+        SET is_default   = #{is_default},
+            valid_status = #{valid_status},
+            modify_time  = #{modify_time}
+        WHERE id = #{id}
+    </update>-->
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.battle.mapper.OrdersBattleInfoMapper" >
+    <!-- 保存OrdersBattleInfo -->
+    <insert id="insertOrdersBattleInfo" parameterType="com.ly.mt.center.data.battle.entity.OrdersBattleInfo">
+        INSERT INTO orders_battle_info (
+            id, order_id, shop_id, user_id, buyer_id, deliveryman_name, deliveryman_phone, type, status, grabed_num, grabed_at, checked_at, taked_at, estimate_sended_at, send_model, send_com, send_no, sended_at, estimated_successed_at, successed_at, create_time, modify_time
+        ) VALUES (
+            #{id}, #{order_id}, #{shop_id}, #{user_id}, #{buyer_id}, #{deliveryman_name}, #{deliveryman_phone}, #{type}, #{status}, #{grabed_num}, #{grabed_at}, #{checked_at}, #{taked_at}, #{estimate_sended_at}, #{send_model}, #{send_com}, #{send_no}, #{sended_at}, #{estimated_successed_at}, #{successed_at}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除OrdersBattleInfo -->
+    <delete id="deleteOrdersBattleInfo" parameterType="com.ly.mt.center.data.battle.entity.OrdersBattleInfo">
+        DELETE FROM orders_battle_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新OrdersBattleInfo -->
+    <update id="updateOrdersBattleInfo" parameterType="com.ly.mt.center.data.battle.entity.OrdersBattleInfo">
+        UPDATE orders_battle_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询OrdersBattleInfo -->
+    <select id="getOrdersBattleInfo" parameterType="com.ly.mt.center.data.battle.entity.OrdersBattleInfo" resultType="com.ly.mt.center.data.battle.entity.OrdersBattleInfo">
+        SELECT * 
+        FROM orders_battle_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

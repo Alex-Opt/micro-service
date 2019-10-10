@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.platform.mapper.PlatformLogisticsMapper" >
+    <!-- 保存PlatformLogistics -->
+    <insert id="insertPlatformLogistics" parameterType="com.ly.mt.center.data.platform.entity.PlatformLogistics">
+        INSERT INTO platform_logistics (
+            id, company_name, company_code, linkman, phone, address, postcode, remark, gy_code, gy_name, create_time
+        ) VALUES (
+            #{id}, #{company_name}, #{company_code}, #{linkman}, #{phone}, #{address}, #{postcode}, #{remark}, #{gy_code}, #{gy_name}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除PlatformLogistics -->
+    <delete id="deletePlatformLogistics" parameterType="com.ly.mt.center.data.platform.entity.PlatformLogistics">
+        DELETE FROM platform_logistics
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新PlatformLogistics -->
+    <update id="updatePlatformLogistics" parameterType="com.ly.mt.center.data.platform.entity.PlatformLogistics">
+        UPDATE platform_logistics
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询PlatformLogistics -->
+    <select id="getPlatformLogistics" parameterType="com.ly.mt.center.data.platform.entity.PlatformLogistics" resultType="com.ly.mt.center.data.platform.entity.PlatformLogistics">
+        SELECT * 
+        FROM platform_logistics
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

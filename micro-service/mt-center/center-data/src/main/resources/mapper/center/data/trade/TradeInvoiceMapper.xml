@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeInvoiceMapper" >
+    <!-- 保存TradeInvoice -->
+    <insert id="insertTradeInvoice" parameterType="com.ly.mt.center.data.trade.entity.TradeInvoice">
+        INSERT INTO trade_invoice (
+            id, order_id, invoice_type, invoice_title, payment_price, invoice_price, contact_person, contact_phone, create_time
+        ) VALUES (
+            #{id}, #{order_id}, #{invoice_type}, #{invoice_title}, #{payment_price}, #{invoice_price}, #{contact_person}, #{contact_phone}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除TradeInvoice -->
+    <delete id="deleteTradeInvoice" parameterType="com.ly.mt.center.data.trade.entity.TradeInvoice">
+        DELETE FROM trade_invoice
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeInvoice -->
+    <update id="updateTradeInvoice" parameterType="com.ly.mt.center.data.trade.entity.TradeInvoice">
+        UPDATE trade_invoice
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeInvoice -->
+    <select id="getTradeInvoice" parameterType="com.ly.mt.center.data.trade.entity.TradeInvoice" resultType="com.ly.mt.center.data.trade.entity.TradeInvoice">
+        SELECT * 
+        FROM trade_invoice
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

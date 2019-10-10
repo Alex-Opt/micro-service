@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgGoodsPlanMapper" >
+
+    <select id="getGzgGoodsPlan" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan" resultType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        SELECT id, imei, cabinet_no,sku_id, bar_code, plan_name, sell_no, stock, state, create_time
+        FROM gzg_goods_plan
+        WHERE imei = #{imei} and state = '1'
+        <if test="sku_id != null">
+            and sku_id = #{sku_id}
+        </if>
+    </select>
+    <!--查询货柜中是包含套装商品的库存数量-->
+    <select id="getGzgGoodsPlanSuitNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COALESCE(sum(a.stock),0)
+        FROM
+            gzg_goods_plan a,goods_sku_info b,goods_spu_info c
+        WHERE
+            a.sku_id = b.id
+          AND b.spu_id = c.id
+          AND a.imei = #{imei}
+          AND c.cid = '1'
+    </select>
+
+    <!--查询货柜中Top3商品是否售罄-->
+    <select id="getTop3GzgGoodsPlanStock" resultType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        select * from gzg_goods_plan t where t.sku_id in
+        <foreach collection="skuIdList" item="skuId" index="index" open="(" close=")" separator=",">
+            #{skuId}
+        </foreach>
+            and t.imei=#{imei} and stock>0
+    </select>
+
+    <insert id="insertGzgGoodsPlan" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        INSERT INTO gzg_goods_plan (
+            id, imei, cabinet_no,sku_id, bar_code, plan_name, sell_no, stock, state, create_time
+        ) VALUES (
+                     #{id}, #{imei}, #{cabinet_no}, #{sku_id}, #{bar_code}, #{plan_name}, #{sell_no}, #{stock}, #{state},#{create_time}
+                 )
+    </insert>
+    <update id="updateGzgGoodsPlanNumByCondation" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        UPDATE gzg_goods_plan
+        SET sell_no = sell_no+1, stock=case when stock &lt;=0 then 0 else stock - 1 end
+        WHERE imei = #{imei}
+        <if test="cabinet_no != null and cabinet_no != ''">
+            AND cabinet_no = #{cabinet_no}
+        </if>
+        <if test="sku_id != null and sku_id != ''">
+            AND sku_id = #{sku_id}
+        </if>
+    </update>
+
+    <update id="updateGzgGoodsPlanNum" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+         UPDATE gzg_goods_plan
+         SET sell_no = sell_no+1, stock = stock-1
+         WHERE imei = #{imei}
+            AND cabinet_no = #{cabinet_no}
+    </update>
+
+    <update id="updateGzgZgGoodsPlanNum" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        UPDATE gzg_goods_plan
+        SET sell_no = sell_no+1,stock = stock-1
+        WHERE imei = #{imei} AND sku_id = #{sku_id}
+    </update>
+
+    <insert id="insertBatchGzgGoodsPlan">
+        insert into gzg_goods_plan (id, imei, cabinet_no,sku_id, bar_code, plan_name, sell_no, stock, state, create_time,cabinet_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT},
+            #{item.imei,jdbcType=VARCHAR},
+            #{item.cabinet_no,jdbcType=VARCHAR},
+            #{item.sku_id,jdbcType=VARCHAR},
+            #{item.bar_code,jdbcType=VARCHAR},
+            #{item.plan_name,jdbcType=VARCHAR},
+            #{item.sell_no,jdbcType=VARCHAR},
+            #{item.stock,jdbcType=VARCHAR},
+            #{item.state,jdbcType=VARCHAR},
+            #{item.create_time,jdbcType=VARCHAR},
+            #{item.cabinet_type,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="updateGzgGoodsPlan" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        UPDATE gzg_goods_plan
+        <set>
+            <if test="sku_id!= null and sku_id != '' ">
+                sku_id = #{sku_id},
+            </if>
+            <if test="plan_name!= null and plan_name!= '' ">
+                plan_name = #{plan_name},
+            </if>
+            <if test="stock!= null and stock != '' ">
+                stock = #{stock},
+            </if>
+
+            <if test="state != null and state != '' ">
+                state = #{state},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--BD补货 在原库存基础上加上本次添加的库存-->
+    <update id="updateGzgGoodsPlanStock" parameterType="com.ly.mt.center.data.gzg.entity.GzgGoodsPlan">
+        UPDATE gzg_goods_plan
+        SET stock = stock+#{stock}
+        WHERE imei = #{imei} AND sku_id = #{sku_id}
+        <if test="cabinet_no != null">
+            and cabinet_no = #{cabinet_no}
+        </if>
+    </update>
+
+    <!--BD补货 原先计划没有的情况下批量插入-->
+    <insert id="insertBatchGzgGoodsPlans" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into gzg_goods_plan (id, imei, cabinet_no,sku_id, bar_code, plan_name, sell_no, stock, state, create_time,cabinet_type)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT},
+            #{item.imei,jdbcType=VARCHAR},
+            #{item.cabinet_no,jdbcType=VARCHAR},
+            #{item.sku_id,jdbcType=VARCHAR},
+            #{item.bar_code,jdbcType=VARCHAR},
+            #{item.plan_name,jdbcType=VARCHAR},
+            #{item.sell_no,jdbcType=VARCHAR},
+            #{item.stock,jdbcType=VARCHAR},
+            #{item.state,jdbcType=VARCHAR},
+            #{item.create_time,jdbcType=VARCHAR},
+            #{item.cabinet_type,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+</mapper >

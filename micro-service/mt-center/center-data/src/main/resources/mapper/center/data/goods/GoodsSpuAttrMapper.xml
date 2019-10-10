@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsSpuAttrMapper" >
+    <select id="getGoodsSpuAttrBySpuId"  resultType="java.util.Map" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuAttr" >
+        SELECT  s.attr_id attrId,a.attr_name attrName
+        FROM goods_spu_attr s
+        LEFT JOIN goods_attr a on a.id=s.attr_id
+        WHERE s.spu_id=#{spu_id}
+        ORDER BY a.sort_num asc
+    </select>
+    
+    <select id="getGoodsSkuAttrByHourSpuId" resultType="java.lang.String" parameterType="java.lang.Long">
+        SELECT attributes FROM goods_sku_info where id in (
+            SELECT sku_id FROM goods_hour_sku WHERE spu_id=#{spu_id}
+            )
+
+    </select>
+</mapper >

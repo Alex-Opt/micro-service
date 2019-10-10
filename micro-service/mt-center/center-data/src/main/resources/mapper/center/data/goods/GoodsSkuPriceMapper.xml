@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsSkuPriceMapper" >
+    <!-- 保存GoodsSkuPrice -->
+    <insert id="insertGoodsSkuPrice" parameterType="com.ly.mt.center.data.goods.entity.GoodsSkuPrice">
+        INSERT INTO goods_sku_price (
+            id, spu_id, sku_id, price_name, sku_price, remark, create_time
+        ) VALUES (
+            #{id}, #{spu_id}, #{sku_id}, #{price_name}, #{sku_price}, #{remark}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GoodsSkuPrice -->
+    <delete id="deleteGoodsSkuPrice" parameterType="com.ly.mt.center.data.goods.entity.GoodsSkuPrice">
+        DELETE FROM goods_sku_price
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GoodsSkuPrice -->
+    <update id="updateGoodsSkuPrice" parameterType="com.ly.mt.center.data.goods.entity.GoodsSkuPrice">
+        UPDATE goods_sku_price
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GoodsSkuPrice -->
+    <select id="getGoodsSkuPrice" parameterType="com.ly.mt.center.data.goods.entity.GoodsSkuPrice" resultType="com.ly.mt.center.data.goods.entity.GoodsSkuPrice">
+        SELECT * 
+        FROM goods_sku_price
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

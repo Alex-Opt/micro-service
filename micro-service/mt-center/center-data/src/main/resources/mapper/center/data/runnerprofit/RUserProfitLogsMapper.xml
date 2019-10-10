@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.runnerprofit.mapper.RUserProfitLogsMapper" >
+  <sql id="Base_Column_List" >
+    id, order_id, user_id, provider_id, profit_type, profit, `status`, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_profit_logs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_profit_logs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfitLogs" >
+    insert into user_profit_logs (id, order_id, user_id, 
+      provider_id, profit_type, profit, 
+      `status`, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{providerId,jdbcType=BIGINT}, #{profitType,jdbcType=TINYINT}, #{profit,jdbcType=DECIMAL}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfitLogs" >
+    insert into user_profit_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="providerId != null" >
+        provider_id,
+      </if>
+      <if test="profitType != null" >
+        profit_type,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="providerId != null" >
+        #{providerId,jdbcType=BIGINT},
+      </if>
+      <if test="profitType != null" >
+        #{profitType,jdbcType=TINYINT},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!--批量插入-->
+    <insert id="inserts">
+      insert into
+      <include refid="Base_Column_List"/>
+      values
+      <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.id}, #{item.orderId}, #{item.userId},
+          #{item.providerId}, #{item.profitType}, #{item.profit},
+          #{item.status}, #{item.createTime}, #{item.modifyTime})
+      </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfitLogs" >
+    update user_profit_logs
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="providerId != null" >
+        provider_id = #{providerId,jdbcType=BIGINT},
+      </if>
+      <if test="profitType != null" >
+        profit_type = #{profitType,jdbcType=TINYINT},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfitLogs" >
+    update user_profit_logs
+    set order_id = #{orderId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      provider_id = #{providerId,jdbcType=BIGINT},
+      profit_type = #{profitType,jdbcType=TINYINT},
+      profit = #{profit,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

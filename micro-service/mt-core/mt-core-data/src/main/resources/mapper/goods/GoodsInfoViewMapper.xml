@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.goods.mapper.GoodsInfoViewMapper">
+    <!-- 查询List<GoodsInfoView> -->
+    <select id="listGoodsInfoView" parameterType="com.ly.mt.core.data.goods.entity.GoodsInfoView" resultType="com.ly.mt.core.data.goods.entity.GoodsInfoView">
+        SELECT *
+        FROM goods_info_view
+        <where>
+            <if test="null != spuCid and '' != spuCid">AND spu_cid = #{spuCid}</if>
+            <if test="null != spuId and '' != spuId">AND spu_id LIKE '%${spuId}%'</if>
+            <if test="null != skuId and '' != skuId">AND sku_id LIKE '%${skuId}%'</if>
+            <if test="null != spuName and '' != spuName">AND spu_name LIKE '%${spuName}%'</if>
+            <if test="null != skuName and '' != skuName">AND sku_name LIKE '%${skuName}%'</if>
+        </where>
+        ORDER BY spu_cid, spu_id, sku_id
+    </select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsFrontMapper" >
+    <!-- 保存GoodsFront -->
+    <insert id="insertGoodsFront" parameterType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        INSERT INTO goods_front (
+            id, spu_id, sku_id, status,price, sort_num, create_time,refund_price,app_type,picture_url
+        ) VALUES (
+            #{id}, #{spu_id}, #{sku_id}, #{status},#{price}, #{sort_num}, #{create_time},#{refund_price},#{app_type},#{picture_url}
+        )
+    </insert>
+
+    <!-- 更新GoodsFront -->
+    <update id="updateGoodsFront" parameterType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        UPDATE goods_front
+        SET  status = #{status}
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询spuId-->
+    <select id="getGoodsFrontSpuId"   resultType="java.lang.String">
+        SELECT DISTINCT spu_id
+        FROM goods_front
+        WHERE status=1 and app_type = #{app_type} ORDER BY sort_num ASC
+    </select>
+    <!-- 查询goodsFront-->
+    <select id="getGoodsFront"   resultType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        SELECT *
+        FROM goods_front
+        WHERE status=1 and app_type = #{app_type} ORDER BY sort_num ASC
+    </select>
+    <!-- 根据spuId查询goodsFront-->
+    <select id="getGoodsFrontBySpuId"   resultType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        SELECT *
+        FROM goods_front
+        WHERE spu_id=#{spu_id} and app_type = #{app_type} and status=1 ORDER BY sort_num ASC
+    </select>
+    <!-- 根据spuId查询sku数据-->
+    <select id="getGoodsSkuBySpuId"   resultType="java.util.Map" parameterType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        SELECT front.id,front.spu_id spuId,front.sku_id skuId,front.price skuPrice,front.sort_num sortNum,sku.name skuName,sku.attributes
+        FROM goods_front front LEFT JOIN goods_sku_info sku on sku.id=front.sku_id
+        WHERE front.spu_id=#{spu_id} and front.status=1 and front.app_type = #{app_type} ORDER BY front.sort_num ASC
+    </select>
+    <!-- 根据skuId查询sku数据-->
+    <select id="getGoodsSkuBySkuId"   resultType="java.util.Map" parameterType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        SELECT front.id,front.spu_id spuId,front.sku_id skuId,front.price skuPrice,front.sort_num sortNum,sku.name skuName,sku.attributes,spu.name spuName,spu.picture_url_c pictureUrlC,spu.describe_url describeUrl
+        FROM goods_front front LEFT JOIN goods_sku_info sku on sku.id=front.sku_id  LEFT JOIN  goods_spu_info spu on spu.id=front.spu_id
+        WHERE front.sku_id=#{sku_id} and front.status=1 and front.app_type = #{app_type}  and front.acti_class = #{acti_class}
+    </select>
+    <!-- 根据APPType和actiClass 查询数据-->
+    <select id="queryGoodsFrontByActiClass"   resultType="com.ly.mt.center.data.goods.entity.GoodsFront" parameterType="com.ly.mt.center.data.goods.entity.GoodsFront">
+        SELECT  *
+        FROM goods_front
+        WHERE  status=1 and  app_type = #{app_type} and  acti_class = #{acti_class}
+    </select>
+</mapper>

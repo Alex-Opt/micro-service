@@ -1,0 +1,62 @@
+/* 顶部菜单样式 */
+.top-menu {
+    width: 110px;
+    height: 30px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.top-menu-hover {
+    width: 110px;
+    height: 30px;
+    font-size: 16px;
+    background-color: deepskyblue;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* 导航二级菜单样式 */
+.easyui-accordion ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 10px 30px;
+}
+
+.easyui-accordion ul li {
+    padding: 0px;
+    background: url(../../../images/menu/bumen.png) no-repeat 0px;
+}
+
+.easyui-accordion ul li a {
+    line-height: 18px;
+    padding-left: 10px;
+}
+
+.easyui-accordion ul li div {
+    margin: 2px 0px;
+    padding-left: 10px;
+    padding-top: 2px;
+}
+
+.easyui-accordion ul li div.hover {
+    border: 1px dashed #99BBE8;
+    background: #E0ECFF;
+    cursor: pointer;
+    background: url(../../../images/menu/bumen.png) no-repeat 0px;
+}
+
+.easyui-accordion ul li div.hover a {
+    color: #416AA3;
+}
+
+/* 系统管理 */
+.icon-xtgl {
+    background: url(../../../images/menu/xtgl.png) no-repeat center center;
+}
+
+/* 客户管理 */
+.icon-khgl {
+    background: url(../../../images/menu/khgl.png) no-repeat center center;
+}

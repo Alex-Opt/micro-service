@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopGrabBlackListMapper" >
+    <!-- 保存ShopGrabBlackList -->
+    <insert id="insertShopGrabBlackList" parameterType="com.ly.mt.center.data.shop.entity.ShopGrabBlackList">
+        INSERT INTO shop_grab_black_list (
+            id, user_id, shop_id, mobile, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{shop_id}, #{mobile}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopGrabBlackList -->
+    <delete id="deleteShopGrabBlackList" parameterType="com.ly.mt.center.data.shop.entity.ShopGrabBlackList">
+        DELETE FROM shop_grab_black_list
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopGrabBlackList -->
+    <update id="updateShopGrabBlackList" parameterType="com.ly.mt.center.data.shop.entity.ShopGrabBlackList">
+        UPDATE shop_grab_black_list
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopGrabBlackList -->
+    <select id="getShopGrabBlackList" parameterType="com.ly.mt.center.data.shop.entity.ShopGrabBlackList" resultType="com.ly.mt.center.data.shop.entity.ShopGrabBlackList">
+        SELECT * 
+        FROM shop_grab_black_list
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

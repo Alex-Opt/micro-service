@@ -1,0 +1,36 @@
+server:
+  port: 8082
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}-${spring.cloud.client.ipaddress}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://lykj:lykjMtEureka@10.11.10.5/eureka/
+spring:
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: http://116.196.118.85:8091/taoye/mt-config.git
+          searchPaths: config-mt
+          username: taoye
+          password: yeTao1989
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 172.17.194.219
+    username: lykj
+    password: lykjmq
+    port: 5672
+    virtual-host: test
+    addresses: 172.17.194.219:5672
+    publisher-confirms: true
+    publisher-returns: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

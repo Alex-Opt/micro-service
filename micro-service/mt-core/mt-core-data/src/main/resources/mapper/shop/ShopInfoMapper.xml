@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.shop.mapper.ShopInfoMapper">
+    <!-- 查询ShopInfo -->
+    <select id="getShopInfo" parameterType="com.ly.mt.core.data.shop.entity.ShopInfo" resultType="com.ly.mt.core.data.shop.entity.ShopInfo">
+        SELECT *
+        FROM shop_info
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<ShopInfo> -->
+    <select id="listShopInfo" parameterType="com.ly.mt.core.data.shop.entity.ShopInfo" resultType="com.ly.mt.core.data.shop.entity.ShopInfo">
+        SELECT *
+        FROM shop_info
+        <where>
+            <if test="null != shopProvinceCode and '' != shopProvinceCode">AND shop_province_code = #{shopProvinceCode}</if>
+            <if test="null != shopCityCode and '' != shopCityCode">AND shop_city_code = #{shopCityCode}</if>
+            <if test="null != shopType and '' != shopType">AND shop_type = #{shopType}</if>
+            <if test="null != status and '' != status">AND status = #{status}</if>
+            <if test="null != shopLon and '' != shopLon">AND shop_lon ${shopLon}</if>
+            <if test="null != shopLat and '' != shopLat">AND shop_lat ${shopLat}</if>
+        </where>
+    </select>
+</mapper>

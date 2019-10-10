@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgStoreInfoMapper" >
+    <!-- 保存GzgStoreInfo -->
+    <insert id="insertGzgStoreInfo" parameterType="com.ly.mt.center.data.gzg.entity.GzgStoreInfo">
+        INSERT INTO gzg_store_info (
+            id, code, plan, num, spu_id, sku_id, price, copywriting, pic, standards, store_num, state
+        ) VALUES (
+            #{id}, #{code}, #{plan}, #{num}, #{spu_id}, #{sku_id}, #{price}, #{copywriting}, #{pic}, #{standards}, #{store_num}, #{state}
+        )
+    </insert>
+
+
+    <!-- 删除GzgStoreInfo -->
+    <delete id="deleteGzgStoreInfo" parameterType="com.ly.mt.center.data.gzg.entity.GzgStoreInfo">
+        DELETE FROM gzg_store_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgStoreInfo -->
+    <update id="updateGzgStoreInfo" parameterType="com.ly.mt.center.data.gzg.entity.GzgStoreInfo">
+        UPDATE gzg_store_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgStoreInfo -->
+    <select id="getGzgStoreInfo" parameterType="com.ly.mt.center.data.gzg.entity.GzgStoreInfo" resultType="com.ly.mt.center.data.gzg.entity.GzgStoreInfo">
+        SELECT * 
+        FROM gzg_store_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

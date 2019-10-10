@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetBussinessCoorperationMapper" >
+  <sql id="Base_Column_List" >
+    id, is_deposit, deposit_amount,owner_user_id, owner_phone, owner_name, bd_phone, bd_user_id,bd_name, contract_id,
+    store_id, `status`,gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String"
+          resultType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation">
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_bussiness_coorperation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_bussiness_coorperation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation" >
+    insert into cabinet_bussiness_coorperation (id, is_deposit, deposit_amount, 
+      owner_phone, owner_name, bd_phone, 
+      bd_name, contract_id, store_id, 
+      `status`, gmt_create, gmt_modify,coorperation_pic
+      )
+    values (#{id,jdbcType=VARCHAR}, #{is_deposit,jdbcType=INTEGER}, #{deposit_amount,jdbcType=REAL},
+      #{owner_phone,jdbcType=VARCHAR}, #{owner_name,jdbcType=VARCHAR}, #{bd_phone,jdbcType=VARCHAR},
+      #{bd_name,jdbcType=VARCHAR}, #{contract_id,jdbcType=VARCHAR}, #{store_id,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{gmt_create,jdbcType=TIMESTAMP}, #{gmt_modify,jdbcType=TIMESTAMP},#{coorperation_pic}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation" >
+    insert into cabinet_bussiness_coorperation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="is_deposit != null" >
+        is_deposit,
+      </if>
+      <if test="deposit_amount != null" >
+        deposit_amount,
+      </if>
+      <if test="owner_phone != null" >
+        owner_phone,
+      </if>
+      <if test="owner_name != null" >
+        owner_name,
+      </if>
+      <if test="bd_phone != null" >
+        bd_phone,
+      </if>
+      <if test="bd_name != null" >
+        bd_name,
+      </if>
+      <if test="contract_id != null" >
+        contract_id,
+      </if>
+      <if test="store_id != null" >
+        store_id,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create,
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify,
+      </if>
+      <if test="coorperation_pic != null">
+        coorperation_pic,
+      </if>
+      <if test="divide_scale != null">
+        divide_scale,
+      </if>
+      <if test="bd_user_id != null">
+        bd_user_id,
+      </if>
+      <if test="owner_user_id != null">
+        owner_user_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="is_sign_contract != null">
+        is_sign_contract
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="is_deposit != null" >
+        #{is_deposit,jdbcType=INTEGER},
+      </if>
+      <if test="deposit_amount != null" >
+        #{deposit_amount},
+      </if>
+      <if test="owner_phone != null" >
+        #{owner_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="owner_name != null" >
+        #{owner_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bd_phone != null" >
+        #{bd_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="bd_name != null" >
+        #{bd_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contract_id != null" >
+        #{contract_id,jdbcType=VARCHAR},
+      </if>
+      <if test="store_id != null" >
+        #{store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmt_create != null" >
+        #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coorperation_pic != null">
+        #{coorperation_pic},
+      </if>
+      <if test="divide_scale">
+        #{divide_scale},
+      </if>
+      <if test="bd_user_id != null">
+        #{bd_user_id},
+      </if>
+      <if test="owner_user_id != null">
+        #{owner_user_id},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="is_sign_contract != null">
+        #{is_sign_contract}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation" >
+    update cabinet_bussiness_coorperation
+    <set >
+      <if test="is_deposit != null" >
+        is_deposit = #{is_deposit,jdbcType=INTEGER},
+      </if>
+      <if test="deposit_amount != null" >
+        deposit_amount = #{deposit_amount},
+      </if>
+      <if test="owner_phone != null" >
+        owner_phone = #{owner_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="owner_name != null" >
+        owner_name = #{owner_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bd_phone != null" >
+        bd_phone = #{bd_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="bd_name != null" >
+        bd_name = #{bd_name,jdbcType=VARCHAR},
+      </if>
+      <if test="contract_id != null" >
+        contract_id = #{contract_id,jdbcType=VARCHAR},
+      </if>
+      <if test="store_id != null" >
+        store_id = #{store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coorperation_pic != null">
+        coorperation_pic = #{coorperation_pic},
+      </if>
+      <if test="is_sign_contract != null">
+        is_sign_contract = #{is_sign_contract},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+      <if test="bd_user_id != null">
+        bd_user_id=#{bd_user_id},
+      </if>
+      <if test="owner_user_id != null">
+        owner_user_id=#{owner_user_id},
+      </if>
+      <if test="divide_scale != null">
+        divide_scale=#{divide_scale}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation" >
+    update cabinet_bussiness_coorperation
+    set is_deposit = #{isDeposit,jdbcType=INTEGER},
+      deposit_amount = #{depositAmount,jdbcType=REAL},
+      owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      bd_phone = #{bdPhone,jdbcType=VARCHAR},
+      bd_name = #{bdName,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      coorperation_pic=#{coorperation_pic},
+      description=#{description},
+      is_sign_contract=#{is_sign_contract},
+      bd_user_id=#{bd_user_id},
+      owner_user_id=#{owner_user_id},
+      devide_scale=#{devide_scale},
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByStoreId" parameterType="java.lang.String" resultType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation">
+    select <include refid="Base_Column_List"/> from cabinet_bussiness_coorperation where store_id=#{storeId}
+  </select>
+
+  <select id="getCoorperationInfo" parameterType="java.lang.String" resultType="com.ly.mt.center.data.cabinet.response.CreateCooperationResVO">
+    select
+      store.id as store_id,
+      store.name as store_name,
+      store.address as store_address,
+      store.detail_address,
+      store.belong_circle,
+      store.m_id,
+      store.create_status,
+      sp.store_type,
+      sp.forcast_flow,
+      sp.decorate_type,
+      sp.is_chain,
+      sp.use_area,
+      sp.per_capita_expense,
+      cbc.bd_name,
+      cbc.bd_phone,
+      cbc.owner_name,
+      cbc.owner_phone,
+      cbc.coorperation_pic,
+      cbc.is_deposit as is_desposit,
+      cbc.deposit_amount as desposit_amount,
+      cbc.divide_scale,
+      cc.take_effect_datetime,
+      cc.contract_pic,
+      cc.lose_efficacy_datetime as lose_effect_datetime,
+      cc.id as contract_id,
+      cbc.description,
+      cbc.is_sign_contract,
+      ci.imei as showcase_imei
+    from cabinet_store store
+      LEFT JOIN cabinet_store_property sp
+        ON store.id=sp.cabinet_store_id
+      LEFT JOIN cabinet_bussiness_coorperation cbc
+        ON cbc.store_id=store.id
+      LEFT JOIN cabinet_contract cc
+        ON cc.id=cbc.contract_id
+      LEFT JOIN cabinet_info  ci
+        ON ci.store_id=store.id
+    where store.id=#{cabinetStoreId}
+  </select>
+  
+  <select id="selectPageByStatus" resultType="com.ly.mt.center.data.cabinet.response.BdStoreMsgRespVO">
+    select
+      cbc.owner_name,
+      cbc.owner_phone,
+      store.detail_address,
+      store.gmt_modify as datetime,
+      store.id as store_id,
+      store.create_status
+    from cabinet_store store
+      LEFT JOIN cabinet_bussiness_coorperation cbc
+        ON store.id=cbc.store_id
+    where
+      <if test="createStatus != null and createStatus != ''">
+        store.create_status=#{createStatus} and
+      </if>
+      <if test="condition != null and condition != ''">
+        (store.name like concat(concat('%',#{condition}),'%')
+        or
+        cbc.owner_name like concat(concat('%',#{condition}),'%')
+        or
+        cbc.owner_phone like concat(concat('%',#{condition}),'%')) and
+      </if>
+      cbc.bd_phone=#{bdPhone} and store.create_type=#{type} order by store.gmt_create desc
+  </select>
+
+
+  <select id="search" resultType="com.ly.mt.center.data.cabinet.response.BdStoreMsgRespVO">
+    select
+      cbc.owner_name,
+      cbc.owner_phone,
+      store.detail_address,
+      store.gmt_modify as datetime,
+      store.id as store_id,
+      store.create_status
+    from cabinet_store store
+      LEFT JOIN cabinet_bussiness_coorperation cbc
+        ON store.id=cbc.store_id
+    where
+      <if test="condition != null and condition != ''">
+        store.name like concat(concat('%',#{condition}),'%')
+        or
+        cbc.owner_name like concat(concat('%',#{condition}),'%')
+        or
+        cbc.owner_phone like concat(concat('%',#{condition}),'%') and
+      </if>
+      cbc.bd_phone=#{bd_phone} and store.create_type=#{type}
+  </select>
+  <select id="selectByStoreIdAndStatus" parameterType="java.lang.String" resultType="com.ly.mt.center.data.cabinet.entity.CabinetBussinessCoorperation">
+    select id, is_deposit, deposit_amount,owner_user_id, owner_phone, owner_name, bd_phone, bd_user_id,bd_name, contract_id,
+           store_id, `status`,divide_scale,gmt_create, gmt_modify
+    from cabinet_bussiness_coorperation
+    where store_id=#{store_id} and status=#{status}
+  </select>
+
+</mapper>

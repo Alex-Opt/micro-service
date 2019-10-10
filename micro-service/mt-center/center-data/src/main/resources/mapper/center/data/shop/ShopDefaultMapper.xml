@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopDefaultMapper" >
+    <!-- 保存ShopDefault -->
+    <insert id="insertShopDefault" parameterType="com.ly.mt.center.data.shop.entity.ShopDefault">
+        INSERT INTO shop_default (
+            id, user_id, real_name, mobile, status, shop_name, shop_lon, shop_lat, shop_address, shop_country, shop_province_code, shop_city_code
+        ) VALUES (
+            #{id}, #{user_id}, #{real_name}, #{mobile}, #{status}, #{shop_name}, #{shop_lon}, #{shop_lat}, #{shop_address}, #{shop_country}, #{shop_province_code}, #{shop_city_code}
+        )
+    </insert>
+
+
+    <!-- 删除ShopDefault -->
+    <delete id="deleteShopDefault" parameterType="com.ly.mt.center.data.shop.entity.ShopDefault">
+        DELETE FROM shop_default
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopDefault -->
+    <update id="updateShopDefault" parameterType="com.ly.mt.center.data.shop.entity.ShopDefault">
+        UPDATE shop_default
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopDefault -->
+    <select id="getShopDefault" parameterType="com.ly.mt.center.data.shop.entity.ShopDefault" resultType="com.ly.mt.center.data.shop.entity.ShopDefault">
+        SELECT * 
+        FROM shop_default
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

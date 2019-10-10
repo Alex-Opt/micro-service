@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.border.mapper.BOrderBattleServiceMapper" >
+
+  <select id="getOrdeBattleShopByUserIdAndShopId" resultType="com.ly.mt.core.base.entity.border.OrderBattleShop" parameterType="java.lang.Long" >
+    SELECT
+      id, orders_battle_id, order_id, shop_id, user_id, status, create_time
+    FROM order_battle_shop
+    WHERE user_id = #{userId,jdbcType=BIGINT}
+    AND shop_id = #{shopId,jdbcType =BIGINT}
+    ORDER BY status ASC
+  </select>
+
+  <select id="getTradeOrdersById" resultType="com.ly.mt.core.base.entity.trade.TradeOrder" parameterType="java.lang.Long">
+    SELECT
+      id,order_no, buyer_id, buyer_memo, shop_id, gy_warehouse_code,gy_shop_code,seller_id,order_old_money,
+      order_money,order_discount_money,distribution_id,logistics_code,gy_logistics_code,freight,
+      order_status,order_source,order_yn,cancle_time, is_refund,refund_time, payment_type,
+      push_status,order_type,address_id,auto_receive_time, auto_cancel_time, order_snapshoot_key,locked,lock_time,
+      delivery_time,create_time,pay_time,order_finish_time
+    FROM trade_orders
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="getTradeOrderItemByOrderId" resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+    SELECT
+      id, order_id, spu_id, spu_name, sku_id,sku_name, sku_price, sku_num, pomotion_price, freight_price, payment_price, create_time
+    FROM trade_order_items
+    WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getBuyerAddressById" resultType="com.ly.mt.core.base.entity.user.UserAddress" parameterType="java.lang.Long">
+    SELECT
+      lat,
+      lon,
+      user_address
+    FROM user_address
+    WHERE id = #{addressId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getShopInfoByUserInfo" resultType="com.ly.mt.core.base.entity.shop.ShopAddress">
+    SELECT
+      id, shop_id,user_id,user_name,
+      receive_name, receive_phone,province_code,
+      province_name,city_code, city_name,
+      district_code,district_name,user_address,
+      is_default,send_lon,send_lat,valid_status
+    FROM shop_address
+    WHERE is_default = 1
+      AND valid_status = 1
+      AND user_id = #{userId,jdbcType=BIGINT}
+      AND shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateOrderBattleStatus" parameterType="com.ly.mt.core.base.entity.border.OrderBattleShop">
+    UPDATE order_battle_shop
+    SET status =#{status ,jdbcType=INTEGER}
+    WHERE orders_battle_id = #{ordersBattleId,jdbcType=BIGINT}
+    <if test="userId != null">
+      AND user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="shopId != null">
+      AND shop_id = #{shopId,jdbcType=BIGINT}
+    </if>
+  </update>
+
+  <update id="updateBattleInfoById" parameterType="com.ly.mt.core.base.entity.border.OrdersBattleInfo" >
+    update orders_battle_info
+    set
+        shop_id = #{shopId,jdbcType=BIGINT},
+        user_id = #{userId,jdbcType=BIGINT},
+        status = #{status,jdbcType=INTEGER},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+    <if test="grabedNum != null">
+      grabed_num = #{grabedNum,jdbcType = INTEGER},
+    </if>
+      grabed_at = #{grabedAt,jdbcType = TIMESTAMP},
+      checked_at = #{checkedAt,jdbcType = TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateShopIdIntoTradeOrders" >
+    update trade_orders
+    set shop_id = #{shopId,jdbcType = BIGINT},
+        seller_id = #{sellerId,jdbcType = BIGINT}
+    where id = #{id,jdbcType= BIGINT}
+  </update>
+
+
+
+  <insert id="insertOrderBattleLogs" parameterType="com.ly.mt.core.base.entity.border.OrderBattleLogs" >
+    insert into order_battle_logs (id, orders_battle_id, order_id, user_id, shop_id, user_type,status, create_time)
+    values (#{id,jdbcType=BIGINT}, #{ordersBattleId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+            #{userId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{userType,jdbcType=TINYINT},
+            #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="getGrabNumById" resultType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+    SELECT
+      id, order_id, shop_id, user_id, buyer_id, deliveryman_name, deliveryman_phone, type,
+      status, grabed_num, grabed_at, checked_at, taked_at, estimate_sended_at, send_model,
+      send_com, send_no, sended_at, estimated_successed_at, successed_at, create_time,
+      modify_time
+    FROM orders_battle_info
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <update id="updateBattleOrderRelease" parameterType="com.ly.mt.core.base.entity.border.OrderBattleShop">
+    UPDATE
+    order_battle_shop
+    SET
+    status = #{status,jdbcType=INTEGER}
+    WHERE orders_battle_id = #{ordersBattleId,jdbcType=BIGINT}
+    <if test="userId != null">
+      AND shop_id = #{shopId,jdbcType =BIGINT}
+      AND user_id = #{userId,jdbcType =BIGINT}
+    </if>
+  </update>
+
+  <select id="getShopCheckLogs" resultType="com.ly.mt.core.base.entity.border.OrderBattleCheckLogs">
+    SELECT
+      id, shop_id, orders_battle_id, order_id,  sku_id, barcode, create_time
+    FROM order_battle_check_logs
+    WHERE orders_battle_id = #{ordersBattleId,jdbcType=BIGINT}
+    AND shop_id =#{shopId,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateStockDeliveryNums" parameterType="com.ly.mt.core.base.entity.shop.ShopStocks">
+    UPDATE shop_stocks
+    SET
+      delivery_nums =delivery_nums + #{deliveryNums,jdbcType=INTEGER},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    WHERE shop_id = #{shopId,jdbcType=BIGINT}
+    AND sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+
+  <!--  根据商品的sku_id查询商品表，得到商品的url.-->
+  <select id="getPictureUrlBySkuId" resultType="java.lang.String">
+    SELECT
+      picture_url AS pictureUrl
+    FROM goods_sku_picture
+    WHERE sku_id = #{skuId, jdbcType=BIGINT}
+    ORDER BY sort_number DESC
+             LIMIT 1
+  </select>
+
+  <update id="cancleOrderByOrderId" >
+    UPDATE trade_orders
+    SET order_status =99,
+        order_yn =2,
+        cancle_time = #{time,jdbcType=TIMESTAMP},
+        order_finish_time = #{time,jdbcType=TIMESTAMP}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBattleOrderStatusById" >
+      UPDATE orders_battle_info
+      SET
+        status = #{status,jdbcType=INTEGER},
+        modify_time = #{time,jdbcType=TIMESTAMP}
+      WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getOrderItemsByOrderId" resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem" parameterType="java.lang.Long">
+    SELECT
+      id, order_id, spu_id,spu_name, sku_id, sku_name, sku_price, sku_num
+    FROM trade_order_items
+    WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getGoodsSkuCodeInfoByCode" resultType="com.ly.mt.core.base.entity.goods.GoodsSkuCode">
+    SELECT
+      id, sku_id, bar_code, parent_code, code, check_num, create_time, modify_time
+    FROM goods_sku_code
+    WHERE code = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getGoodsSkuInfoByBarCode" resultType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo">
+    SELECT
+    id,name,bar_code
+    FROM goods_sku_info
+    WHERE
+      bar_code = #{barCode,jdbcType=VARCHAR}
+    LIMIT 1
+  </select>
+
+  <update id="updateGoodsSkuCodeCheckTimes">
+    UPDATE goods_sku_code
+    SET check_num = check_num+1,
+        modify_time = #{modifyTime,jdbcType =TIMESTAMP}
+    WHERE  code = #{code,jdbcType =VARCHAR}
+  </update>
+
+  <update id="updateBattleOrderDeliveryStatus" parameterType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+    UPDATE orders_battle_info
+    SET
+      status = #{status,jdbcType=INTEGER},
+      <if test="deliverymanName != null">
+        deliveryman_name = #{deliverymanName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverymanPhone != null">
+        deliveryman_phone = #{deliverymanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="takedAt != null">
+        taked_at = #{takedAt,jdbcType=TIMESTAMP},
+      </if>
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateOrderStatusById">
+    UPDATE trade_orders
+    SET
+      order_status = #{status},
+      <if test="finishTime != null">
+        order_finish_time= #{finishTime,jdbcType=TIMESTAMP}
+      </if>
+    WHERE id = #{orderId,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertOrderBattleCheckLogs" parameterType="com.ly.mt.core.base.entity.border.OrderBattleCheckLogs" >
+    INSERT INTO order_battle_check_logs (id, shop_id, orders_battle_id, order_id,  sku_id, barcode, create_time)
+    VALUES (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{ordersBattleId,jdbcType=BIGINT},
+            #{orderId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT},
+            #{barcode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateGoodsSocksByShopIdAndSkuId">
+      UPDATE shop_stocks
+      SET
+          delivery_nums = delivery_nums + 1,
+          modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+      WHERE shop_id = #{shopId}
+      AND sku_id = #{skuId}
+  </update>
+  
+  <update id="deductionShopGoodsStocks">
+    UPDATE shop_stocks
+    SET
+    delivery_nums = delivery_nums - #{nums,jdbcType=INTEGER},
+    nums = nums - #{nums,jdbcType=INTEGER},
+    sales = sales + #{nums,jdbcType=INTEGER},
+    modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    WHERE shop_id = #{shopId}
+    AND sku_id = #{skuId}
+  </update>
+
+  <update id="recoverShopGoodsStocks">
+    UPDATE shop_stocks
+    SET
+      nums = nums + #{nums,jdbcType=INTEGER},
+      sales = sales - #{nums,jdbcType=INTEGER},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    WHERE shop_id = #{shopId}
+    AND sku_id = #{skuId}
+  </update>
+
+  <select id="getUserInfoById" resultType="com.ly.mt.core.base.entity.user.User">
+    SELECT
+           id,user_name,wx_open_id,qq_open_id,quick_type
+    FROM USER
+    WHERE id =#{userId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertShopProfitLogs" parameterType="com.ly.mt.core.base.entity.shop.ShopProfitLogs" >
+    INSERT INTO shop_profit_logs (id, order_id, shop_id, user_id, profit_type, profit, status, create_time)
+    VALUES (
+            #{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+            #{profitType,jdbcType=TINYINT}, #{profit,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
+           )
+  </insert>
+
+  <insert id="insertShopProfits" parameterType="com.ly.mt.core.base.entity.shop.ShopProfitsForBattleOrder" >
+    INSERT INTO shop_profits (id, shop_id, user_id, total_profit, reward, grab, create_time)
+    VALUES (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+            #{totalProfit,jdbcType=DECIMAL},  #{reward,jdbcType=DECIMAL},#{grab,jdbcType=DECIMAL},
+            #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateShopProfitsByPrimaryKey" parameterType="com.ly.mt.core.base.entity.shop.ShopProfitsForBattleOrder" >
+    UPDATE shop_profits
+    SET
+        total_profit =total_profit + #{totalProfit,jdbcType=DECIMAL},
+        reward = #{reward,jdbcType=DECIMAL},
+        grab =grab + #{grab,jdbcType=DECIMAL},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getShopProfitsByUserIdAndShopId" resultType="com.ly.mt.core.base.entity.shop.ShopProfitsForBattleOrder">
+    SELECT
+      id, shop_id, user_id, total_profit, grab_cash, lode_cash, shop_order_cash, withdraw_cash,
+      reward, grab, lode, shop_order, profit_frozen, reward_frozen, grab_frozen, lode_frozen,
+      shop_order_frozen, create_time, modify_time
+    FROM shop_profits
+    WHERE user_id = #{userId,jdbcType=BIGINT}
+    AND shop_id= #{shopId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getBattleInfoByOrderId" resultType="com.ly.mt.core.base.entity.border.OrdersBattleInfo">
+    SELECT
+      id, order_id, shop_id, user_id, buyer_id, deliveryman_name, deliveryman_phone, type,
+      status, grabed_num, grabed_at, checked_at, taked_at, estimate_sended_at, send_model,
+      send_com, send_no, sended_at, estimated_successed_at, successed_at, create_time,
+      modify_time
+    FROM orders_battle_info
+    WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertOrderBattleExpress" parameterType="com.ly.mt.core.base.entity.border.OrderBattleExpresses" >
+    INSERT INTO order_battle_expresses (id, orders_battle_id, order_id,shop_id, user_id, state,create_time, data
+    )
+    VALUES (#{id,jdbcType=BIGINT}, #{ordersBattleId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+            #{shopId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT},
+            #{createTime,jdbcType=TIMESTAMP}, #{data,jdbcType=LONGVARCHAR}
+           )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.base.entity.border.OrderBattleExpresses" >
+    UPDATE order_battle_expresses
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="data != null" >
+        data = #{data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getOrderNoByOrderId" resultType="java.lang.String" parameterType="java.lang.Long">
+    SELECT
+      order_no
+    FROM
+      trade_orders
+    WHERE id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+
+
+</mapper>

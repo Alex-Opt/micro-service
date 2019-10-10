@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserNoticesMapper" >
+    <!-- 保存UserNotices -->
+    <insert id="insertUserNotices" parameterType="com.ly.mt.center.data.user.entity.UserNotices">
+        INSERT INTO user_notices (
+            id, from_id, to_id, type, title, description, content, create_time, modify_time
+        ) VALUES (
+            #{id}, #{from_id}, #{to_id}, #{type}, #{title}, #{description}, #{content}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserNotices -->
+    <delete id="deleteUserNotices" parameterType="com.ly.mt.center.data.user.entity.UserNotices">
+        DELETE FROM user_notices
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserNotices -->
+    <update id="updateUserNotices" parameterType="com.ly.mt.center.data.user.entity.UserNotices">
+        UPDATE user_notices
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserNotices -->
+    <select id="getUserNotices" parameterType="com.ly.mt.center.data.user.entity.UserNotices" resultType="com.ly.mt.center.data.user.entity.UserNotices">
+        SELECT * 
+        FROM user_notices
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

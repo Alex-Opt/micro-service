@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgCouponCodeMapper" >
+
+    <insert id="insertGzgCouponCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+    insert into coupon_code (id, coupon_id, coupon_code,
+      user_id, pull_status, pull_time,
+      invalid_time, use_status, use_time,
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{coupon_id,jdbcType=BIGINT}, #{coupon_code,jdbcType=VARCHAR},
+      #{user_id,jdbcType=BIGINT}, #{pull_status,jdbcType=INTEGER}, #{pull_time,jdbcType=TIMESTAMP},
+      #{invalid_time,jdbcType=TIMESTAMP}, #{use_status,jdbcType=INTEGER}, #{use_time,jdbcType=TIMESTAMP},
+      #{create_time,jdbcType=TIMESTAMP})
+  </insert>
+
+    <delete id="deleteGzgCouponCodeById" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+    delete from coupon_code
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+
+    <update id="updateGzgCouponCodeById" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+    update coupon_code
+    set coupon_id = #{coupon_id,jdbcType=BIGINT},
+      coupon_code = #{coupon_code,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=BIGINT},
+      pull_status = #{pull_status,jdbcType=INTEGER},
+      pull_time = #{pull_time,jdbcType=TIMESTAMP},
+      invalid_time = #{invalid_time,jdbcType=TIMESTAMP},
+      use_status = #{use_status,jdbcType=INTEGER},
+      use_time = #{use_time,jdbcType=TIMESTAMP},
+      create_time = #{create_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="getGzgCouponCodeById" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+    select id, coupon_id, coupon_code, user_id, pull_status, pull_time, invalid_time,
+    use_status, use_time, create_time
+    from coupon_code
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="getGzgCouponCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+    select id, coupon_id, coupon_code, user_id, pull_status, pull_time, invalid_time,
+    use_status, use_time, create_time
+    from coupon_code
+    where  1=1
+        <if test="coupon_code != null">
+           and coupon_code = #{coupon_code}
+        </if>
+         <if test="user_id != null">
+             and user_id = #{user_id}
+         </if>
+        <if test="pull_status != null">
+            and pull_status = #{pull_status}
+        </if>
+        <if test="pull_time != null">
+            and  pull_time = #{pull_time}
+        </if>
+        <if test="invalid_time != null">
+            and invalid_time = #{invalid_time}
+        </if>
+        <if test="use_status != null">
+            and  use_status = #{use_status}
+        </if>
+        <if test="use_time != null">
+            and use_time = #{use_time}
+        </if>
+        <if test="create_time != null">
+            and create_time = #{create_time}
+        </if>
+        <if test="coupon_id != null">
+            and coupon_id = #{coupon_id}
+        </if>
+
+  </select>
+
+    <select id="getGzgCouponCodeNotUsed" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        select a.id, a.coupon_id, a.coupon_code, a.user_id, a.pull_status, a.pull_time, a.invalid_time,
+               a.use_status, a.use_time, a.create_time
+        from coupon_code a  LEFT JOIN coupon_info b ON a.coupon_id = b.id
+        where  b.coupon_use_system = 20
+     AND use_time IS NULL AND use_status = '1' AND invalid_time > NOW() AND user_id = #{user_id}
+    </select>
+
+
+    <select id="getGzgCouponCodeUsedInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        select id, coupon_id, coupon_code, user_id, pull_status, pull_time, invalid_time,
+        use_status, use_time, create_time
+        from coupon_code
+        where  1=1
+     AND user_id = #{user_id} and coupon_id = #{coupon_id} and invalid_time > NOW() and use_status = '1' and use_time is  null
+    </select>
+
+    <select id="selectAllCouponByUserId" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        select id, coupon_id, coupon_code, user_id, pull_status, pull_time, invalid_time,
+        use_status, use_time, create_time
+        from coupon_code
+        where  user_id = #{user_id}
+
+    </select>
+
+
+    <update id="updateGzgCouponUseStatus" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        update coupon_code set use_status = 2 where user_id = #{user_id} AND coupon_id = #{coupon_id}
+    </update>
+
+</mapper >

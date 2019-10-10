@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.point.mapper.PointMallRuleMapper" >
+    <!-- 保存PointMallRule -->
+    <insert id="insertPointMallRule" parameterType="com.ly.mt.center.data.point.entity.PointMallRule">
+        INSERT INTO point_mall_rule (
+            id, title, rule_desc, rule_status, exchange_type, score, start_time, end_time, create_time
+        ) VALUES (
+            #{id}, #{title}, #{rule_desc}, #{rule_status}, #{exchange_type}, #{score}, #{start_time}, #{end_time}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除PointMallRule -->
+    <delete id="deletePointMallRule" parameterType="com.ly.mt.center.data.point.entity.PointMallRule">
+        DELETE FROM point_mall_rule
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新PointMallRule -->
+    <update id="updatePointMallRule" parameterType="com.ly.mt.center.data.point.entity.PointMallRule">
+        UPDATE point_mall_rule
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询PointMallRule -->
+    <select id="getPointMallRule" parameterType="com.ly.mt.center.data.point.entity.PointMallRule" resultType="com.ly.mt.center.data.point.entity.PointMallRule">
+        SELECT * 
+        FROM point_mall_rule
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

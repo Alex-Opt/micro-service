@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.cabinet.mapper.CabinetRewardRecordMapper">
+    <select id="getRecordList" resultType="com.ly.mt.core.data.cabinet.entity.CabinetRewardRecord">
+        SELECT * FROM cabinet_reward_record
+        WHERE status = 0 and create_time &lt;#{create_time}
+        order by create_time asc
+    </select>
+    <update id="updateRecordById" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetRewardRecord">
+        UPDATE cabinet_reward_record
+        SET status = 1,update_time = #{update_time}
+        WHERE id = #{id}
+    </update>
+    <update id="updateCabinetRewardRecordByIdList">
+        UPDATE cabinet_reward_record
+        SET status = 1,update_time = #{update_time}
+        WHERE  id in
+        <foreach collection="idList" open="(" separator="," close=")" item="item">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

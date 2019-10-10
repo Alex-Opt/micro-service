@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.cabinet.mapper.CabinetCategroyMapper">
+    <!-- 新增CabinetCategroy -->
+    <insert id="insertCabinetCategroy" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetCategroy">
+        INSERT INTO cabinet_categroy (
+            id, cabinet_name, cabinet_code, cabinet_type, goods_count, aisle_number,
+            door_number, create_time, create_name, update_time, update_name, valid_status
+        ) VALUES (
+            #{id}, #{cabinetName}, #{cabinetCode}, #{cabinetType}, #{goodsCount}, #{aisleNumber},
+            #{doorNumber}, #{createTime}, #{createName}, #{updateTime}, #{updateName}, #{validStatus}
+        )
+    </insert>
+
+
+    <!-- 更新CabinetCategroy -->
+    <insert id="updateCabinetCategroy" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetCategroy">
+        UPDATE cabinet_categroy
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != cabinetName">cabinet_name = #{cabinetName},</if>
+            <if test="null != cabinetCode">cabinet_code = #{cabinetCode},</if>
+            <if test="null != cabinetType">cabinet_type = #{cabinetType},</if>
+            <if test="null != goodsCount">goods_count = #{goodsCount},</if>
+            <if test="null != aisleNumber">aisle_number = #{aisleNumber},</if>
+            <if test="null != doorNumber">door_number = #{doorNumber},</if>
+            <if test="null != validStatus">valid_status = #{validStatus},</if>
+            <if test="null != updateTime">update_time = #{updateTime},</if>
+            <if test="null != updateName">update_name = #{updateName},</if>
+        </trim>
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </insert>
+
+
+    <!-- 查询CabinetCategroy -->
+    <select id="getCabinetCategroy" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetCategroy" resultType="com.ly.mt.core.data.cabinet.entity.CabinetCategroy">
+        SELECT *
+        FROM cabinet_categroy
+        <where>
+            <if test="null != id">AND id = #{id}</if>
+            <if test="null != cabinetName">AND cabinet_name = #{cabinetName}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<CabinetCategroy> -->
+    <select id="listCabinetCategroy" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetCategroy" resultType="com.ly.mt.core.data.cabinet.entity.CabinetCategroy">
+        SELECT *
+        FROM cabinet_categroy
+        <where>
+            <if test="null != updateName and '' != updateName">AND update_name LIKE '%${updateName}%'</if>
+            <if test="null != cabinetName and '' != cabinetName">AND cabinet_name LIKE '%${cabinetName}%'</if>
+            <if test="null != cabinetType and '' != cabinetType and '-1' != cabinetType">cabinet_type = #{cabinetType}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgOrdersServiceMapper">
+    <sql id="Base_Column_List">
+        id, payment_no as paymentNo,
+          order_money as orderMoney,
+          order_status as orderStatus,
+          payment_type as paymentType,
+          pay_time as payTime,
+          order_finish_time as orderFinishTime,
+          gy_sku_code as gySkuCode,
+          code
+    </sql>
+    <sql id="Base_Col_List">
+        Id,
+            sku_Id,
+            sku_name,
+            sku_price,
+            sku_num,
+            pomotion_price,
+            freight_price,
+            payment_price,
+            cabinet_no,
+            gy_sku_code,
+            code
+    </sql>
+    <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgOrderItemVo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="sku_Id" property="skuId"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="sku_price" property="skuPrice"/>
+        <result column="sku_num" property="skuNum"/>
+        <result column="cabinet_no" property="cabinetNo" />
+        <result column="code" property="code"/>
+        <result column="payment_price" property="paymentPrice"/>
+    </resultMap>
+    <select id="selectPictureBySkuId" parameterType="java.lang.Long" resultType="java.util.Map">
+        select small_pic_url from gzg_sku_picture where sku_id=#{skuId}
+    </select>
+    <select id="selectItemByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Col_List"/>
+        FROM gzg_order_items
+        WHERE id = #{orderItemId}
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ly.mt.core.common.entity.gzg.GzgOrderVo">
+        select id, payment_no as paymentNo,
+          order_money as orderMoney,
+          order_status as orderStatus,
+          payment_type as paymentType,
+          pay_time as payTime,
+          order_finish_time as orderFinishTime,
+          code,
+          hotel_id as hotelId
+        from gzg_orders where id=#{orderId}
+    </select>
+    <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgOrderVo">
+        INSERT INTO gzg_orders (id, payment_no, buyer_id, buyer_memo,
+                                  shop_id, gy_warehouse_id, seller_id,
+                                  order_old_money, order_money, order_discount_money,
+                                  distribution_id, logistics_id, gy_logistics_code,
+                                  freight, order_status, order_source,
+                                  order_yn, is_refund, refund_time,
+                                  payment_type, push_status, order_type, address_id,
+                                  auto_receive_time, auto_cancel_time, order_snapshoot_key,
+                                  locked, lock_time, create_time,
+                                  pay_time, order_finish_time,cell_state,code,hotel_id)
+        VALUES (#{id,jdbcType=BIGINT}, #{paymentNo,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT},
+                #{buyerMemo,jdbcType=VARCHAR},
+                #{shopId,jdbcType=BIGINT}, #{gyWarehouseId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT},
+                #{orderOldMoney,jdbcType=DOUBLE}, #{orderMoney,jdbcType=DOUBLE}, #{orderDiscountMoney,jdbcType=DOUBLE},
+                #{distributionId,jdbcType=BIGINT}, #{logisticsId,jdbcType=BIGINT}, #{gyLogisticsCode,jdbcType=VARCHAR},
+                #{freight,jdbcType=DOUBLE}, #{orderStatus,jdbcType=INTEGER}, #{orderSource,jdbcType=INTEGER},
+                #{orderYn,jdbcType=INTEGER}, #{isRefund,jdbcType=INTEGER}, #{refundTime,jdbcType=TIMESTAMP},
+                #{paymentType,jdbcType=INTEGER}, #{pushStatus,jdbcType=VARCHAR}, #{orderType,jdbcType=INTEGER},
+                #{addressId,jdbcType=BIGINT},
+                #{autoReceiveTime,jdbcType=TIMESTAMP}, #{autoCancelTime,jdbcType=TIMESTAMP},
+                #{orderSnapshootKey,jdbcType=VARCHAR},
+                #{locked,jdbcType=INTEGER}, #{lockTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+                #{payTime,jdbcType=TIMESTAMP}, #{orderFinishTime,jdbcType=TIMESTAMP},
+                #{cellState,jdbcType=VARCHAR},
+                #{code,jdbcType=VARCHAR},#{hotelId,jdbcType=BIGINT}
+                )
+    </insert>
+
+
+
+    <insert id="batchInsertOrderItems">
+        insert into gzg_order_items (Id, order_id, spu_id,
+        sku_Id, sku_name, sku_price,
+        sku_num, pomotion_price, freight_price,
+        gy_spu_id, gy_spu_code, gy_sku_code,
+        payment_price, create_time,cabinetNo,code,hotel_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.orderId,jdbcType=BIGINT}, #{item.spuId,jdbcType=BIGINT},
+            #{item.skuId,jdbcType=BIGINT}, #{item.skuName,jdbcType=VARCHAR}, #{item.skuPrice,jdbcType=DOUBLE},
+            #{item.skuNum,jdbcType=INTEGER}, #{item.pomotionPrice,jdbcType=DOUBLE},
+            #{item.freightPrice,jdbcType=DOUBLE},
+            #{item.gySpuId,jdbcType=VARCHAR}, #{item.gySpuCode,jdbcType=VARCHAR}, #{item.gySkuCode,jdbcType=VARCHAR},
+            #{item.paymentPrice,jdbcType=DOUBLE}, #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.cabinetNo,jdbcType=VARCHAR},
+            #{item.code,jdbcType=VARCHAR},#{item.hotelId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+
+    <!--     	2.根据订单主表id查询订单明细表查询商品信息。可以得到【商品名，商品原始单价，商品购买数量，缺少商品图片地址。】-->
+    <select id="getGzgOrderItemVoByOrderId" resultType="com.ly.mt.core.common.entity.gzg.GzgOrderItemVo">
+        SELECT
+            Id,
+            sku_Id,
+            sku_name,
+            sku_price,
+            sku_num,
+            pomotion_price,
+            freight_price,
+            payment_price,
+            cabinetNo,
+            code,
+            hotel_id
+        FROM gzg_order_items
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateGzgOrderByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgOrderVo">
+        UPDATE gzg_orders
+
+        <set>
+            <if test="paymentNo != null">
+                payment_no           = #{paymentNo,jdbcType=BIGINT},
+            </if>
+
+            <if test="buyerId != null">
+                buyer_id             = #{buyerId,jdbcType=BIGINT},
+            </if>
+
+            <if test="buyerMemo != null">
+                buyer_memo           = #{buyerMemo,jdbcType=VARCHAR},
+            </if>
+
+            <if test="shopId != null">
+                shop_id              = #{shopId,jdbcType=BIGINT},
+            </if>
+
+            <if test="gyWarehouseId != null">
+                gy_warehouse_id      = #{gyWarehouseId,jdbcType=BIGINT},
+            </if>
+
+            <if test="sellerId != null">
+                seller_id            = #{sellerId,jdbcType=BIGINT},
+            </if>
+
+            <if test="orderOldMoney != null">
+                order_old_money      = #{orderOldMoney,jdbcType=DOUBLE},
+            </if>
+
+            <if test="orderMoney != null">
+                order_money          = #{orderMoney,jdbcType=DOUBLE},
+            </if>
+
+            <if test="orderDiscountMoney != null">
+                order_discount_money = #{orderDiscountMoney,jdbcType=DOUBLE},
+            </if>
+
+            <if test="distributionId != null">
+                distribution_id      = #{distributionId,jdbcType=BIGINT},
+            </if>
+
+            <if test="logisticsId != null">
+                logistics_id         = #{logisticsId,jdbcType=BIGINT},
+            </if>
+
+
+            <if test="gyLogisticsCode != null">
+                gy_logistics_code    = #{gyLogisticsCode,jdbcType=VARCHAR},
+            </if>
+
+            <if test="freight != null">
+                freight              = #{freight,jdbcType=DOUBLE},
+            </if>
+
+            <if test="orderStatus != null">
+                order_status         = #{orderStatus,jdbcType=INTEGER},
+            </if>
+
+            <if test="orderSource != null">
+                order_source         = #{orderSource,jdbcType=INTEGER},
+            </if>
+
+            <if test="orderYn != null">
+                order_yn             = #{orderYn,jdbcType=INTEGER},
+            </if>
+
+            <if test="isRefund != null">
+                is_refund            = #{isRefund,jdbcType=INTEGER},
+            </if>
+
+            <if test="refundTime != null">
+                refund_time          = #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="paymentType != null">
+                payment_type         = #{paymentType,jdbcType=INTEGER},
+            </if>
+
+            <if test="pushStatus != null">
+                push_status          = #{pushStatus,jdbcType=VARCHAR},
+            </if>
+
+            <if test="orderType != null">
+                order_type           = #{orderType,jdbcType=INTEGER},
+            </if>
+
+            <if test="addressId != null">
+                address_id           = #{addressId,jdbcType=BIGINT},
+            </if>
+
+            <if test="autoReceiveTime != null">
+                auto_receive_time    = #{autoReceiveTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="autoCancelTime != null">
+                auto_cancel_time     = #{autoCancelTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="orderSnapshootKey != null">
+                order_snapshoot_key  = #{orderSnapshootKey,jdbcType=VARCHAR},
+            </if>
+
+            <if test="locked != null">
+                locked               = #{locked,jdbcType=INTEGER},
+            </if>
+
+            <if test="lockTime != null">
+                lock_time            = #{lockTime,jdbcType=TIMESTAMP},
+            </if>
+
+
+
+            <if test="payTime != null">
+                pay_time             = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="orderFinishTime != null">
+                order_finish_time    = #{orderFinishTime,jdbcType=TIMESTAMP}
+            </if>
+
+
+            <if test="cellState != null">
+                cell_state = #{cellState,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findOrders" resultType="java.util.Map">
+        SELECT
+            o.id,
+            oi.sku_name as skuName,
+            o.order_money as orderMoney,
+            o.create_time as createTime,
+            o.payment_no as paymentNo,
+            o.order_status as orderStatus
+        FROM
+            gzg_orders o
+            JOIN gzg_order_items oi ON oi.order_id = o.id
+        <where>
+            o.hotel_id = #{hotelId}
+            <if test="startTime != null">
+                and o.create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and o.create_time &lt;= #{endTime}
+            </if>
+            <if test="code != null">
+                and o.code = #{code}
+            </if>
+            <if test="orderStatus != null">
+                and o.order_status = #{orderStatus}
+            </if>
+        </where>
+        GROUP BY o.id ORDER BY o.create_time desc
+    </select>
+</mapper>

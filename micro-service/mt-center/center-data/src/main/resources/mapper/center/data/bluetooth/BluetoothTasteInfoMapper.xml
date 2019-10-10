@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.bluetooth.mapper.BluetoothTasteInfoMapper">
+    <select id="getBluetoothTasteList" resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothUserTasteInfo"
+            parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothUserTasteInfo">
+        select t.id,
+               t.taste,
+               t.taste_key,
+               t.icon_url,
+               (select count(t1.id)
+                from bluetooth_user_taste t1
+                where t1.user_id = #{user_id} and t1.taste_key = t.taste_key) as num
+        from bluetooth_taste_info t
+        where t.taste_status = '0'
+        order by num desc,id asc
+    </select>
+</mapper>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetStoreMapper" >
+  <sql id="Base_Column_List" >
+    id, `name`, address, detail_address, belong_circle, create_status, `status`,create_status gmt_create,
+    gmt_modify
+  </sql>
+  <select id="getCabinetStoreById" resultType="com.ly.mt.center.data.cabinet.entity.CabinetStore" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_store
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_store
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStore" >
+    insert into cabinet_store (id, `name`, address, 
+      detail_address, belong_circle, create_status, 
+      `status`, gmt_create, gmt_modify,m_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{detail_address,jdbcType=VARCHAR}, #{belong_circle,jdbcType=VARCHAR}, #{create_status,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{gmt_create,jdbcType=TIMESTAMP}, #{gmt_modify,jdbcType=TIMESTAMP},#{m_id}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStore" >
+    insert into cabinet_store
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="detail_address != null" >
+        detail_address,
+      </if>
+      <if test="belong_circle != null" >
+        belong_circle,
+      </if>
+      <if test="create_status != null" >
+        create_status,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create,
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify,
+      </if>
+      <if test="m_id != null">
+          m_id,
+      </if>
+        <if test="create_type != null">
+            create_type,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detail_address != null" >
+        #{detail_address,jdbcType=VARCHAR},
+      </if>
+      <if test="belong_circle != null" >
+        #{belong_circle,jdbcType=VARCHAR},
+      </if>
+      <if test="create_status != null" >
+        #{create_status,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmt_create != null" >
+        #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="m_id != null">
+          #{m_id},
+      </if>
+        <if test="create_type != null">
+            #{create_type}
+        </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStore" >
+    update cabinet_store
+    <set >
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detail_address != null" >
+        detail_address = #{detail_address,jdbcType=VARCHAR},
+      </if>
+      <if test="belong_circle != null" >
+        belong_circle = #{belong_circle,jdbcType=VARCHAR},
+      </if>
+      <if test="create_status != null" >
+        create_status = #{create_status,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="m_id != null">
+          m_id=#{m_id},
+      </if>
+      <if test="create_type != null">
+            create_type=#{create_type}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStore" >
+    update cabinet_store
+    set `name` = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      detail_address = #{detail_address,jdbcType=VARCHAR},
+      belong_circle = #{belong_circle,jdbcType=VARCHAR},
+      create_status = #{create_status,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--库管根据自己userid查询所负责的区域格子柜详情-->
+  <select id="getCabinetStoreByUserId" parameterType="java.util.Map" resultType="com.ly.mt.center.data.cabinet.response.CabinetStoreResVo">
+    select k.id,
+    k.`name`,
+    k.address,
+    k.detail_address,
+    k.belong_circle,
+    k.create_status,
+    k.gmt_create ,
+    k.gmt_modify ,
+    m.owner_phone,
+    m.owner_name
+    FROM cabinet_store k
+    LEFT JOIN cabinet_bussiness_coorperation m ON k.id = m.store_id
+    WHERE k.m_id in (
+          SELECT right_id from basic_role_right where role_id in (
+          SELECT role_id from basic_user_role where user_id = #{user_id}
+        )
+    )
+    and  k.create_status != '0' and k.status = '0' and k.create_type = '1'
+        <if test="create_status != null  and create_status !=''  "  >
+          and create_status =  #{create_status}
+        </if>
+
+      <if test="search_key != null  and search_key !=''  "  >
+          and CONCAT(
+          IFNULL( m.owner_phone,''),
+          IFNULL(m.owner_name,''),
+          IFNULL(m.bd_phone,''),
+          IFNULL(m.bd_name,''),
+          IFNULL(k.address,''),
+          IFNULL(k.detail_address,''),
+          IFNULL(k.`name`,'')
+          )
+       like '%${search_key}%'
+      </if>
+
+
+    ORDER BY k.gmt_create desc
+
+
+  </select>
+  <!--查询店铺收益总汇-->
+    <select id="findBdDataDetail" resultType="java.util.Map">
+      SELECT COUNT(id) as order_count, SUM(order_amount) as order_amount,SUM(profit_amount) as profit_amount FROM  cabinet_store_profit_log WHERE imei IN (
+              SELECT imei FROM cabinet_info WHERE store_id IN (
+              SELECT store_id FROM cabinet_bussiness_coorperation WHERE bd_phone = #{phone} AND status = 0
+              ) AND `status` = 0 AND create_status = 0
+          ) AND create_time BETWEEN #{startTime} AND #{endTime}
+    </select>
+  <!--bd数据统计店铺详情-->
+  <select id="findBdDataStatistics" resultType="com.ly.mt.center.data.cabinet.response.BdDataStaticsticVo">
+    SELECT  st.store_id as store_id,st.name AS store_name ,COUNT(lg.id) AS order_num,SUM(lg.order_amount) AS order_amount,
+      SUM(lg.profit_amount) as profit_amount ,stoc.replenish AS replenish, stoc.stock_num AS stock_num
+      FROM ( select * from cabinet_store_profit_log
+          <if test="storeId != null and storeId != ''">
+              where store_id = #{storeId}
+          </if>) lg
+          INNER JOIN (
+                  SELECT ci.imei,store.* FROM cabinet_info ci
+                          INNER JOIN (
+                              SELECT cbc.store_id , cs.`name` FROM  cabinet_bussiness_coorperation cbc
+                                      LEFT JOIN cabinet_store  cs ON  cbc.store_id = cs.id
+                                      WHERE cbc.bd_phone = #{phone}
+                                      ) store on ci.store_id = store.store_id
+                              )  st ON lg.imei = st.imei
+              INNER JOIN (
+                                  SELECT imei,COUNT(imei) AS count_num,SUM(stock) AS stock_num,
+                                      CASE WHEN cabinet_type = '2' THEN (#{stock_num}-SUM(stock)) ELSE (COUNT(imei)-SUM(stock)) END AS replenish
+                                      FROM gzg_goods_plan
+                                      ##WHERE imei = lg.imei
+                                      GROUP BY imei
+                                  ) stoc ON stoc.imei = lg.imei
+              WHERE lg.create_time BETWEEN #{startTime} AND #{endTime}
+
+              GROUP BY st.store_id
+  </select>
+
+  <select id="findBdDataStatisticOne" resultType="com.ly.mt.center.data.cabinet.response.BdDataStaticsticVo">
+     SELECT st.name AS store_name ,COUNT(lg.id) AS order_num,SUM(lg.order_amount) AS order_amount,
+      SUM(lg.profit_amount) as profit_amount ,stoc.replenish AS replenish, stoc.stock_num AS stock_num
+      FROM (select * from cabinet_store_profit_log where store_id = #{storeId}) lg
+          INNER JOIN (
+                  SELECT ci.imei,store.* FROM cabinet_info ci
+                          INNER JOIN (
+                              SELECT cbc.store_id , cs.`name` FROM  cabinet_bussiness_coorperation cbc
+                                      LEFT JOIN cabinet_store  cs ON  cbc.store_id = cs.id
+                                      WHERE cbc.bd_phone = #{phone}
+                                      ) store on ci.store_id = store.store_id
+                              )  st ON lg.imei = st.imei
+              INNER JOIN (
+                                  SELECT imei,COUNT(imei) AS count_num,SUM(stock) AS stock_num,
+                                      CASE WHEN cabinet_type = '2' THEN (25-SUM(stock)) ELSE (COUNT(imei)-SUM(stock)) END AS replenish
+                                      FROM gzg_goods_plan
+                                      ##WHERE imei = lg.imei
+                                      GROUP BY imei
+                                  ) stoc ON stoc.imei = lg.imei
+              WHERE lg.create_time BETWEEN #{startTime} AND #{endTime}
+              GROUP BY st.store_id
+  </select>
+  <select id="findBdStoreOrders" resultType="com.ly.mt.center.data.cabinet.response.Orders">
+    SELECT goi.sku_name,(goi.sku_price * goi.sku_num) AS price ,go.order_status,goi.create_time FROM gzg_order_item goi
+	INNER JOIN (SELECT imei FROM cabinet_info
+	<if test="storeId != null  and storeId!=''">
+        WHERE store_id = #{storeId}
+    </if>
+	            ) im ON goi.imei = im.imei
+	INNER JOIN gzg_order go ON goi.order_id = go.id
+	WHERE	goi.create_time BETWEEN #{startTime} and #{endTime}
+	ORDER BY goi.create_time DESC
+  </select>
+
+</mapper>

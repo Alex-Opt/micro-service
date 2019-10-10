@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserProfitLogsMapper" >
+    <!-- 保存UserProfitLogs -->
+    <insert id="insertUserProfitLogs" parameterType="com.ly.mt.center.data.user.entity.UserProfitLogs">
+        INSERT INTO user_profit_logs (
+            id, order_id, user_id, provider_id, profit_type, profit, status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{order_id}, #{user_id}, #{provider_id}, #{profit_type}, #{profit}, #{status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserProfitLogs -->
+    <delete id="deleteUserProfitLogs" parameterType="com.ly.mt.center.data.user.entity.UserProfitLogs">
+        DELETE FROM user_profit_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserProfitLogs -->
+    <update id="updateUserProfitLogs" parameterType="com.ly.mt.center.data.user.entity.UserProfitLogs">
+        UPDATE user_profit_logs
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserProfitLogs -->
+    <select id="getUserProfitLogs" parameterType="com.ly.mt.center.data.user.entity.UserProfitLogs" resultType="com.ly.mt.center.data.user.entity.UserProfitLogs">
+        SELECT * 
+        FROM user_profit_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

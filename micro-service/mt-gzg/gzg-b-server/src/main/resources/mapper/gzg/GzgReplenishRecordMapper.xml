@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgReplenishRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="replenish_code" property="replenishCode" jdbcType="VARCHAR" />
+    <result column="replenish_order_id" property="replenishOrderId" jdbcType="BIGINT" />
+    <result column="replenish_user_id" property="replenishUserId" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="invalid_type" property="invalidType" jdbcType="INTEGER" />
+    <result column="grad_time" property="gradTime" jdbcType="TIMESTAMP" />
+    <result column="submit_audit_time" property="submitAuditTime" jdbcType="TIMESTAMP" />
+    <result column="arrival_account_time" property="arrivalAccountTime" jdbcType="TIMESTAMP" />
+    <result column="invalid_time" property="invalidTime" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="audit_picture" property="auditPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, replenish_code, replenish_order_id, replenish_user_id, `state`, invalid_type, 
+    grad_time, submit_audit_time, arrival_account_time, invalid_time, amount, audit_picture
+  </sql>
+
+  <sql id="BaseColumnList" >
+    id, replenish_code as replenishCode, replenish_order_id as replenishOrderId, replenish_user_id as replenishUserId, state, invalid_type as invalidType,
+    grad_time as gradTime, submit_audit_time as submitAuditTime, arrival_account_time as arrivalAccountTime, invalid_time as invalidTime, amount, audit_picture as auditPicture
+  </sql>
+  <select id="selectByUserIdAndStatus" resultType="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord">
+    select <include refid="Base_Column_List"/> from gzg_replenish_record where replenish_user_id=#{userId} and state=#{status}
+  </select>
+  <select id="selectByReplenishOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from gzg_replenish_record where replenish_order_id=#{replenishOrderId}
+  </select>
+  <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from gzg_replenish_record where state=#{status}
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Long" resultType="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord">
+    select <include refid="BaseColumnList"/> from gzg_replenish_record where replenish_user_id=#{userId}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gzg_replenish_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gzg_replenish_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord" >
+    insert into gzg_replenish_record (id, replenish_code, replenish_order_id, 
+      replenish_user_id, `state`, invalid_type, 
+      grad_time, submit_audit_time, arrival_account_time, 
+      invalid_time, amount, audit_picture
+      )
+    values (#{id,jdbcType=BIGINT}, #{replenishCode,jdbcType=VARCHAR}, #{replenishOrderId,jdbcType=BIGINT}, 
+      #{replenishUserId,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, #{invalidType,jdbcType=INTEGER}, 
+      #{gradTime,jdbcType=TIMESTAMP}, #{submitAuditTime,jdbcType=TIMESTAMP}, #{arrivalAccountTime,jdbcType=TIMESTAMP}, 
+      #{invalidTime,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{auditPicture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord" >
+    insert into gzg_replenish_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="replenishCode != null" >
+        replenish_code,
+      </if>
+      <if test="replenishOrderId != null" >
+        replenish_order_id,
+      </if>
+      <if test="replenishUserId != null" >
+        replenish_user_id,
+      </if>
+      <if test="state != null" >
+        `state`,
+      </if>
+      <if test="invalidType != null" >
+        invalid_type,
+      </if>
+      <if test="gradTime != null" >
+        grad_time,
+      </if>
+      <if test="submitAuditTime != null" >
+        submit_audit_time,
+      </if>
+      <if test="arrivalAccountTime != null" >
+        arrival_account_time,
+      </if>
+      <if test="invalidTime != null" >
+        invalid_time,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="auditPicture != null" >
+        audit_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="replenishCode != null" >
+        #{replenishCode,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishOrderId != null" >
+        #{replenishOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="replenishUserId != null" >
+        #{replenishUserId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="invalidType != null" >
+        #{invalidType,jdbcType=INTEGER},
+      </if>
+      <if test="gradTime != null" >
+        #{gradTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitAuditTime != null" >
+        #{submitAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrivalAccountTime != null" >
+        #{arrivalAccountTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invalidTime != null" >
+        #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="auditPicture != null" >
+        #{auditPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord" >
+    update gzg_replenish_record
+    <set >
+      <if test="replenishCode != null" >
+        replenish_code = #{replenishCode,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishOrderId != null" >
+        replenish_order_id = #{replenishOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="replenishUserId != null" >
+        replenish_user_id = #{replenishUserId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="invalidType != null" >
+        invalid_type = #{invalidType,jdbcType=INTEGER},
+      </if>
+      <if test="gradTime != null" >
+        grad_time = #{gradTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitAuditTime != null" >
+        submit_audit_time = #{submitAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrivalAccountTime != null" >
+        arrival_account_time = #{arrivalAccountTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invalidTime != null" >
+        invalid_time = #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="auditPicture != null" >
+        audit_picture = #{auditPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishRecord" >
+    update gzg_replenish_record
+    set replenish_code = #{replenishCode,jdbcType=VARCHAR},
+      replenish_order_id = #{replenishOrderId,jdbcType=BIGINT},
+      replenish_user_id = #{replenishUserId,jdbcType=BIGINT},
+      `state` = #{state,jdbcType=INTEGER},
+      invalid_type = #{invalidType,jdbcType=INTEGER},
+      grad_time = #{gradTime,jdbcType=TIMESTAMP},
+      submit_audit_time = #{submitAuditTime,jdbcType=TIMESTAMP},
+      arrival_account_time = #{arrivalAccountTime,jdbcType=TIMESTAMP},
+      invalid_time = #{invalidTime,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=DECIMAL},
+      audit_picture = #{auditPicture,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

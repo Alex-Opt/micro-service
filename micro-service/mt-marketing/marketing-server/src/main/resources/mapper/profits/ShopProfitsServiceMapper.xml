@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.marketing.server.profits.mapper.ShopProfitsServiceMapper" >
+
+    <!-- 根据用户id查询总收益-->
+    <select id="selectSumProfitsByUId" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfits" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsSumVo">
+        SELECT total_profit totalProfit, reward, grab, lode, shop_order shopOrder
+        FROM shop_profits
+        where  user_id = #{userId}
+    </select>
+
+    <!-- 查询抢单排行-->
+    <select id="selectGrabTop" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsTopVo">
+        SELECT IFNULL(p.grab,0)  profits, u.user_name userName
+        FROM shop_profits p
+        LEFT JOIN user u ON u.id = p.user_id
+        ORDER BY p.grab DESC LIMIT #{topValue}
+    </select>
+    <!-- 查询抢单奖励排行-->
+    <select id="selectRewardTop" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsTopVo">
+        SELECT p.reward  profits, u.user_name userName
+        FROM shop_profits p
+        LEFT JOIN user u ON u.id = p.user_id
+        ORDER BY p.reward DESC
+        LIMIT #{topValue}
+    </select>
+
+    <!-- 查询抢单奖励收益详情 -->
+    <select id="getRewardProfitsDetails" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsDetailsVO">
+      SELECT reward_frozen frozenProfits, reward cashProfits, reward + reward_frozen totalCashProfits, reward + reward_frozen + withdraw_cash totalProfits
+      FROM shop_profits
+      WHERE user_id = #{userId}
+    </select>
+
+    <!-- 查询抢单收益详情详情 -->
+    <select id="getGrabProfitsDetails" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsDetailsVO">
+        SELECT grab_frozen frozenProfits, grab cashProfits, grab_frozen + grab totalCashProfits, grab_frozen + grab + grab_cash totalProfits
+        FROM shop_profits
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 查询专属订单收益详情 -->
+    <select id="getOrderProfitsDetails" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsDetailsVO">
+        SELECT shop_order_frozen frozenProfits, shop_order cashProfits, shop_order_frozen + shop_order totalCashProfits, shop_order_frozen + shop_order  + shop_order_cash totalProfits
+        FROM shop_profits
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 查询淘金收益详情 -->
+    <select id="getLodeProfitsDetails" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsDetailsVO">
+        SELECT lode_frozen frozenProfits, lode cashProfits, lode_frozen + lode totalCashProfits, lode_frozen + lode  + lode_cash totalProfits
+        FROM shop_profits
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getShopOrderUserTotal" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(1), 0)
+        FROM orders_battle_info
+        WHERE user_id IS NOT NULL
+        GROUP BY user_id
+    </select>
+
+    <!-- 查询淘金排行-->
+    <select id="selectLodeTop" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsTopVo">
+        SELECT p.load  profits, u.user_name userName
+        FROM shop_profits p
+        LEFT JOIN user u ON u.id = p.user_id
+        ORDER BY p.load DESC
+        LIMIT #{topValue}
+    </select>
+</mapper>

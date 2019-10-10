@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.goods.mapper.GoodsCategroyInfoMapper">
+    <!-- 查询GoodsCategroyInfo -->
+    <select id="getGoodsCategroyInfo" parameterType="com.ly.mt.core.data.goods.entity.GoodsCategroyInfo" resultType="com.ly.mt.core.data.goods.entity.GoodsCategroyInfo">
+        SELECT *
+        FROM goods_categroy_info
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<GoodsCategroyInfo> -->
+    <select id="listGoodsCategroyInfo" parameterType="com.ly.mt.core.data.goods.entity.GoodsCategroyInfo" resultType="com.ly.mt.core.data.goods.entity.GoodsCategroyInfo">
+        SELECT *
+        FROM goods_categroy_info
+        <where>
+            <if test="null != parentId and '' != parentId">AND parent_id = #{parentId}</if>
+        </where>
+    </select>
+</mapper>

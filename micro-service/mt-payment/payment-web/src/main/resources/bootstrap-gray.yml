@@ -1,0 +1,15 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}-${spring.cloud.client.ipaddress}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://lykj:lykjMtEureka@10.11.10.1/eureka/,http://lykj:lykjMtEureka@10.11.10.2/eureka/
+spring:
+  cloud:
+    config:
+      name: time,redis,swagger,mq
+      profile: gray
+      discovery:
+        enabled: true
+        service-id: base-config

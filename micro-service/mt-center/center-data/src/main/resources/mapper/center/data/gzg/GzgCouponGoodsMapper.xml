@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgCouponGoodsMapper" >
+    <!-- 保存GzgCouponGoods -->
+    <insert id="insertGzgCouponGoods" parameterType="com.ly.mt.center.data.gzg.entity.GzgCouponGoods">
+        INSERT INTO gzg_coupon_goods (
+            id, coupon_id, spu_id, create_time
+        ) VALUES (
+            #{id}, #{coupon_id}, #{spu_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GzgCouponGoods -->
+    <delete id="deleteGzgCouponGoods" parameterType="com.ly.mt.center.data.gzg.entity.GzgCouponGoods">
+        DELETE FROM gzg_coupon_goods
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgCouponGoods -->
+    <update id="updateGzgCouponGoods" parameterType="com.ly.mt.center.data.gzg.entity.GzgCouponGoods">
+        UPDATE gzg_coupon_goods
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgCouponGoods -->
+    <select id="getGzgCouponGoods" parameterType="com.ly.mt.center.data.gzg.entity.GzgCouponGoods" resultType="com.ly.mt.center.data.gzg.entity.GzgCouponGoods">
+        SELECT * 
+        FROM gzg_coupon_goods
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

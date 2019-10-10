@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsSpuAttrValueMapper" >
+    <select id="getGoodsSpuAttrValueBySpuId"  resultType="java.util.Map" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuAttrValue" >
+        SELECT  s.attr_id attrId,s.attr_value_id attrValueId,v.attr_value attrValue
+        FROM goods_spu_attr_value s
+        LEFT JOIN goods_attr_value v on v.id=s.attr_value_id
+        WHERE s.spu_id=#{spu_id} and s.attr_status = 1
+        ORDER  BY v.sort_num asc
+    </select>
+    <select id="getGoodsSpuAllAttrValueBySpuId"  resultType="java.util.Map" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuAttrValue" >
+        SELECT  s.attr_id attrId,s.attr_value_id attrValueId,v.attr_value attrValue
+        FROM goods_spu_attr_value s
+                 LEFT JOIN goods_attr_value v on v.id=s.attr_value_id
+        WHERE s.spu_id=#{spu_id}
+        ORDER  BY v.sort_num asc
+    </select>
+</mapper >

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopProfitsMapper" >
+    <!-- 保存ShopProfits -->
+    <insert id="insertShopProfits" parameterType="com.ly.mt.center.data.shop.entity.ShopProfits">
+        INSERT INTO shop_profits (
+            id, shop_id, user_id, total_profit, grab_cash, lode_cash, shop_order_cash, withdraw_cash, reward, grab, lode, shop_order, profit_frozen, reward_frozen, grab_frozen, lode_frozen, shop_order_frozen, create_time, modify_time
+        ) VALUES (
+            #{id}, #{shop_id}, #{user_id}, #{total_profit}, #{grab_cash}, #{lode_cash}, #{shop_order_cash}, #{withdraw_cash}, #{reward}, #{grab}, #{lode}, #{shop_order}, #{profit_frozen}, #{reward_frozen}, #{grab_frozen}, #{lode_frozen}, #{shop_order_frozen}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopProfits -->
+    <delete id="deleteShopProfits" parameterType="com.ly.mt.center.data.shop.entity.ShopProfits">
+        DELETE FROM shop_profits
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopProfits -->
+    <update id="updateShopProfits" parameterType="com.ly.mt.center.data.shop.entity.ShopProfits">
+        UPDATE shop_profits
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopProfits -->
+    <select id="getShopProfits" parameterType="com.ly.mt.center.data.shop.entity.ShopProfits" resultType="com.ly.mt.center.data.shop.entity.ShopProfits">
+        SELECT * 
+        FROM shop_profits
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

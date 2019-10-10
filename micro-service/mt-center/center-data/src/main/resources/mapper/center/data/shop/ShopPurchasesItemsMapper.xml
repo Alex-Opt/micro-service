@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopPurchasesItemsMapper" >
+    <!-- 保存ShopPurchasesItems -->
+    <insert id="insertShopPurchasesItems" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesItems">
+        INSERT INTO shop_purchases_items (
+            id, shop_id, shop_purchases_id, spu_id, sku_id, sku_name, sku_price, sku_num, pomotion_price, freight_price, payment_price, create_time
+        ) VALUES (
+            #{id}, #{shop_id}, #{shop_purchases_id}, #{spu_id}, #{sku_id}, #{sku_name}, #{sku_price}, #{sku_num}, #{pomotion_price}, #{freight_price}, #{payment_price}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopPurchasesItems -->
+    <delete id="deleteShopPurchasesItems" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesItems">
+        DELETE FROM shop_purchases_items
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopPurchasesItems -->
+    <update id="updateShopPurchasesItems" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesItems">
+        UPDATE shop_purchases_items
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopPurchasesItems -->
+    <select id="getShopPurchasesItems" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesItems" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesItems">
+        SELECT * 
+        FROM shop_purchases_items
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <select id="getItemList" parameterType="java.lang.Long" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesItems">
+        select
+        a.id, a.shop_id, a.shop_purchases_id, a.spu_id, a.sku_id, a.sku_name, a.sku_price, a.sku_num, a.pomotion_price, a.freight_price,
+        a.payment_price, a.create_time, b.name
+        from shop_purchases_items a
+          LEFT JOIN goods_spu_info b
+            ON a.spu_id=b.id
+          LEFT JOIN goods_sku_info c
+            ON a.sku_id=c.id
+        where shop_purchases_id=#{shoupPurchasesId}
+    </select>
+
+    <!-- 查询商家进货总数 (支付后的才算累计)-->
+    <select id="getItemsNum" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem" resultType="java.lang.String">
+        SELECT SUM(pi.sku_num)
+        FROM shop_purchases_items pi
+        LEFT JOIN shop_purchases p on p.id = pi.shop_purchases_id
+        WHERE 1 = 1 AND p.status >= 20
+        <if test="null != shop_id and '' != shop_id">AND pi.shop_id = #{shop_id}</if>
+    </select>
+
+    <!-- spu销量 (支付后的才算累计)-->
+    <select id="getSpuNum" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesRefundItem" resultType="java.lang.String">
+        SELECT SUM(pi.sku_num)
+        FROM shop_purchases_items pi
+        LEFT JOIN shop_purchases p on p.id = pi.shop_purchases_id
+        WHERE 1 = 1 AND p.status >= 20
+        <if test="null != spu_id and '' != spu_id">AND pi.spu_id = #{spu_id}</if>
+    </select>
+</mapper>

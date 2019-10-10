@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.purchase.server.member.mapper.MemberInfoMapper">
+
+    <select id="selectInfoByUserId" resultType="com.ly.mt.core.common.entity.purchase.MemberInfoVO" parameterType="long">
+        SELECT
+          si.stock_num, sg.title, sg.icon, sg.promotion_rate
+        FROM shop_info as si, shop_grade as sg
+        WHERE si.shop_point_grade_id = sg.id AND si.user_id= #{userId}
+    </select>
+</mapper>

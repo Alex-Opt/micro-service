@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.activity.server.product.mapper.FrontCategoryMapper" >
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.hd.FrontCategory" >
+    insert into front_category (id, `name`, app_type, 
+      area_id, `status`, create_time, 
+      modify_time,picture_url)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{appType,jdbcType=INTEGER}, 
+      #{areaId,jdbcType=BIGINT}, #{status,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP},#{pictureUrl})
+  </insert>
+
+</mapper>

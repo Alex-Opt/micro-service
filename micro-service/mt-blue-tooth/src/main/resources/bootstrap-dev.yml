@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      name: mt-bluetooth,eureka,time,mq,redis
+      profile: dev
+      uri: http://39.96.191.19:8082
+      #uri: http://localhost:8082

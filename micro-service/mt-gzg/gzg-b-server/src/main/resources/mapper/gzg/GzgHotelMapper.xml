@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgHotelMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgHotel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="hotel_admin_id" property="hotelAdminId" jdbcType="BIGINT" />
+    <result column="bd_id" property="bdId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, `name`, address, province_code, city_code, area, hotel_admin_id, bd_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gzg_hotel
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gzg_hotel
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotel" >
+    insert into gzg_hotel (id, `name`, address, 
+      province_code, city_code, area, 
+      hotel_admin_id, bd_id, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{hotelAdminId,jdbcType=BIGINT}, #{bdId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotel" useGeneratedKeys="true" keyProperty="id">
+    insert into gzg_hotel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="hotelAdminId != null" >
+        hotel_admin_id,
+      </if>
+      <if test="bdId != null" >
+        bd_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelAdminId != null" >
+        #{hotelAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="bdId != null" >
+        #{bdId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotel" >
+    update gzg_hotel
+    <set >
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelAdminId != null" >
+        hotel_admin_id = #{hotelAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="bdId != null" >
+        bd_id = #{bdId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotel" >
+    update gzg_hotel
+    set `name` = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      hotel_admin_id = #{hotelAdminId,jdbcType=BIGINT},
+      bd_id = #{bdId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

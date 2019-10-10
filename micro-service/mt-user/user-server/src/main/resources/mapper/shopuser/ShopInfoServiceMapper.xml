@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.shopuser.mapper.ShopInfoServiceMapper" >
+
+
+  <select id="selectByPrimaryKey" resultType="com.ly.mt.core.common.entity.shop.ShopInfo"
+          parameterType="java.lang.Long" >
+    select
+        id, user_id, mobile, status, shop_point_grade_id, shop_type, shop_name, e_shop_name,
+        e_shop_url, shop_lon, shop_lat, shop_address, shop_country, shop_province_code, shop_city_code,
+        idcard_front, idcard_back, real_name, idcard, vaild_type, vaild_start_at, vaild_end_at,
+        invite_code, stock_num, create_time, modify_time
+    from shop_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByMobile" resultType="com.ly.mt.core.common.entity.shop.ShopInfo"
+          parameterType="String">
+    select
+        id, user_id, mobile, status, shop_point_grade_id, shop_type, shop_name, e_shop_name,
+        e_shop_url, shop_lon, shop_lat, shop_address, shop_country, shop_province_code, shop_city_code,
+        idcard_front, idcard_back, real_name, idcard, vaild_type, vaild_start_at, vaild_end_at,
+        invite_code, stock_num, create_time, modify_time
+    from shop_info
+    where mobile = #{mobile}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.shop.ShopInfo" >
+      insert into shop_info (id, user_id, mobile,
+                             status,invite_code,create_time
+      )
+      values (#{id}, #{userId}, #{mobile},
+              #{status}, #{inviteCode},#{createTime}
+             )
+  </insert>
+
+    <!-- B端手机号未注册用户向user表插入一条数据start -->
+    <insert id="bRegisterUser" parameterType="com.ly.mt.core.common.entity.user.User">
+        INSERT INTO user(
+            id, login_name, mobile, create_time, quick_type, user_status
+        ) VALUES (
+                     #{id}, #{loginName}, #{mobile}, #{createTime}, #{quickType}, #{userStatus}
+                 )
+    </insert>
+    <!-- B端手机号未注册用户向user表插入一条数据end -->
+
+    <insert id="insertLodeRunnerTree" parameterType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees">
+        INSERT INTO lode_runner_trees(
+            id,user_id,father_id,top_user_id,user_level,user_source,create_time
+        ) VALUES (
+              #{id},#{userId},#{fatherId},#{topUserId},#{userLevel},#{userSource},#{createTime}
+        )
+    </insert>
+
+    <select id="selectLoadRunnerTreeByUserId" parameterType="Long" resultType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees">
+        SELECT id,user_id,father_id,top_user_id,user_level,user_source,create_time
+        FROM lode_runner_trees WHERE user_id=#{userId}
+    </select>
+
+    <select id="selectLodeRunnerConFigs"
+            resultType="com.ly.mt.core.common.entity.shop.LodeRunnerConfigs">
+        select id,level,proportion from lode_runner_configs
+    </select>
+
+  <update id="updateBasicInfoById" parameterType="com.ly.mt.core.common.entity.shop.ShopInfo" >
+      update shop_info
+      <set>
+          <if test="shopType != null">
+              shop_type = #{shopType},
+          </if>
+          <if test="shopName != null">
+              shop_name = #{shopName},
+          </if>
+          <if test="eShopName != null">
+              e_shop_name = #{eShopName},
+          </if>
+          <if test="eShopUrl != null">
+              e_shop_url = #{eShopUrl},
+          </if>
+          <if test="shopLon != null">
+              shop_lon = #{shopLon},
+          </if>
+          <if test="shopLat != null">
+              shop_lat = #{shopLat},
+          </if>
+          <if test="shopAddress != null">
+              shop_address = #{shopAddress},
+          </if>
+          <if test="shopCountry != null">
+              shop_country = #{shopCountry},
+          </if>
+          <if test="shopProvinceCode != null">
+              shop_province_code = #{shopProvinceCode},
+          </if>
+          <if test="shopCityCode != null">
+              shop_city_code = #{shopCityCode},
+          </if>
+          <if test="modifyTime != null">
+              modify_time = #{modifyTime},
+          </if>
+      </set>
+      WHERE id = #{shopId}
+  </update>
+
+
+  <!-- 根据用户名/手机号获取用户信息start -->
+ <select id="getUser" parameterType="com.ly.mt.core.common.entity.user.UserLoginVo"
+         resultType="com.ly.mt.core.common.entity.user.User">
+    SELECT
+           id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+         birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+    user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+    FROM user
+    WHERE 1 = 1
+    <if test="null != loginName and '' != loginName">AND login_name = #{loginName}</if>
+    <if test="null != mobile and '' != mobile">AND mobile = #{mobile}</if>
+  </select>
+  <!-- 根据用户名/手机号获取用户信息end -->
+
+    <select id="beZeroNumsIfNull" parameterType="com.ly.mt.core.common.entity.shop.LoderRunnerCodes">
+        UPDATE lode_runner_codes SET  nums = 0 WHERE  user_id= #{userId} AND shop_id=#{shopId} AND nums IS NULL
+    </select>
+
+    <!--根据邀请码查询淘金者专属邀请码表-->
+    <select id="selectLodeRunnerCodesByCode"
+            parameterType="com.ly.mt.core.common.entity.shop.LoderRunnerCodes"
+            resultType="com.ly.mt.core.common.entity.shop.LoderRunnerCodes">
+
+      SELECT user_id,shop_id,code,nums,create_time,modify_time  FROM lode_runner_codes WHERE  code=#{code}
+
+    </select>
+
+
+    <update id="addInviteNum" parameterType="com.ly.mt.core.common.entity.shop.LoderRunnerCodes">
+        UPDATE lode_runner_codes SET  nums = nums +1 where  user_id= #{userId} AND shop_id=#{shopId}
+    </update>
+
+
+    <update id="setPassword">
+        UPDATE user SET password = #{password} WHERE id=#{userId}
+    </update>
+
+    <insert id="inserNewShopAddress" parameterType="com.ly.mt.core.common.entity.shop.ShopAddress">
+        insert into shop_address (id, shop_id, user_id,
+                                  user_name,
+                                  province_code, province_name, city_code,
+                                  city_name, district_code, district_name,
+                                  user_address, is_default, send_lon,
+                                  send_lat, valid_status, create_time
+                                  )
+        values (#{id}, #{shopId}, #{userId},
+                #{userName},
+                #{provinceCode}, #{provinceName}, #{cityCode},
+                #{cityName}, #{districtCode}, #{districtName},
+                #{userAddress}, #{isDefault}, #{sendLon},
+                #{sendLat}, #{validStatus}, #{createTime})
+    </insert>
+
+    <update id="updateShopAddressById" parameterType="com.ly.mt.core.common.entity.shop.ShopAddress">
+          UPDATE shop_address
+          SET
+              province_code = #{provinceCode},
+              province_name=#{provinceName},
+              city_code=#{cityCode},
+              city_name=#{cityName},
+              district_code=#{districtCode},
+              district_name=#{districtName},
+              user_address=#{userAddress},
+              is_default=#{isDefault},
+              send_lon=#{sendLon},
+              send_lat=#{sendLat},
+              valid_status=#{validStatus},
+              modify_time=#{modifyTime}
+          WHERE  id=#{id} AND shop_id=#{shopId}
+    </update>
+
+    <select id="selecShopInfoByShopId" resultType="com.ly.mt.core.common.entity.shop.ShopInfo">
+        select user_id from  shop_info where  id = #{shopId}
+    </select>
+
+    <!-- 获取用户信息开始-->
+    <select id="getShopUser"
+            parameterType="com.ly.mt.core.common.entity.shop.ShopInfo"
+            resultType="com.ly.mt.core.common.entity.shop.ShopInfo">
+            select
+                id, user_id, mobile, status, shop_point_grade_id, shop_type, shop_name, e_shop_name,
+                e_shop_url, shop_lon, shop_lat, shop_address, shop_country, shop_province_code, shop_city_code,
+                idcard_front, idcard_back, real_name, idcard, vaild_type, vaild_start_at, vaild_end_at,
+                invite_code, stock_num, create_time, modify_time
+            from shop_info
+        where  1=1
+        <if test="null != mobile and '' != mobile">
+            and mobile = #{mobile}
+        </if>
+        <if test="null != id and '' != id">
+            and id=#{id}
+        </if>
+        <if test="null != userId and '' != userId">
+            and user_id=#{userId}
+        </if>
+    </select>
+    <!-- 获取用户信息结束-->
+
+    <!-- 获取店铺发货地址开始-->
+    <select id="getShopAddress" resultType="com.ly.mt.core.common.entity.shop.ShopAddress"
+            parameterType="com.ly.mt.core.common.entity.shop.ShopAddress">
+          SELECT
+              id, shop_id, user_id, user_name, receive_name, receive_phone, province_code, province_name,
+              city_code, city_name, district_code, district_name, user_address, is_default, send_lon,
+              send_lat, valid_status, create_time, modify_time
+          FROM
+              shop_address
+          where
+              shop_id = #{shopId} AND  is_default = 1
+    </select>
+    <!-- 获取店铺发货地址结束-->
+
+    <!-- 获取店铺营业执照照片开始-->
+    <select id="getShopLicensesByShopId" resultType="com.ly.mt.core.common.entity.shop.ShopLicenses">
+      SELECT
+          id, shop_id, path, create_time, modify_time
+      FROM
+          shop_licenses
+      WHERE  shop_id=#{shopId}
+    </select>
+    <!-- 获取店铺营业执照照片结束-->
+
+    <!-- 插入店铺营业执照照片开始-->
+    <insert id="InsertNewLicenses" parameterType="com.ly.mt.core.common.entity.shop.ShopLicenses">
+        INSERT INTO shop_licenses(
+            id,
+            shop_id,
+            path,
+            create_time
+        ) VALUES (#{id},#{shopId},#{path},#{createTime})
+    </insert>
+    <!-- 插入店铺营业执照照片结束-->
+
+    <!-- 更新店铺营业执照照片开始-->
+    <update id="updateLicensesByShopId" parameterType="com.ly.mt.core.common.entity.shop.ShopLicenses">
+        UPDATE shop_licenses
+        set path = #{path},modify_time = #{modifyTime}
+        WHERE shop_Id = #{shopId}
+    </update>
+    <!-- 更新店铺营业执照照片结束-->
+
+    <!-- 修改店铺身份信息开始-->
+    <update id="updateIdCardByShopId" parameterType="com.ly.mt.core.common.entity.shop.IdCardVo">
+    UPDATE shop_info
+        <set>
+            <if test="idcardFront != null">
+                idcard_front = #{idcardFront},
+            </if>
+            <if test="idcardBack != null">
+                idcard_back = #{idcardBack},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName},
+            </if>
+            <if test="idcard != null">
+                idcard = #{idcard},
+            </if>
+            <if test="vaildType != null">
+                vaild_type = #{vaildType},
+            </if>
+            <if test="vaildStartAt != null">
+                vaild_start_at = #{vaildStartAt},
+            </if>
+            <if test="vaildEndAt != null">
+                vaild_end_at = #{vaildEndAt},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+        </set>
+    WHERE id=#{shopId}
+    </update>
+    <!-- 修改店铺身份信息结束-->
+
+    <!-- 店铺审核通过开始-->
+    <update id="updateShopStatus">
+        UPDATE shop_info SET status = 0 WHERE id=#{shopId}
+    </update>
+    <!-- 店铺审核通过结束-->
+
+   <!-- 绑定微信开始-->
+    <update id="bindWechat" parameterType="com.ly.mt.core.common.entity.user.User">
+        UPDATE user SET  wx_open_id = #{wxOpenId} WHERE mobile=#{mobile}
+    </update>
+    <!-- 绑定微信结束-->
+
+    <insert id="addUserFeedback" parameterType="com.ly.mt.core.common.entity.user.UserFeedback" >
+        INSERT INTO user_feedback (id,user_id,mobile,back_type,status,create_time,content)
+        VALUES (#{id,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{mobile,jdbcType=VARCHAR},#{backType,jdbcType=INTEGER},
+                #{status,jdbcType=TINYINT},#{createTime,jdbcType=TIMESTAMP},#{content,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <insert id="addUserFeedbackImages" parameterType="com.ly.mt.core.common.entity.user.UserFeedbackImages">
+        INSERT INTO user_feedback_images (id, feedback_id, images_url, create_time)
+        VALUES (#{id,jdbcType=BIGINT}, #{feedbackId,jdbcType=BIGINT}, #{imagesUrl,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+</mapper>

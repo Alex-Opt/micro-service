@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.cabinet.mapper.CabinetOptionsMapper" >
+
+    <select id="getOptions" resultType="com.ly.mt.center.data.cabinet.entity.CabinetOptions">
+        select * from cabinet_options where status=0
+    </select>
+</mapper>

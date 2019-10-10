@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.user.mapper.UserMapper">
+    <!-- 新增User -->
+    <insert id="insertUser" parameterType="com.ly.mt.core.data.user.entity.User">
+        INSERT INTO user (
+            id, client_id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password,
+            id_card, sex, birthday, province_code, city_code, district_code, user_type, nick_name,
+            shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config,
+            first_login, last_login_time, last_login_ip, project_type, create_time, create_user,
+            update_time, update_user, valid_status, valid_time, valid_user
+        ) VALUES (
+            #{id}, #{clientId}, #{userName}, #{mobile}, #{email}, #{wxOpenId}, #{qqOpenId}, #{loginName}, #{password},
+            #{idCard}, #{sex}, #{birthday}, #{provinceCode}, #{cityCode}, #{districtCode}, #{userType}, #{nickName},
+            #{shopId}, #{auditor}, #{auditRemark}, #{quickType}, #{avatarPicSrc}, #{noticeConfig},
+            #{firstLogin}, #{lastLoginTime}, #{lastLoginIp}, #{projectType}, #{createTime}, #{createUser},
+            #{updateTime}, #{updateUser}, #{validStatus}, #{validTime}, #{validUser}
+        )
+    </insert>
+
+
+    <!-- 更新User -->
+    <update id="updateUser" parameterType="com.ly.mt.core.data.user.entity.User">
+        UPDATE user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != clientId">client_id = #{clientId},</if>
+            <if test="null != userName">user_name = #{userName},</if>
+            <if test="null != mobile">mobile = #{mobile},</if>
+            <if test="null != email">email = #{email},</if>
+            <if test="null != wxOpenId">wx_open_id = #{wxOpenId},</if>
+            <if test="null != qqOpenId">qq_open_id = #{qqOpenId},</if>
+            <if test="null != loginName">login_name = #{loginName},</if>
+            <if test="null != password">password = #{password},</if>
+            <if test="null != idCard">id_card = #{idCard},</if>
+            <if test="null != sex">sex = #{sex},</if>
+            <if test="null != birthday">birthday = #{birthday},</if>
+            <if test="null != provinceCode">province_code = #{provinceCode},</if>
+            <if test="null != cityCode">city_code = #{cityCode},</if>
+            <if test="null != districtCode">district_code = #{districtCode},</if>
+            <if test="null != userType">user_type = #{userType},</if>
+            <if test="null != nickName">nick_name = #{nickName},</if>
+            <if test="null != shopId">shop_id = #{shopId},</if>
+            <if test="null != auditor">auditor = #{auditor},</if>
+            <if test="null != auditRemark">audit_remark = #{auditRemark},</if>
+            <if test="null != quickType">quick_type = #{quickType},</if>
+            <if test="null != avatarPicSrc">avatar_pic_src = #{avatarPicSrc},</if>
+            <if test="null != noticeConfig">notice_config = #{noticeConfig},</if>
+            <if test="null != firstLogin">first_login = #{firstLogin},</if>
+            <if test="null != lastLoginTime">last_login_time = #{lastLoginTime},</if>
+            <if test="null != lastLoginIp">last_login_ip = #{lastLoginIp},</if>
+            <if test="null != projectType">project_type = #{projectType},</if>
+            <if test="null != createTime">create_time = #{createTime},</if>
+            <if test="null != createUser">create_user = #{createUser},</if>
+            <if test="null != updateTime">update_time = #{updateTime},</if>
+            <if test="null != updateUser">update_user = #{updateUser},</if>
+            <if test="null != validStatus">valid_status = #{validStatus},</if>
+            <if test="null != validTime">valid_time = #{validTime},</if>
+            <if test="null != validUser">valid_user = #{validUser},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 查询User -->
+    <select id="getUser" parameterType="com.ly.mt.core.data.user.entity.User" resultType="com.ly.mt.core.data.user.entity.User">
+        SELECT *
+        FROM user
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+            <if test="null != mobile and '' != mobile">AND mobile = #{mobile}</if>
+            <if test="null != loginName and '' != loginName">AND login_name = #{loginName}</if>
+            <if test="null != wxOpenId and '' != wxOpenId">AND wx_open_id = #{wxOpenId}</if>
+            <if test="null != wxOpenId and '' != wxOpenId">AND wx_open_id = #{wxOpenId}</if>
+            <if test="null != projectType and '' != projectType and '-1' != projectType">AND project_type = #{projectType}</if>
+            <if test="null != quickType and '' != quickType and '-1' != quickType">AND quick_type = #{quickType}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<User> -->
+    <select id="listUser" parameterType="com.ly.mt.core.data.user.entity.User" resultType="com.ly.mt.core.data.user.entity.User">
+        SELECT *
+        FROM user
+        <where>
+            <if test="null != quickType and '' != quickType and '-1' != quickType">AND quick_type = #{quickType}</if>
+            <if test="null != validStatus and '' != validStatus and '-1' != validStatus">AND valid_status = #{validStatus}</if>
+            <if test="null != projectType and '' != projectType and '-1' != projectType">AND project_type = #{projectType}</if>
+            <choose>
+                <when test="null != id and '' != id">AND id IN (${id})</when>
+                <otherwise>AND id > 0</otherwise>
+            </choose>
+            <if test="null != userName and '' != userName">AND user_name LIKE '%${userName}%'</if>
+            <if test="null != loginName and '' != loginName">AND login_name LIKE '%${loginName}%'</if>
+            <if test="null != mobile and '' != mobile">AND mobile LIKE '%${mobile}%'</if>
+            <if test="null != createTime and '' != createTime">AND create_time ${createTime}</if>
+            <if test="null != lastLoginTime and '' != lastLoginTime">AND last_login_time ${lastLoginTime}</if>
+        </where>
+    </select>
+
+
+    <!-- 根据roleId查询List<User> -->
+    <select id="listUserByRoleId" parameterType="String" resultType="com.ly.mt.core.data.user.entity.User">
+        SELECT *
+        FROM user
+        WHERE id IN (
+            SELECT DISTINCT user_id
+            FROM basic_user_role
+            WHERE role_id = #{_parameter}
+        )
+    </select>
+</mapper>

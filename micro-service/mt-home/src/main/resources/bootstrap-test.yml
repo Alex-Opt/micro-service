@@ -1,0 +1,8 @@
+server:
+  port: 9391
+spring:
+  cloud:
+    config:
+      name: mt-home,eureka,time,mq,redis,txc
+      profile: test
+      uri: http://10.11.10.15

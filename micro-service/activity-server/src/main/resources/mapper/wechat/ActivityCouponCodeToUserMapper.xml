@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.activity.server.wechat.mapper.ActivityCouponCodeToUserMapper" >
+  <sql id="Base_Column_List" >
+    id, activityId, user_id, open_id, coupon_id, code
+  </sql>
+  <select id="selectByPrimaryKey"  parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_coupon_code_to_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity_coupon_code_to_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.hd.ActivityCouponCodeToUser" >
+    insert into activity_coupon_code_to_user (id, activityId, user_id, 
+      open_id, coupon_id, code
+      )
+    values (#{id,jdbcType=INTEGER}, #{activityid,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{openId,jdbcType=VARCHAR}, #{couponId,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.hd.ActivityCouponCodeToUser" >
+    insert into activity_coupon_code_to_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityid != null" >
+        activityId,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityid != null" >
+        #{activityid,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.hd.ActivityCouponCodeToUser" >
+    update activity_coupon_code_to_user
+    <set >
+      <if test="activityid != null" >
+        activityId = #{activityid,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.hd.ActivityCouponCodeToUser" >
+    update activity_coupon_code_to_user
+    set activityId = #{activityid,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      open_id = #{openId,jdbcType=VARCHAR},
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

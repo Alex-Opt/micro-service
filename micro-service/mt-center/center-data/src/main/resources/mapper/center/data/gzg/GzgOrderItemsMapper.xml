@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgOrderItemsMapper" >
+
+
+    <insert id="insertGzgOrderItems" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderItem">
+    insert into gzg_order_item (id, order_id,
+       sku_id, sku_name,
+      sku_price, sku_num, pomotion_price,
+       payment_price, create_time,
+      cabinet_no, imei)
+    values (#{id,jdbcType=BIGINT}, #{order_id,jdbcType=BIGINT},
+       #{sku_id,jdbcType=BIGINT}, #{sku_name,jdbcType=VARCHAR},
+      #{sku_price,jdbcType=DOUBLE}, #{sku_num,jdbcType=INTEGER}, #{pomotion_price,jdbcType=DOUBLE},
+      #{payment_price,jdbcType=DOUBLE}, #{create_time,jdbcType=TIMESTAMP},
+      #{cabinet_no,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR})
+  </insert>
+
+
+    <delete id="deleteGzgOrderItemsById" parameterType="java.lang.Long">
+    delete from gzg_order_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+    <update id="updateGzgOrderItemsById" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderItem">
+    update gzg_order_item
+      <trim prefix="set" suffixOverrides=",">
+        <if test="sku_id!=null">
+          sku_id=#{sku_id},
+        </if>
+      <if test="sku_price!=null">
+        sku_price=#{sku_price},
+        </if>
+      <if test="sku_num!=null">
+        sku_num=#{sku_num},
+        </if>
+      <if test="pomotion_price!=null">
+        pomotion_price=#{pomotion_price},
+        </if>
+      <if test="payment_price!=null">
+        payment_price=#{payment_price},
+        </if>
+      <if test="create_time!=null">
+        create_time=#{create_time},
+        </if>
+        <if test="cabinet_no!=null">
+          cabinet_no=#{cabinet_no},
+        </if>
+        <if test="imei!=null">
+          imei=#{imei},
+        </if>
+      </trim>
+
+    where 1 = 1
+      <if test="id != null and id != ''"> and  id = #{id}</if>
+      <if test="order_id != null and order_id != ''"> and order_id = #{order_id}</if>
+      <if test="sku_id != null and sku_id != ''"> and sku_id = #{sku_id}</if>
+  </update>
+
+  <update id="updateGzgOrderItemsByOrderId" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderItem">
+update  gzg_order_item  set   pomotion_price = #{pomotion_price},payment_price=#{payment_price} where order_id = #{order_id} and sku_id = #{sku_id}
+  </update>
+
+    <select id="getGzgOrderItemsById" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderItem" resultType="com.ly.mt.center.data.gzg.entity.GzgOrderItem">
+    select *
+    from gzg_order_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="getGzgOrderItems" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderItem" resultType="com.ly.mt.center.data.gzg.entity.GzgOrderItem">
+    select *
+    from gzg_order_item
+    where order_id = #{order_id}
+  </select>
+
+
+  <select id="getSellNumBySkuId" resultType="java.lang.Integer" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderItem">
+   select count(1) from gzg_order_item m, gzg_order k  where k.id = m.order_id AND k.payment_no is not null and m.sku_id = #{sku_id}
+  </select>
+
+</mapper >

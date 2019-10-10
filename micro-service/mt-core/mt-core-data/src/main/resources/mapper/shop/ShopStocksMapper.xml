@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.shop.mapper.ShopStocksMapper">
+    <!-- 更新List<ShopStocks> -->
+    <update id="updateDeliveryNums" parameterType="List">
+        UPDATE shop_stocks
+        SET delivery_nums = CASE
+                <foreach collection="list" item="s" separator=" ">
+                    WHEN shop_id = #{s.shopId} AND sku_id = #{s.skuId} THEN delivery_nums + #{s.deliveryNums}
+                </foreach>
+            END,
+            modify_time  = CASE
+                <foreach collection="list" item="s" separator=" ">
+                    WHEN shop_id = #{s.shopId} AND sku_id = #{s.skuId} THEN #{s.modifyTime}
+                </foreach>
+            END
+        WHERE shop_id IN (<foreach collection="list" item="s" separator=",">#{s.shopId}</foreach>)
+        AND sku_id IN (<foreach collection="list" item="s" separator=",">#{s.skuId}</foreach>)
+    </update>
+
+
+    <!-- 更新List<ShopStocks> -->
+    <update id="updateNums" parameterType="List">
+        UPDATE shop_stocks
+        SET nums = CASE
+                <foreach collection="list" item="s" separator=" ">
+                    WHEN shop_id = #{s.shopId} AND sku_id = #{s.skuId} THEN nums + #{s.nums}
+                </foreach>
+            END,
+            sales = CASE
+                <foreach collection="list" item="s" separator=" ">
+                    WHEN shop_id = #{s.shopId} AND sku_id = #{s.skuId} THEN sales - #{s.nums}
+                </foreach>
+            END,
+            modify_time  = CASE
+                <foreach collection="list" item="s" separator=" ">
+                    WHEN shop_id = #{s.shopId} AND sku_id = #{s.skuId} THEN #{s.modifyTime}
+                </foreach>
+            END
+        WHERE shop_id IN (<foreach collection="list" item="s" separator=",">#{s.shopId}</foreach>)
+          AND sku_id IN (<foreach collection="list" item="s" separator=",">#{s.skuId}</foreach>)
+    </update>
+</mapper>

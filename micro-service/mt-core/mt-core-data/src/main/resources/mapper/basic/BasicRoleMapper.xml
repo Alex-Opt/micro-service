@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.basic.mapper.BasicRoleMapper">
+    <!-- 保存BasicRole -->
+    <insert id="insertBasicRole" useGeneratedKeys="true" keyProperty="id" parameterType="com.ly.mt.core.data.basic.entity.BasicRole">
+        INSERT INTO basic_role (
+            name, parent_id, role_level, project_type, role_type,
+            create_time, create_user, update_time, update_user, valid_status
+        ) VALUES (
+            #{name}, #{parentId}, #{roleLevel}, #{projectType}, #{roleType},
+            #{createTime}, #{createUser}, #{updateTime}, #{updateUser}, #{validStatus}
+        )
+    </insert>
+
+
+    <!-- 更新BasicRole -->
+    <update id="updateBasicRole" parameterType="com.ly.mt.core.data.basic.entity.BasicRole">
+        UPDATE basic_role
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != name">name = #{name},</if>
+            <if test="null != parentId">parent_id = #{parentId},</if>
+            <if test="null != roleLevel">role_level = #{roleLevel},</if>
+            <if test="null != projectType">project_type = #{projectType},</if>
+            <if test="null != roleType">role_type = #{roleType},</if>
+            <if test="null != updateTime">update_time = #{updateTime},</if>
+            <if test="null != updateUser">update_user = #{updateUser},</if>
+            <if test="null != validStatus">valid_status = #{validStatus},</if>
+        </trim>
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </update>
+
+
+    <!-- 查询BasicRole -->
+    <select id="getBasicRole" parameterType="com.ly.mt.core.data.basic.entity.BasicRole" resultType="com.ly.mt.core.data.basic.entity.BasicRole">
+        SELECT *
+        FROM basic_role
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- List<BasicRole> -->
+    <select id="listBasicRole" parameterType="com.ly.mt.core.data.basic.entity.BasicRole" resultType="com.ly.mt.core.data.basic.entity.BasicRole">
+        SELECT *
+        FROM basic_role
+        <where>
+            <if test="null != createTime and '' != createTime">AND create_time ${createTime}</if>
+            <if test="null != validStatus and '' != validStatus and '-1' != validStatus">AND valid_status = #{validStatus}</if>
+            <if test="null != projectType and '' != projectType">AND project_type = #{projectType}</if>
+            <if test="null != parentId and '' != parentId">AND parent_id = #{parentId}</if>
+            <if test="null != id and '' != id">AND id LIKE '%${id}%'</if>
+            <if test="null != name and '' != name">AND name LIKE '%${name}%'</if>
+        </where>
+    </select>
+</mapper>

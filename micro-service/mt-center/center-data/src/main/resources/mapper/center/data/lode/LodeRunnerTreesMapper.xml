@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.lode.mapper.LodeRunnerTreesMapper" >
+    <!-- 保存LodeRunnerTrees -->
+    <insert id="insertLodeRunnerTrees" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerTrees">
+        INSERT INTO lode_runner_trees (
+            id, user_id, father_id, top_user_id, user_level, user_source, create_time, modify_time
+        ) VALUES (
+            #{id}, #{user_id}, #{father_id}, #{top_user_id}, #{user_level}, #{user_source}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除LodeRunnerTrees -->
+    <delete id="deleteLodeRunnerTrees" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerTrees">
+        DELETE FROM lode_runner_trees
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新LodeRunnerTrees -->
+    <update id="updateLodeRunnerTrees" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerTrees">
+        UPDATE lode_runner_trees
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询LodeRunnerTrees -->
+    <select id="getLodeRunnerTrees" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerTrees" resultType="com.ly.mt.center.data.lode.entity.LodeRunnerTrees">
+        SELECT * 
+        FROM lode_runner_trees
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        LIMIT 1
+    </select>
+</mapper>

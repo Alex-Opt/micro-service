@@ -1,0 +1,8 @@
+server:
+  port: 8097
+spring:
+  cloud:
+    config:
+      name: eureka,time,db-redis,db-mysql,sms,mq
+      profile: dev
+      uri: http://39.96.191.19:8082

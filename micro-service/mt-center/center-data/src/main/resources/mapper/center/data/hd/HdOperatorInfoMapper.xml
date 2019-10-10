@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.hd.mapper.HdOperatorInfoMapper" >
+    <!-- 保存HdOperatorInfo -->
+    <insert id="insertHdOperatorInfo" parameterType="com.ly.mt.center.data.hd.entity.HdOperatorInfo">
+        INSERT INTO hd_operator_info (
+            id, operator_code, operator_country_id, operator_province_id, operator_city_id, operator_name, operator_msg, operator_phone, operator_person, operator_status, create_time, update_time
+        ) VALUES (
+            #{id}, #{operator_code}, #{operator_country_id}, #{operator_province_id}, #{operator_city_id}, #{operator_name}, #{operator_msg}, #{operator_phone}, #{operator_person}, #{operator_status}, #{create_time}, #{update_time}
+        )
+    </insert>
+
+
+    <!-- 删除HdOperatorInfo -->
+    <delete id="deleteHdOperatorInfo" parameterType="com.ly.mt.center.data.hd.entity.HdOperatorInfo">
+        DELETE FROM hd_operator_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新HdOperatorInfo -->
+    <update id="updateHdOperatorInfo" parameterType="com.ly.mt.center.data.hd.entity.HdOperatorInfo">
+        UPDATE hd_operator_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询HdOperatorInfo -->
+    <select id="getHdOperatorInfo" parameterType="com.ly.mt.center.data.hd.entity.HdOperatorInfo" resultType="com.ly.mt.center.data.hd.entity.HdOperatorInfo">
+        SELECT * 
+        FROM hd_operator_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.mt.order.server.trade.mapper.TradeOrderRefundItemMapper">
+    <resultMap type="com.ly.mt.core.base.entity.trade.TradeOrderRefundItem" id="TradeOrderRefundItemResult">
+        <result property="id"    column="id"    />
+        <result property="refundId"    column="refund_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="refundNum"    column="refund_num"    />
+        <result property="skuPrice"    column="sku_price"    />
+        <result property="skuOrderPrice"    column="sku_order_price"    />
+        <result property="skuRefundPrice"    column="sku_refund_price"    />
+        <result property="subtractCouponPrice"    column="subtract_coupon_price"    />
+        <result property="subtractFreightPrice"    column="subtract_freight_price"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectTradeOrderRefundItemVo">
+        SELECT id, refund_id, order_id, sku_id, refund_num, sku_price, sku_order_price, sku_refund_price, subtract_coupon_price, subtract_freight_price, create_time from trade_order_refund_item
+    </sql>
+	
+    <select id="selectTradeOrderRefundItemList" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundItem" resultMap="TradeOrderRefundItemResult">
+        <include refid="selectTradeOrderRefundItemVo"/>
+        <where>  
+            <if test="id != null "> AND id = #{id}</if>
+             <if test="refundId != null "> AND refund_id = #{refundId}</if>
+             <if test="orderId != null "> AND order_id = #{orderId}</if>
+             <if test="skuId != null "> AND sku_id = #{skuId}</if>
+             <if test="refundNum != null "> AND refund_num = #{refundNum}</if>
+             <if test="skuPrice != null "> AND sku_price = #{skuPrice}</if>
+             <if test="skuOrderPrice != null "> AND sku_order_price = #{skuOrderPrice}</if>
+             <if test="skuRefundPrice != null "> AND sku_refund_price = #{skuRefundPrice}</if>
+             <if test="subtractCouponPrice != null "> AND subtract_coupon_price = #{subtractCouponPrice}</if>
+             <if test="subtractFreightPrice != null "> AND subtract_freight_price = #{subtractFreightPrice}</if>
+             <if test="createTime != null "> AND create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectTradeOrderRefundItemById" parameterType="Long" resultMap="TradeOrderRefundItemResult">
+        <include refid="selectTradeOrderRefundItemVo"/>
+        WHERE id = #{id}
+    </select>
+        
+    <insert id="insertTradeOrderRefundItem" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundItem">
+        INSERT INTO trade_order_refund_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="refundId != null  ">refund_id,</if>
+			<if test="orderId != null  ">order_id,</if>
+			<if test="skuId != null  ">sku_id,</if>
+			<if test="refundNum != null  ">refund_num,</if>
+			<if test="skuPrice != null  ">sku_price,</if>
+			<if test="skuOrderPrice != null  ">sku_order_price,</if>
+			<if test="skuRefundPrice != null  ">sku_refund_price,</if>
+			<if test="subtractCouponPrice != null  ">subtract_coupon_price,</if>
+			<if test="subtractFreightPrice != null  ">subtract_freight_price,</if>
+			<if test="createTime != null  ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="refundId != null  ">#{refundId},</if>
+			<if test="orderId != null  ">#{orderId},</if>
+			<if test="skuId != null  ">#{skuId},</if>
+			<if test="refundNum != null  ">#{refundNum},</if>
+			<if test="skuPrice != null  ">#{skuPrice},</if>
+			<if test="skuOrderPrice != null  ">#{skuOrderPrice},</if>
+			<if test="skuRefundPrice != null  ">#{skuRefundPrice},</if>
+			<if test="subtractCouponPrice != null  ">#{subtractCouponPrice},</if>
+			<if test="subtractFreightPrice != null  ">#{subtractFreightPrice},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTradeOrderRefundItem" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundItem">
+        UPDATE trade_order_refund_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refundId != null  ">refund_id = #{refundId},</if>
+            <if test="orderId != null  ">order_id = #{orderId},</if>
+            <if test="skuId != null  ">sku_id = #{skuId},</if>
+            <if test="refundNum != null  ">refund_num = #{refundNum},</if>
+            <if test="skuPrice != null  ">sku_price = #{skuPrice},</if>
+            <if test="skuOrderPrice != null  ">sku_order_price = #{skuOrderPrice},</if>
+            <if test="skuRefundPrice != null  ">sku_refund_price = #{skuRefundPrice},</if>
+            <if test="subtractCouponPrice != null  ">subtract_coupon_price = #{subtractCouponPrice},</if>
+            <if test="subtractFreightPrice != null  ">subtract_freight_price = #{subtractFreightPrice},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+	<delete id="deleteTradeOrderRefundItemById" parameterType="Long">
+        DELETE FROM trade_order_refund_item WHERE id = #{id}
+    </delete>
+	
+<!--    <delete id="deleteTradeOrderRefundItemByIds" parameterType="String">
+        DELETE FROM trade_order_refund_item WHERE id IN
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>-->
+
+    <select id="selectTradeOrderRefundItemByOrderId" resultMap="TradeOrderRefundItemResult" parameterType="Long">
+        <include refid="selectTradeOrderRefundItemVo"/>
+        WHERE order_id=#{orderId} AND status = 1
+    </select>
+
+    <select id="selectTradeOrderRefundItemByOrderIdAndSkuId" resultMap="TradeOrderRefundItemResult">
+        <include refid="selectTradeOrderRefundItemVo"/>
+        WHERE order_id=#{orderId} AND sku_id=#{skuId} AND status = 1
+    </select>
+
+    <insert id="insertByBatchTradeOrderRefundItem" parameterType="java.util.List">
+        INSERT INTO
+          trade_order_refund_item( id,refund_id,  order_id,sku_id,refund_num, sku_price, sku_order_price,
+        sku_refund_price, subtract_coupon_price,subtract_freight_price, status, create_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.id,jdbcType=BIGINT}, #{item.refundId,jdbcType=BIGINT},  #{item.orderId,jdbcType=BIGINT},
+            #{item.skuId,jdbcType=BIGINT}, #{item.refundNum,jdbcType=INTEGER},  #{item.skuPrice,jdbcType=DOUBLE},
+             #{item.skuOrderPrice,jdbcType=DOUBLE},#{item.skuRefundPrice,jdbcType=DOUBLE}, #{item.subtractCouponPrice,jdbcType=DOUBLE},
+            #{item.subtractFreightPrice,jdbcType=DOUBLE},#{item.status,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="updateTradeOrderRefundItemStatus" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderRefundItem">
+        UPDATE trade_order_refund_item
+        SET
+        status =#{status,jdbcType=INTEGER}
+        WHERE refund_id=#{refundId,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="getRerundid" parameterType="Long" resultMap="TradeOrderRefundItemResult">
+        <include refid="selectTradeOrderRefundItemVo"/>
+        WHERE refund_id = #{refundId} AND status=1
+    </select>
+
+    
+</mapper>

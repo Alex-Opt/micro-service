@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.mt.center.data.profits.mapper.ProfitsUserTaskServiceMapper">
+
+    <select id="selectNotFinishTaskByUId" parameterType="com.ly.mt.center.data.profits.entity.ProfitsUserTaskParamVo" resultType="com.ly.mt.center.data.profits.entity.ProfitsUserTask">
+        SELECT u.id, u.task_name taskName, u.task_work taskWork, u.task_desc taskDesc
+        FROM user_task u
+        LEFT JOIN user_task_finished f ON u.id = f.task_id AND f.user_id = #{userId}
+        WHERE f.id IS NULL AND u.task_type = 1 AND u.task_yn = 1 AND u.app_type = 3
+    </select>
+</mapper>

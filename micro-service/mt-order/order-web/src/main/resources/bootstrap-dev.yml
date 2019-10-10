@@ -1,0 +1,8 @@
+server:
+  port: 8098
+spring:
+  cloud:
+    config:
+      name: eureka,time,redis,swagger,mq,order-web
+      profile: dev
+      uri: http://39.96.191.19:8082

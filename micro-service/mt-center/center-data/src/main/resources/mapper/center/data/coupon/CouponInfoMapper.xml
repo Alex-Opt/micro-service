@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.coupon.mapper.CouponInfoMapper" >
+    <!-- 保存CouponInfo -->
+    <insert id="insertCouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        INSERT INTO coupon_info (
+            id, coupon_name, start_time, end_time, validity_day, denomination, discount_rate, limit_type, start_fee, coupon_use_system, coupon_type, remark, creater_id, create_time
+        ) VALUES (
+            #{id}, #{coupon_name}, #{start_time}, #{end_time}, #{validity_day}, #{denomination}, #{discount_rate}, #{limit_type}, #{start_fee}, #{coupon_use_system}, #{coupon_type}, #{remark}, #{creater_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除CouponInfo -->
+    <delete id="deleteCouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        DELETE FROM coupon_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新CouponInfo -->
+    <update id="updateCouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        UPDATE coupon_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询CouponInfo -->
+    <select id="getCouponInfo" parameterType="com.ly.mt.center.data.coupon.entity.CouponInfo" resultType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        SELECT * 
+        FROM coupon_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+
+    <!-- 根据到家C商品spuId查询优惠券数据 -->
+    <select id="getCouponInfoBySpuId"  resultType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        SELECT  id,coupon_name,start_time,end_time,denomination,discount_rate,start_fee,coupon_use_system,coupon_type
+        FROM coupon_info
+        WHERE limit_type=1 AND  start_time &lt; NOW() AND  end_time &gt; NOW() AND coupon_use_system=10 AND coupon_type=30
+        UNION ALL (
+        SELECT  c.id,c.coupon_name,c.start_time,c.end_time,c.denomination,c.discount_rate,c.start_fee,c.coupon_use_system,c.coupon_type
+        FROM coupon_info c
+        INNER JOIN coupon_goods g on c.id=g.coupon_id
+        WHERE c.limit_type=2 AND g.spu_id=#{spuId} AND c.start_time &lt; NOW() AND  c.end_time &gt; NOW() AND c.coupon_use_system=10 AND c.coupon_type=30
+        ORDER  BY c.create_time ASC )
+    </select>
+
+
+    <!-- 查询到家C用户优惠券信息 -->
+    <select id="getCouponInfoByUserId" resultType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        SELECT *
+        FROM coupon_info
+        WHERE id IN (SELECT coupon_id FROM coupon_code WHERE user_id = #{userId} AND use_status = 1)
+        AND start_time &lt;= #{nowTime} AND end_time &gt; #{nowTime} AND coupon_use_system=10
+        ORDER BY denomination ASC
+    </select>
+
+    <!-- 查询新人系统发放优惠券 -->
+    <select id="getNewUserCoupons" resultType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        SELECT *
+        FROM coupon_info
+        WHERE  coupon_use_system=10 AND coupon_type=10
+        AND start_time &lt;= #{nowTime} AND end_time &gt; #{nowTime}
+        ORDER BY denomination ASC
+    </select>
+
+    <!-- 查询新人系统发放优惠券 -->
+    <select id="getNewUserCouponsSpree" resultType="com.ly.mt.center.data.coupon.entity.CouponInfo">
+        SELECT *
+        FROM coupon_info
+        WHERE  coupon_use_system=10 AND coupon_type=20
+          AND start_time &lt;= #{nowTime} AND end_time &gt; #{nowTime}
+        ORDER BY denomination ASC
+    </select>
+
+    <!-- 查询到家B用户优惠券信息 -->
+    <select id="getCouponInfoByUserIdForShop" parameterType="com.ly.mt.center.data.coupon.entity.CouponModel" resultType="com.ly.mt.center.data.coupon.entity.CouponModel">
+        SELECT ci.coupon_name, ci.start_time, ci.end_time, ci.validity_day, ci.discount_rate,
+        cc.id, cc.use_status, cc.Invalid_time, cc.coupon_code
+        FROM coupon_info ci
+        LEFT JOIN coupon_code cc on cc.coupon_id = ci.id
+        WHERE 1= 1
+        AND ci.coupon_use_system = 30
+        <if test="null != coupon_id and '' != coupon_id">AND cc.id = #{coupon_id}</if>
+        <if test="null != user_id and '' != user_id">AND cc.user_id = #{user_id}</if>
+        <if test="null != use_status and '' != use_status and 3 != use_status ">AND cc.use_status = #{use_status}</if>
+        <if test="null != coupon_code and '' != coupon_code">AND cc.coupon_code = #{coupon_code}</if>
+        <!-- 已过期条件 -->
+        <if test="1 == use_status ">AND cc.invalid_time &gt; NOW()</if>
+        <if test="3 == use_status ">AND cc.invalid_time &lt; NOW() AND cc.use_status = 1</if>
+        ORDER BY discount_rate ASC, use_status ASC
+    </select>
+</mapper>

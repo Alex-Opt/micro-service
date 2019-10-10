@@ -1,0 +1,130 @@
+package com.ly.mt.center.data.gzg.entity;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
+public class GzgCouponInfo {
+    @ApiModelProperty(value = "主键id", required = true)
+    private String id;
+    @ApiModelProperty("优惠券名称")
+    private String coupon_name;
+    @ApiModelProperty("优惠开始时间")
+    private String start_time;
+    @ApiModelProperty("优惠结束时间")
+    private String end_time;
+    @ApiModelProperty("优惠券有效天数")
+    private String validity_day;
+    @ApiModelProperty("优惠金额")
+    private String denomination;
+    @ApiModelProperty("优惠折扣，和优惠活动金额是互斥的")
+    private String discount_rate;
+    @ApiModelProperty("优惠类型 1：全品类，2：限定商品")
+    private String limit_type;
+    @ApiModelProperty("最小订单金额")
+    private String start_fee;
+    @ApiModelProperty("描述")
+    private String remark;
+    @ApiModelProperty("创建人")
+    private String creater_id;
+    @ApiModelProperty("创建时间")
+    private String create_time;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCoupon_name() {
+        return coupon_name;
+    }
+
+    public void setCoupon_name(String coupon_name) {
+        this.coupon_name = coupon_name;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public String getValidity_day() {
+        return validity_day;
+    }
+
+    public void setValidity_day(String validity_day) {
+        this.validity_day = validity_day;
+    }
+
+    public String getDenomination() {
+        return denomination;
+    }
+
+    public void setDenomination(String denomination) {
+        this.denomination = denomination;
+    }
+
+    public String getDiscount_rate() {
+        return discount_rate;
+    }
+
+    public void setDiscount_rate(String discount_rate) {
+        this.discount_rate = discount_rate;
+    }
+
+    public String getLimit_type() {
+        return limit_type;
+    }
+
+    public void setLimit_type(String limit_type) {
+        this.limit_type = limit_type;
+    }
+
+    public String getStart_fee() {
+        return start_fee;
+    }
+
+    public void setStart_fee(String start_fee) {
+        this.start_fee = start_fee;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCreater_id() {
+        return creater_id;
+    }
+
+    public void setCreater_id(String creater_id) {
+        this.creater_id = creater_id;
+    }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+}

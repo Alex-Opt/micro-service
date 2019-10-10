@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetReplenishMapper">
+
+    <insert id="insertOne" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetReplenish">
+        INSERT INTO cabinet_replenish(id, order_finish_time,order_type,sku_id,cabinet_code,user_id, six_nine_code, cabinet_no, cabinet_type, order_id,
+                                      order_item_id, cabinet_store_id, status, replenishment_timeout_time, create_time)
+        VALUES (#{id},#{order_finish_time},#{order_type}, #{sku_id},#{cabinet_code}, #{user_id},#{six_nine_code}, #{cabinet_no}, #{cabinet_type}, #{order_id}, #{order_item_id},
+                #{cabinet_store_id}, #{status}, #{replenishment_timeout_time}, #{create_time});
+    </insert>
+
+    <!--BD补货更新审核状态-->
+    <update id="updateCabinetReplenishById" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetReplenish" >
+        update cabinet_replenish
+        <set >
+            <if test="status != null" >
+                status = #{status},
+            </if>
+            <if test="audit_picture_url != null" >
+                audit_picture_url = #{audit_picture_url},
+            </if>
+            <if test="submit_check_time != null" >
+                submit_check_time = #{submit_check_time},
+            </if>
+            <if test="update_time != null" >
+                update_time = NOW(),
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过skuId查询spuName+skuName-->
+    <select id="getGoodsInfoNameBySkuId" resultType="com.ly.mt.center.data.cabinet.bo.GoodsInfoNameBo"
+            parameterType="java.lang.String">
+        select a.name as sku_name,b.name spu_name from goods_sku_info a left join goods_spu_info b on a.spu_id = b.id where a.id=#{id}
+    </select>
+
+    <!--获取BD补货列表-->
+    <select id="getCabinetReplenishById" resultType="com.ly.mt.center.data.cabinet.entity.CabinetReplenish"
+            parameterType="java.lang.String">
+        SELECT * FROM cabinet_replenish  WHERE id=#{id}
+    </select>
+
+    <!--获取BD补货列表-->
+    <select id="getReplenishList" resultType="com.ly.mt.center.data.cabinet.bo.CabinetReplenishListBo"
+            parameterType="java.lang.String">
+        SELECT
+            a.id,
+            a.order_finish_time,
+            a.sku_id,
+            a.order_id,
+            a.order_item_id,
+            b.big_pic_url,
+            a.STATUS,
+            a.cabinet_code,
+            a.cabinet_no,
+            c.NAME as shop_name,
+            c.address,
+            c.detail_address
+        FROM
+            cabinet_replenish a,
+            gzg_sku_picture b,
+            cabinet_store c
+            WHERE a.sku_id = b.sku_id and a.cabinet_store_id = c.id AND a.user_id = #{userId} and a.status=#{status} and a.order_type=#{orderType}
+    </select>
+</mapper>

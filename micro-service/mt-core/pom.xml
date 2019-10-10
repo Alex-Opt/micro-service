@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mt.core</groupId>
+    <artifactId>mt-core</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+    <name>mt-core</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!--<module>mt-core-1.0.0</module>-->
+        <!--<module>mt-core-2.0.0</module>-->
+        <module>mt-core-base</module>
+        <module>mt-core-data</module>
+        <module>mt-core-feign</module>
+        <module>mt-core-fn</module>
+        <module>mt-core-logistics</module>
+        <module>mt-core-mq</module>
+        <module>mt-core-redis</module>
+        <module>mt-core-rest</module>
+        <module>mt-core-swagger</module>
+        <module>mt-core-txc</module>
+        <module>mt-core-wechat</module>
+		<module>mt-core-aliyun</module>
+        <module>mt-core-getui</module>
+    </modules>
+</project>

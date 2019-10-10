@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.user.mapper.UserHcViewMapper">
+    <select id="listUserHcView" parameterType="com.ly.mt.core.data.user.entity.UserHcView" resultType="com.ly.mt.core.data.user.entity.UserHcView">
+        SELECT *
+        FROM user_hc_view
+        <where>
+            <if test="null != sex and '' != sex and '-1' != sex">AND sex = #{sex}</if>
+            <if test="null != provinceCode and '' != provinceCode and '-1' != provinceCode">AND province_code = #{provinceCode}</if>
+            <if test="null != cityCode and '' != cityCode and '-1' != cityCode">AND city_code = #{cityCode}</if>
+            <if test="null != districtCode and '' != districtCode and '-1' != districtCode">AND district_code = #{districtCode}</if>
+            <if test="null != id and '' != id">AND id LIKE '%${id}%'</if>
+            <if test="null != userName and '' != userName">AND user_name LIKE '%${userName}%'</if>
+            <if test="null != mobile and '' != mobile">AND mobile LIKE '%${mobile}%'</if>
+        </where>
+    </select>
+</mapper>

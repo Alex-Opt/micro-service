@@ -1,0 +1,8 @@
+server:
+  port: 8093
+spring:
+  cloud:
+    config:
+      name: eureka,time,redis,db-mysql,payment,mq
+      profile: dev
+      uri: http://39.96.191.19:8082

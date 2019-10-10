@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgReplenishOrderMapper" >
+    <!-- 保存GzgReplenishOrder -->
+    <insert id="insertGzgReplenishOrder" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishOrder">
+        INSERT INTO gzg_replenish_order (
+            id, gzg_order_id, gzg_order_itme_id, hotel_id, gzg_id, cabinet_no, state, create_time
+        ) VALUES (
+            #{id}, #{gzg_order_id}, #{gzg_order_itme_id}, #{hotel_id}, #{gzg_id}, #{cabinet_no}, #{state}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GzgReplenishOrder -->
+    <delete id="deleteGzgReplenishOrder" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishOrder">
+        DELETE FROM gzg_replenish_order
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgReplenishOrder -->
+    <update id="updateGzgReplenishOrder" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishOrder">
+        UPDATE gzg_replenish_order
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgReplenishOrder -->
+    <select id="getGzgReplenishOrder" parameterType="com.ly.mt.center.data.gzg.entity.GzgReplenishOrder" resultType="com.ly.mt.center.data.gzg.entity.GzgReplenishOrder">
+        SELECT * 
+        FROM gzg_replenish_order
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

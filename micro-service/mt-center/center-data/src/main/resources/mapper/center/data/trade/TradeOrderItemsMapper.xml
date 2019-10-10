@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrderItemsMapper" >
+    <!-- 保存TradeOrderItems -->
+    <insert id="insertTradeOrderItems" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderItems">
+        INSERT INTO trade_order_items (
+        id, order_id, spu_name, spu_id, sku_id, sku_name, sku_price, sku_num, pomotion_price, freight_price, gy_spu_id, gy_spu_code, gy_sku_code, payment_price, create_time
+        ) VALUES (
+        #{id}, #{order_id}, #{spu_name}, #{spu_id}, #{sku_id}, #{sku_name}, #{sku_price}, #{sku_num}, #{pomotion_price}, #{freight_price}, #{gy_spu_id}, #{gy_spu_code}, #{gy_sku_code}, #{payment_price}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除TradeOrderItems -->
+    <delete id="deleteTradeOrderItems" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderItems">
+        DELETE FROM trade_order_items
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeOrderItems -->
+    <update id="updateTradeOrderItems" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderItems">
+        UPDATE trade_order_items
+        SET
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeOrderItems -->
+    <select id="getTradeOrderItems" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderItems" resultType="com.ly.mt.center.data.trade.entity.TradeOrderItems">
+        SELECT *
+        FROM trade_order_items
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+
+    <select id="listOrderItemsByOrderId" resultType="com.ly.mt.center.data.trade.entity.TradeOrderItems" parameterType="java.lang.Long" >
+        SELECT *  FROM trade_order_items WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="getFreeLittleSmokeCount" parameterType="long" resultType="int">
+        SELECT IFNULL(SUM(t.sku_num),0)
+        FROM trade_order_items t LEFT JOIN trade_orders o ON o.id= t.order_id
+        WHERE  o.buyer_id = #{userId}
+          AND t.sku_id in (112492576930,112492582466,112492576122,112492578023,112492576116,112492578055) and t.sku_price= 0
+    </select>
+
+    <select id="getmogozeropriceCount" resultType="int">
+        SELECT IFNULL(SUM(t.sku_num),0)
+        FROM trade_order_items t LEFT JOIN trade_orders o ON o.id= t.order_id
+        WHERE  o.buyer_id = #{userId}
+          AND t.sku_id in (112492575754,112492575751,112492575752) and t.sku_price= 0
+    </select>
+
+    <select id="gettaozhuangzeropriceCount" resultType="int">
+        SELECT IFNULL(SUM(t.sku_num),0)
+        FROM trade_order_items t LEFT JOIN trade_orders o ON o.id= t.order_id
+        WHERE  o.buyer_id = #{userId}
+          AND t.sku_id in (112492577675,112492578591,112492575139,586197169359) and t.sku_price= 0
+    </select>
+</mapper >

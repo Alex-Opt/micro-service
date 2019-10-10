@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgCabinetMapper" >
+
+    <insert id="insertGzgCabinet" parameterType="com.ly.mt.center.data.gzg.entity.GzgCabinet">
+    insert into gzg_cabinet (id, cabinet_no, gzg_code,
+      gmt_create, gmt_modify, `status`,
+      placeholder_1, placeholder_2)
+    values (#{id,jdbcType=INTEGER}, #{cabinetNo,jdbcType=INTEGER}, #{gzgCode,jdbcType=VARCHAR},
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+      #{placeholder1,jdbcType=INTEGER}, #{placeholder2,jdbcType=INTEGER})
+  </insert>
+
+    <delete id="deleteGzgCabinetById" parameterType="java.lang.Integer">
+    delete from gzg_cabinet
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+    <update id="updateGzgCabinetById" parameterType="com.ly.mt.center.data.gzg.entity.GzgCabinet">
+     update gzg_cabinet
+      <if test="gmt_modify != null">
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+        where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="getGzgCabinet" parameterType="com.ly.mt.center.data.gzg.entity.GzgCabinet" resultType="com.ly.mt.center.data.gzg.entity.GzgCabinet">
+    select id, cabinet_no, gzg_code, gmt_create, gmt_modify, `status`, placeholder_1,
+    placeholder_2
+    from gzg_cabinet
+    where cabinet_no = #{cabinet_no} and gzg_code = #{gzg_code}
+  </select>
+
+    <select id="getGzgCabinetById" parameterType="java.lang.Integer" resultType="com.ly.mt.center.data.gzg.entity.GzgCabinet">
+    select id, cabinet_no, gzg_code, gmt_create, gmt_modify, `status`, placeholder_1,
+    placeholder_2
+    from gzg_cabinet
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+    <select id="getGzgCabinetBySellNo" parameterType="com.ly.mt.center.data.gzg.entity.GzgCabinet" resultType="com.ly.mt.center.data.gzg.entity.GzgCabinet">
+    select id, cabinet_no, gzg_code, gmt_create, gmt_modify, `status`, placeholder_1,
+    placeholder_2
+    from gzg_cabinet
+    where  gzg_code = #{gzg_code} order by sell_no desc limit 2
+  </select>
+
+
+
+
+
+</mapper >

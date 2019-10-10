@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopLicensesMapper" >
+    <!-- 保存ShopLicenses -->
+    <insert id="insertShopLicenses" parameterType="com.ly.mt.center.data.shop.entity.ShopLicenses">
+        INSERT INTO shop_licenses (
+            id, shop_id, path, create_time, modify_time
+        ) VALUES (
+            #{id}, #{shop_id}, #{path}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopLicenses -->
+    <delete id="deleteShopLicenses" parameterType="com.ly.mt.center.data.shop.entity.ShopLicenses">
+        DELETE FROM shop_licenses
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopLicenses -->
+    <update id="updateShopLicenses" parameterType="com.ly.mt.center.data.shop.entity.ShopLicenses">
+        UPDATE shop_licenses
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopLicenses -->
+    <select id="getShopLicenses" parameterType="com.ly.mt.center.data.shop.entity.ShopLicenses" resultType="com.ly.mt.center.data.shop.entity.ShopLicenses">
+        SELECT * 
+        FROM shop_licenses
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

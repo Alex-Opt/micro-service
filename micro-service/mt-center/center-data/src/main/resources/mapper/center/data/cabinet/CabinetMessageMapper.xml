@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetMessageMapper">
+    <insert id="insertCabinetMessage" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetMessage">
+        INSERT INTO cabinet_message(message_id, user_id,message_type,read_status,message_title,message_content, create_time, modify_time)
+        VALUES (#{message_id},#{user_id},#{message_type}, #{read_status},#{message_title}, #{message_content},#{create_time}, #{modify_time});
+    </insert>
+
+    <!--更新消息状态-->
+    <update id="updateCabinetMessageById" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetMessage" >
+        update cabinet_message
+        <set>
+            <if test="read_status != null" >
+                read_status = #{read_status},
+            </if>
+            <if test="modify_time != null" >
+                modify_time = #{modify_time}
+            </if>
+        </set>
+        where user_id = #{user_id} and message_type =#{message_type}
+    </update>
+
+    <!--查询该用户是否有未读消息-->
+    <select id="getCabinetMessage" resultType="com.ly.mt.center.data.cabinet.entity.CabinetMessage"
+            parameterType="java.lang.String">
+        select * from  cabinet_message where user_id=#{userId} and read_status='0'
+    </select>
+</mapper>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.goods.mapper.GoodsSkuInfoServiceMapper" >
+  <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo" parameterType="java.lang.Long" >
+    SELECT   id, name, code, spu_id as spuId, sku_status as skuStatus, bar_code as barCode, market_price as marketPrice,
+           wholesale_price wholesalePrice, attributes, product_no as productNo, create_time
+    FROM goods_sku_info
+    WHERE id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_sku_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo" >
+    insert into goods_sku_info (id, name, code, 
+      spu_id, attributes, bar_code,
+      market_price, wholesale_price, sku_attr, 
+      product_no, create_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{spuId,jdbcType=BIGINT}, #{skuStatus,jdbcType=INTEGER}, #{barCode,jdbcType=VARCHAR}, 
+      #{marketPrice,jdbcType=DOUBLE}, #{wholesalePrice,jdbcType=DOUBLE}, #{attributes,jdbcType=VARCHAR},
+      #{productNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo" >
+    insert into goods_sku_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="spuId != null" >
+        spu_id,
+      </if>
+      <if test="skuStatus != null" >
+        sku_status,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="wholesalePrice != null" >
+        wholesale_price,
+      </if>
+      <if test="attributes != null" >
+        attributes,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="spuId != null" >
+        #{spuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuStatus != null" >
+        #{skuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="wholesalePrice != null" >
+        #{wholesalePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="attributes != null" >
+        #{attributes,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo" >
+    update goods_sku_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="spuId != null" >
+        spu_id = #{spuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuStatus != null" >
+        sku_status = #{skuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null" >
+        market_price = #{marketPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="wholesalePrice != null" >
+        wholesale_price = #{wholesalePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="attributes != null" >
+        attributes = #{attributes,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo" >
+    update goods_sku_info
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      spu_id = #{spuId,jdbcType=BIGINT},
+      sku_status = #{skuStatus,jdbcType=INTEGER},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      market_price = #{marketPrice,jdbcType=DOUBLE},
+      wholesale_price = #{wholesalePrice,jdbcType=DOUBLE},
+      attributes = #{attributes,jdbcType=VARCHAR},
+      product_no = #{productNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 根据spuId和attributes查询商品sku-->
+  <select id="queryGoodsSku"  resultType="com.ly.mt.core.base.entity.goods.GoodsSkuInfoVo">
+    select  id, name, code, spu_id, sku_status, bar_code, market_price, wholesale_price, attributes,
+            product_no, create_time
+    from goods_sku_info where spu_id = #{spuId,jdbcType=BIGINT} AND attributes = #{attributes,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据spuId查询商品sku价格-->
+  <select id="queryGoodsSkuPriceBySkuId"  resultType="com.ly.mt.core.base.entity.goods.GoodsSkuPrice">
+    select  id, spu_id, sku_id, price_name, sku_price, remark, create_time
+    from goods_sku_price where sku_id = #{skuId,jdbcType=BIGINT}
+  </select>
+  <!-- 根据spuId查询商品sku图片-->
+  <select id="queryGoodsSkuPictureBySkuId"  resultType="com.ly.mt.core.base.entity.goods.GoodsSkuPicture">
+    select  id, sku_id, picture_url, sort_number, create_time
+    from goods_sku_picture where sku_id = #{skuId,jdbcType=BIGINT} order by sort_number asc
+  </select>
+
+  <select id="getGoodsSpuInfoBySpuId" resultType="com.ly.mt.core.base.entity.goods.GoodsSpuInfoForSkuVo" parameterType="java.lang.Long" >
+      SELECT
+        id, name, code, cid, brand_id, market_price, wholesale_price, weight, describe_url,
+        spu_attr, spu_status, data_source, create_time, modify_time, remark
+      FROM goods_spu_info
+      WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectBySpuId" parameterType="long" resultType="com.ly.mt.core.base.entity.goods.GoodsSkuInfo">
+
+    SELECT id, name, code, spu_id, sku_status, bar_code, market_price, wholesale_price, attributes,
+           product_no, create_time
+    FROM goods_sku_info WHERE spu_id = #{spuId}
+  </select>
+</mapper>

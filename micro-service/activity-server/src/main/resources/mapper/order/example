@@ -1,0 +1,25 @@
+
+
+service
+        PageHelper.startPage(request.getPageNum(),request.getPageSize());
+        //List<Map<String, Object>> maps = attAchDao.mapSelect();
+        List<Map<String, Object>> maps = attAchDao.conditionSearch(request.getConditions());
+        PageInfo<Map<String, Object>> mapPageInfo1 = new PageInfo<>(maps);
+
+
+dao
+List<Map<String,Object>> conditionSearch(@Param("condition") Map<String,Object> condition);
+<!--条件查询模版-->
+<!--<select id="conditionSearch"  resultType="java.util.HashMap">
+  select * from
+  <include refid="BASE_TABLE" />
+  <if test="condition != null and condition.size >0">
+    <where>
+      <foreach collection="condition.entrySet()"  item="value" index="key">
+        <if test="key != null">
+          AND  ${key} like concat('%',#{value},'%')
+        </if>
+      </foreach>
+    </where>
+  </if>
+</select>-->

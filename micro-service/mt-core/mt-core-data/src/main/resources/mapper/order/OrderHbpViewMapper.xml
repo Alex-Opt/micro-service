@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.order.mapper.OrderHbpViewMapper">
+    <!-- 查询OrderHbpView -->
+    <select id="getOrderHbpView" parameterType="com.ly.mt.core.data.order.entity.OrderHbpView" resultType="com.ly.mt.core.data.order.entity.OrderHbpView">
+        SELECT *
+        FROM order_hbp_view
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<OrderHbpView> -->
+    <select id="listOrderHbpView" parameterType="com.ly.mt.core.data.order.entity.OrderHbpView" resultType="com.ly.mt.core.data.order.entity.OrderHbpView">
+        SELECT *
+        FROM order_hbp_view
+        <where>
+            <if test="null != payedModel and '' != payedModel and '-1' != payedModel">AND payed_model = #{payedModel}</if>
+            <if test="null != status and '' != status and '-1' != status">AND status = #{status}</if>
+            <if test="null != createTime and '' != createTime">AND create_time ${createTime}</if>
+            <if test="null != actualAmount and '' != actualAmount">AND actual_amount ${actualAmount}</if>
+            <if test="null != userId and '' != userId">AND user_id LIKE '%${userId}%'</if>
+            <if test="null != id and '' != id">AND id LIKE '%${id}%'</if>
+            <if test="null != shopName and '' != shopName">AND shop_name LIKE '%${shopName}%'</if>
+        </where>
+    </select>
+</mapper>

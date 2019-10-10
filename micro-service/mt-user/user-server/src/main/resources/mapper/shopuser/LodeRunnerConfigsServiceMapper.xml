@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.shopuser.mapper.LodeRunnerConfigsServiceMapper" >
+
+  <select id="selectByPrimaryKey" resultType="LodeRunnerConfigs" parameterType="java.lang.Long" >
+    select  id, level, proportion, create_time, created_user, modify_time, updated_user
+    from lode_runner_configs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lode_runner_configs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="LodeRunnerConfigs" >
+    insert into lode_runner_configs (id, level, proportion, 
+      create_time, created_user, modify_time, 
+      updated_user)
+    values (#{id,jdbcType=BIGINT}, #{level,jdbcType=BIGINT}, #{proportion,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{updatedUser,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="LodeRunnerConfigs" >
+    insert into lode_runner_configs (
+        id,
+        level,
+        proportion,
+        create_time,
+        created_user,
+        modify_time,
+        updated_user)
+     VALUES(
+        #{id,jdbcType=BIGINT},
+        #{level,jdbcType=BIGINT},
+        #{proportion,jdbcType=DECIMAL},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createdUser,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{updatedUser,jdbcType=BIGINT}
+		)
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="LodeRunnerConfigs" >
+    update lode_runner_configs
+    SET
+        level = #{level,jdbcType=BIGINT},
+        proportion = #{proportion,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        created_user = #{createdUser,jdbcType=BIGINT},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        updated_user = #{updatedUser,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="LodeRunnerConfigs" >
+    update lode_runner_configs
+    set level = #{level,jdbcType=BIGINT},
+      proportion = #{proportion,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      created_user = #{createdUser,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

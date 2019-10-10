@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgInfoMapper" >
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gzg_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insertGzgInfo" parameterType="com.ly.mt.center.data.gzg.entity.GzgInfo">
+    insert into gzg_info (id, code, hotel_id,
+      `position`, plan_id, create_time,
+      price, buy_time)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{hotelId,jdbcType=BIGINT},
+      #{position,jdbcType=VARCHAR}, #{planId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{price,jdbcType=VARCHAR}, #{buyTime,jdbcType=TIMESTAMP})
+  </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.gzg.entity.GzgInfo">
+    update gzg_info
+    set code = #{code,jdbcType=VARCHAR},
+      hotel_id = #{hotelId,jdbcType=BIGINT},
+      `position` = #{position,jdbcType=VARCHAR},
+      plan_id = #{planId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=VARCHAR},
+      buy_time = #{buyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="getGzgInfoByCode" parameterType="com.ly.mt.center.data.gzg.entity.GzgInfo" resultType="com.ly.mt.center.data.gzg.entity.GzgInfo">
+    select id, code, hotel_id, `position`, plan_id, create_time, price, buy_time
+    from gzg_info
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+
+
+
+
+    <select id="selectAll" resultType="com.ly.mt.center.data.gzg.entity.GzgInfo">
+    select id, code, hotel_id, `position`, plan_id, create_time, price, buy_time
+    from gzg_info
+  </select>
+
+
+
+
+</mapper >

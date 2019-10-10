@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <logger name="com.ly.mt.core.data.activity.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.basic.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.cabinet.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.coupon.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.goods.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.gzg.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.order.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.payment.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.record.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.redis.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.shop.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.trade.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.core.data.user.mapper" level="DEBUG"/>
+</configuration>

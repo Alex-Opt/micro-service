@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.payment.server.payment.mapper.PaymentServiceMapper">
+    <!-- 插入支付流水start -->
+    <insert id="insertPaymentDetail" parameterType="com.ly.mt.core.base.entity.payment.PaymentDetailVo">
+        INSERT INTO payment_detail(
+            id, order_no, payee, payer, money, trade_type, trade_status, payment_type, payment_no, create_time
+        ) VALUES (
+            #{id}, #{orderNo}, #{payee}, #{payer}, #{money}, #{tradeType}, #{tradeStatus}, #{paymentType}, #{paymentNo}, #{createTime}
+        )
+    </insert>
+    <!-- 插入支付流水end -->
+
+
+    <!-- 根据订单号获取订单信息start -->
+    <select id="getOrderByOrderNo" parameterType="Map" resultType="com.ly.mt.core.base.entity.payment.PaymentOrderVo">
+        SELECT o.id,o.order_no, o.buyer_id, o.seller_id, o.order_money,o.distribution_id,
+               (SELECT spu_name FROM trade_order_items WHERE order_id = o.id LIMIT 1) AS spu_name
+        FROM trade_orders o
+        WHERE o.order_no = #{orderNo}
+    </select>
+    <!-- 根据订单号获取订单信息end -->
+
+    <!--根据购货单id查询购货订单信息-start-->
+    <select id="getPurchaseOrderById" parameterType="Map" resultType="com.ly.mt.core.base.entity.payment.PaymentOrderVo">
+        SELECT sp.id as order_no, sp.user_id as buyer_id,sp.seller_id as seller_id,sp.actual_amount as order_money,
+               (SELECT sku_name FROM shop_purchases_items WHERE shop_purchases_id = sp.id LIMIT 1) AS spu_name
+        FROM shop_purchases sp
+        WHERE sp.id = #{purchaseId}
+    </select>
+    <!--根据购货单id查询购货订单信息-end-->
+
+    <!-- 根据订单号获取最小的订单状态start -->
+    <select id="getOrderStatusByOrderNo" parameterType="com.ly.mt.core.base.entity.payment.PaymentDetailVo" resultType="Integer">
+        SELECT IFNULL(MIN(order_status), 0)
+        FROM trade_orders
+        WHERE order_no = #{orderNo}
+    </select>
+    <!-- 根据订单号获取最小的订单状态end -->
+
+
+    <!-- 更新订单支付状态start -->
+    <update id="updateOrderStatusPaymentSuccess" parameterType="com.ly.mt.core.base.entity.payment.PaymentOrderVo">
+        UPDATE trade_orders
+        SET order_status = #{orderStatus},
+            payment_type = #{paymentType},
+            pay_time = #{payTime}
+        WHERE order_no = #{orderNo}
+        AND order_status = 10
+    </update>
+    <!-- 更新订单支付状态end -->
+
+    <!-- 根据退款单号获取退款单信息start -->
+    <select id="getTradeOrderRefundInfoById" parameterType="long"
+            resultType="com.ly.mt.core.base.entity.trade.TradeOrderRefundInfo">
+    SELECT
+        id,order_id,buyer_id,refund_status,refund_desc,refund_reason,
+        refund_price,refund_freight_price,subtract_coupon_price,retund_address,
+        refund_type,status,consignee,phone,create_time
+        FROM  trade_order_refund WHERE id = #{refundNo} AND status = 1
+</select>
+    <!-- 根据退款单号获取退款单信息end -->
+
+    <!-- 根据退款单号更新退款单状态start-->
+    <update id="updateTradeOrderRefundStatusById" parameterType="long">
+        UPDATE trade_order_refund SET refund_status = 99 WHERE id=#{refundNo} AND status = 1
+    </update>
+    <!-- 根据退款单号更新退款单状态end-->
+</mapper>

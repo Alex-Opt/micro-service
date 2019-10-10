@@ -1,0 +1,13 @@
+server:
+  port: 8191
+spring:
+  cloud:
+    config:
+      name: eureka,time,db-redis,db-mysql,sms,oss,mq
+      profile: dev
+      uri: http://39.96.191.19:8082
+#pagehelper:
+#  helper-dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countSql

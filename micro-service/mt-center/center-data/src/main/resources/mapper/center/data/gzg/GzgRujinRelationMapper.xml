@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgRujinRelationMapper" >
+
+    <select id="getGzgRujinRelationListByNameAndTid" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation" resultType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        select *
+        from gzg_rujin_relation
+        where tid is null
+     </select>
+
+
+    <select id="getGzgRujinRelationListByName" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation" resultType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        select *
+        from gzg_rujin_relation
+        where name = #{name} limit 1
+     </select>
+
+    <update id="updateGzgRujinRelationById" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        update gzg_rujin_relation set tid = #{tid} where id =#{id}
+    </update>
+
+    <insert id="insertGzgRujinRelation" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        INSERT INTO gzg_rujin_relation (
+            id,name,tid,tname,hg,hd,plan_name,create_time
+        ) VALUES (
+                     #{id}, #{name}, #{tid}, #{tname}, #{hg}, #{hd}, #{plan_name}, #{create_time}
+                 )
+    </insert>
+
+    <select id="getGzgRujinRelationByNameAndTname" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation" resultType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        select * from gzg_rujin_relation where name=#{name} and tname=#{tname}
+    </select>
+    <select id="getGzgRujinRelationByTname" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation" resultType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        select *
+        from gzg_rujin_relation
+        where tname = #{tname} limit 1
+     </select>
+
+    <select id="getGzgRujinRelationByTid" parameterType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation" resultType="com.ly.mt.center.data.gzg.entity.GzgRujinRelation">
+        select *
+        from gzg_rujin_relation
+        where tid = #{tid} limit 1
+     </select>
+
+</mapper >

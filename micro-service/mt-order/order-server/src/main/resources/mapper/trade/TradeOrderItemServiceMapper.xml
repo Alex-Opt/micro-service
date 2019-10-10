@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.trade.mapper.TradeOrderItemServiceMapper">
+
+    <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem" parameterType="java.lang.Long">
+        SELECT
+            Id,order_id, spu_id, spu_name,  sku_Id, sku_name, sku_price, sku_num, pomotion_price, freight_price, gy_spu_id,
+            gy_spu_code,gy_sku_code, payment_price, create_time
+        FROM trade_order_items
+        WHERE Id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <insert id="insert" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+        INSERT INTO trade_order_items (Id, order_id, spu_id, spu_name, sku_Id, sku_name, sku_price,
+                                       sku_num, pomotion_price, freight_price,gy_spu_id, gy_spu_code, gy_sku_code,
+                                       payment_price, create_time)
+        VALUES (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{spuId,jdbcType=BIGINT},
+                #{spuName,jdbcType=VARCHAR}, #{skuId,jdbcType=BIGINT}, #{skuName,jdbcType=VARCHAR}, #{skuPrice,jdbcType=DOUBLE},
+                #{skuNum,jdbcType=INTEGER}, #{pomotionPrice,jdbcType=DOUBLE}, #{freightPrice,jdbcType=DOUBLE},
+                #{gySpuId,jdbcType=VARCHAR}, #{gySpuCode,jdbcType=VARCHAR}, #{gySkuCode,jdbcType=VARCHAR},
+                #{paymentPrice,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="batchInsert">
+        INSERT INTO trade_order_items (Id, order_id, spu_id,spu_name, sku_Id, sku_name, sku_price, sku_num, pomotion_price,
+                                       freight_price, gy_spu_id,  gy_spu_code, gy_sku_code, payment_price, create_time)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.orderId,jdbcType=BIGINT}, #{item.spuId,jdbcType=BIGINT},#{item.spuName,jdbcType=VARCHAR},
+            #{item.skuId,jdbcType=BIGINT}, #{item.skuName,jdbcType=VARCHAR}, #{item.skuPrice,jdbcType=DOUBLE},
+            #{item.skuNum,jdbcType=INTEGER}, #{item.pomotionPrice,jdbcType=DOUBLE}, #{item.freightPrice,jdbcType=DOUBLE},
+            #{item.gySpuId,jdbcType=VARCHAR}, #{item.gySpuCode,jdbcType=VARCHAR}, #{item.gySkuCode,jdbcType=VARCHAR},
+            #{item.paymentPrice,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.base.entity.trade.TradeOrderItem">
+        UPDATE trade_order_items
+        SET order_id       = #{orderId,jdbcType=BIGINT},
+            spu_id         = #{spuId,jdbcType=BIGINT},
+            spu_name       = #{spuName,jdbcType=VARCHAR},
+            sku_Id         = #{skuId,jdbcType=BIGINT},
+            sku_name       = #{skuName,jdbcType=VARCHAR},
+            sku_price      = #{skuPrice,jdbcType=DOUBLE},
+            sku_num        = #{skuNum,jdbcType=INTEGER},
+            pomotion_price = #{pomotionPrice,jdbcType=DOUBLE},
+            freight_price  = #{freightPrice,jdbcType=DOUBLE},
+            gy_spu_id      = #{gySpuId,jdbcType=VARCHAR},
+            gy_spu_code    = #{gySpuCode,jdbcType=VARCHAR},
+            gy_sku_code    = #{gySkuCode,jdbcType=VARCHAR},
+            payment_price  = #{paymentPrice,jdbcType=DOUBLE},
+            create_time    = #{createTime,jdbcType=TIMESTAMP}
+        WHERE Id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <select id="selectByOrderIdAndSkuId"  resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem"
+            parameterType="java.lang.Long">
+        SELECT
+            Id, order_id, spu_id, spu_name, sku_Id, sku_name, sku_price,  sku_num, pomotion_price,
+            freight_price, gy_spu_id,gy_spu_code, gy_sku_code, payment_price, create_time
+        FROM trade_order_items
+        WHERE  order_id=#{orderId,jdbcType=BIGINT} and sku_id = #{skuId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOrderId"  resultType="com.ly.mt.core.base.entity.trade.TradeOrderItem" parameterType="java.lang.Long">
+        SELECT
+            Id,order_id,  spu_id, spu_name, sku_Id,sku_name, sku_price,sku_num,pomotion_price,freight_price,
+               gy_spu_id, gy_spu_code, gy_sku_code,payment_price,create_time
+        FROM trade_order_items
+        WHERE  order_id=#{order_id,jdbcType=BIGINT}
+    </select>
+</mapper>

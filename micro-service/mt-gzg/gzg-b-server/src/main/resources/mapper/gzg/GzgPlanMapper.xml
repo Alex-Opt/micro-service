@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgPlan" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="one" property="one" jdbcType="VARCHAR" />
+    <result column="two" property="two" jdbcType="VARCHAR" />
+    <result column="three" property="three" jdbcType="VARCHAR" />
+    <result column="four" property="four" jdbcType="VARCHAR" />
+    <result column="five" property="five" jdbcType="VARCHAR" />
+    <result column="six" property="six" jdbcType="VARCHAR" />
+    <result column="seven" property="seven" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, plan_name, one, two, three, four, five, six, seven
+  </sql>
+  <select id="getPlans" resultType="java.util.Map">
+    select id,plan_name from gzg_plan
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gzg_plan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gzg_plan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgPlan" >
+    insert into gzg_plan (id, plan_name, one, 
+      two, three, four, five, 
+      six, seven)
+    values (#{id,jdbcType=BIGINT}, #{planName,jdbcType=VARCHAR}, #{one,jdbcType=VARCHAR}, 
+      #{two,jdbcType=VARCHAR}, #{three,jdbcType=VARCHAR}, #{four,jdbcType=VARCHAR}, #{five,jdbcType=VARCHAR}, 
+      #{six,jdbcType=VARCHAR}, #{seven,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgPlan" >
+    insert into gzg_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="one != null" >
+        one,
+      </if>
+      <if test="two != null" >
+        two,
+      </if>
+      <if test="three != null" >
+        three,
+      </if>
+      <if test="four != null" >
+        four,
+      </if>
+      <if test="five != null" >
+        five,
+      </if>
+      <if test="six != null" >
+        six,
+      </if>
+      <if test="seven != null" >
+        seven,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="one != null" >
+        #{one,jdbcType=VARCHAR},
+      </if>
+      <if test="two != null" >
+        #{two,jdbcType=VARCHAR},
+      </if>
+      <if test="three != null" >
+        #{three,jdbcType=VARCHAR},
+      </if>
+      <if test="four != null" >
+        #{four,jdbcType=VARCHAR},
+      </if>
+      <if test="five != null" >
+        #{five,jdbcType=VARCHAR},
+      </if>
+      <if test="six != null" >
+        #{six,jdbcType=VARCHAR},
+      </if>
+      <if test="seven != null" >
+        #{seven,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgPlan" >
+    update gzg_plan
+    <set >
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="one != null" >
+        one = #{one,jdbcType=VARCHAR},
+      </if>
+      <if test="two != null" >
+        two = #{two,jdbcType=VARCHAR},
+      </if>
+      <if test="three != null" >
+        three = #{three,jdbcType=VARCHAR},
+      </if>
+      <if test="four != null" >
+        four = #{four,jdbcType=VARCHAR},
+      </if>
+      <if test="five != null" >
+        five = #{five,jdbcType=VARCHAR},
+      </if>
+      <if test="six != null" >
+        six = #{six,jdbcType=VARCHAR},
+      </if>
+      <if test="seven != null" >
+        seven = #{seven,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgPlan" >
+    update gzg_plan
+    set plan_name = #{planName,jdbcType=VARCHAR},
+      one = #{one,jdbcType=VARCHAR},
+      two = #{two,jdbcType=VARCHAR},
+      three = #{three,jdbcType=VARCHAR},
+      four = #{four,jdbcType=VARCHAR},
+      five = #{five,jdbcType=VARCHAR},
+      six = #{six,jdbcType=VARCHAR},
+      seven = #{seven,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSkuIdAndName" resultType="java.util.Map">
+      SELECT s.id as skuId, s.`name` as skuName,s.code as skuCode from goods_sku_info s
+      JOIN (SELECT p.skuId FROM gzg_info gi
+      JOIN (SELECT * FROM(
+      SELECT a.id,a.one as skuId from gzg_plan a
+      union all
+      SELECT b.id,b.two as skuId from gzg_plan b
+      union all
+      SELECT c.id,c.three as skuId from gzg_plan c
+      union all
+      SELECT d.id,d.four as skuId from gzg_plan d
+      union all
+      SELECT e.id,e.five as skuId from gzg_plan e
+      union all
+      SELECT f.id,f.six as skuId from gzg_plan f
+      union all
+      SELECT g.id,g.seven as skuId from gzg_plan g
+      ) as plan) p on p.id = gi.plan_id
+      where gi.hotel_id = #{hotelId}
+      GROUP BY p.skuId) p on p.skuId = s.id
+  </select>
+</mapper>

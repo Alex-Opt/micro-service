@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.share.mapper.ShareGoodsPictureDelMapper" >
+    <!-- 保存ShareGoodsPictureDel -->
+    <insert id="insertShareGoodsPictureDel" parameterType="com.ly.mt.center.data.share.entity.ShareGoodsPictureDel">
+        INSERT INTO share_goods_picture_del (
+            id, user_id, sku_id, spu_id, pic_url, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{sku_id}, #{spu_id}, #{pic_url}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShareGoodsPictureDel -->
+    <delete id="deleteShareGoodsPictureDel" parameterType="com.ly.mt.center.data.share.entity.ShareGoodsPictureDel">
+        DELETE FROM share_goods_picture_del
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShareGoodsPictureDel -->
+    <update id="updateShareGoodsPictureDel" parameterType="com.ly.mt.center.data.share.entity.ShareGoodsPictureDel">
+        UPDATE share_goods_picture_del
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShareGoodsPictureDel -->
+    <select id="getShareGoodsPictureDel" parameterType="com.ly.mt.center.data.share.entity.ShareGoodsPictureDel" resultType="com.ly.mt.center.data.share.entity.ShareGoodsPictureDel">
+        SELECT * 
+        FROM share_goods_picture_del
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

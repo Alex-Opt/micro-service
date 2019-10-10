@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsAttrValueMapper" >
+    <!-- 保存GoodsAttrValue -->
+    <insert id="insertGoodsAttrValue" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttrValue">
+        INSERT INTO goods_attr_value (
+            id, attr_id, attr_status, attr_value, sort_num, create_time, modify_time
+        ) VALUES (
+            #{id}, #{attr_id}, #{attr_status}, #{attr_value}, #{sort_num}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除GoodsAttrValue -->
+    <delete id="deleteGoodsAttrValue" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttrValue">
+        DELETE FROM goods_attr_value
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GoodsAttrValue -->
+    <update id="updateGoodsAttrValue" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttrValue">
+        UPDATE goods_attr_value
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GoodsAttrValue -->
+    <select id="getGoodsAttrValue" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttrValue" resultType="com.ly.mt.center.data.goods.entity.GoodsAttrValue">
+        SELECT * 
+        FROM goods_attr_value
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <!-- 根据属性值id查询属性值和属性-->
+    <select id="getGoodsAttrByValueId" parameterType="com.ly.mt.center.data.goods.entity.GoodsAttrValue"  resultType="java.util.Map">
+        SELECT
+        ga.id attrValueId,ga.attr_name attrName,gav.attr_id attrId,gav.attr_value attrValue
+        FROM goods_attr ga LEFT JOIN goods_attr_value gav ON ga.id = gav.attr_id
+        WHERE
+        gav.attr_status= 1 AND gav.id  =#{id}
+    </select>
+</mapper>

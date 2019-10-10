@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.shopuser.mapper.LodeRunnerTreesServiceMapper" >
+
+  <select id="selectByPrimaryKey" resultType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees" parameterType="java.lang.Long" >
+    select  id, user_id, father_id, top_user_id, user_level, user_source, create_time, modify_time
+    from lode_runner_trees
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lode_runner_trees
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees" >
+    insert into lode_runner_trees (id, user_id, father_id, 
+      top_user_id, user_level, user_source, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{fatherId,jdbcType=BIGINT}, 
+      #{topUserId,jdbcType=BIGINT}, #{userLevel,jdbcType=INTEGER}, #{userSource,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees" >
+    insert into lode_runner_trees
+   (
+        id,
+        user_id,
+        father_id,
+        top_user_id,
+        user_level,
+        user_source,
+        create_time,
+        modify_time
+	)
+	VALUES(
+        #{id,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT},
+        #{fatherId,jdbcType=BIGINT},
+        #{topUserId,jdbcType=BIGINT},
+        #{userLevel,jdbcType=INTEGER},
+        #{userSource,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP}
+		)
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees" >
+    update lode_runner_trees
+    SET
+        user_id = #{userId,jdbcType=BIGINT},
+        father_id = #{fatherId,jdbcType=BIGINT},
+        top_user_id = #{topUserId,jdbcType=BIGINT},
+        user_level = #{userLevel,jdbcType=INTEGER},
+        user_source = #{userSource,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.shop.LodeRunnerTrees" >
+    update lode_runner_trees
+    set user_id = #{userId,jdbcType=BIGINT},
+      father_id = #{fatherId,jdbcType=BIGINT},
+      top_user_id = #{topUserId,jdbcType=BIGINT},
+      user_level = #{userLevel,jdbcType=INTEGER},
+      user_source = #{userSource,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

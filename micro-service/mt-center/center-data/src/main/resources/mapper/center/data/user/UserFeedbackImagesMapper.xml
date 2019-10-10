@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserFeedbackImagesMapper" >
+    <!-- 保存UserFeedbackImages -->
+    <insert id="insertUserFeedbackImages" parameterType="com.ly.mt.center.data.user.entity.UserFeedbackImages">
+        INSERT INTO user_feedback_images (
+            id, feedback_id, images_url, create_time
+        ) VALUES (
+            #{id}, #{feedback_id}, #{images_url}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserFeedbackImages -->
+    <delete id="deleteUserFeedbackImages" parameterType="com.ly.mt.center.data.user.entity.UserFeedbackImages">
+        DELETE FROM user_feedback_images
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserFeedbackImages -->
+    <update id="updateUserFeedbackImages" parameterType="com.ly.mt.center.data.user.entity.UserFeedbackImages">
+        UPDATE user_feedback_images
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserFeedbackImages -->
+    <select id="getUserFeedbackImages" parameterType="com.ly.mt.center.data.user.entity.UserFeedbackImages" resultType="com.ly.mt.center.data.user.entity.UserFeedbackImages">
+        SELECT * 
+        FROM user_feedback_images
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

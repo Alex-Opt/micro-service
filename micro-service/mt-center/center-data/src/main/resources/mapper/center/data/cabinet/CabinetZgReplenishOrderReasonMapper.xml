@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetZgReplenishOrderReasonMapper">
+    <!--批量插入-->
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT INTO cabinet_zgreplenish_order_reason(id, zg_replenish_order_id,cabinet_code,replenishment_reason, status, create_time, update_time
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+               (
+                #{item.id},
+                #{item.zg_replenish_order_id},
+                #{item.cabinet_code},
+                #{item.replenishment_reason},
+                #{item.status},
+                #{item.create_time},
+                #{item.update_time}
+                )
+        </foreach>
+    </insert>
+
+    <!--更新补货订单理由状态-->
+    <update id="updateCabinetZgReplenishReasonById" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrderReason" >
+        update cabinet_zgreplenish_order_reason
+        <set >
+            <if test="status != null" >
+                status = #{status},
+            </if>
+            <if test="update_time != null" >
+                update_time = #{update_time},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过条件查询展柜的补货订单理由-->
+    <select id="getCabinetZgReplenishReasonByCondtion" resultType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrderReason"
+            parameterType="com.ly.mt.center.data.cabinet.entity.CabinetZgReplenishOrderReason">
+        select * from cabinet_zgreplenish_order_reason where 1=1
+        <if test="zg_replenish_order_id != null" >
+            AND zg_replenish_order_id = #{zg_replenish_order_id}
+        </if>
+        <if test="cabinet_code != null" >
+            AND cabinet_code = #{cabinet_code}
+        </if>
+        <if test="replenishment_reason != null" >
+            AND replenishment_reason = #{replenishment_reason}
+        </if>
+        <if test="status != null" >
+            AND status = #{status}
+        </if>
+    </select>
+</mapper>

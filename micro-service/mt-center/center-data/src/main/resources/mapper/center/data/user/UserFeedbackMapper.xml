@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserFeedbackMapper" >
+    <!-- 保存UserFeedback -->
+    <insert id="insertUserFeedback" parameterType="com.ly.mt.center.data.user.entity.UserFeedback">
+        INSERT INTO user_feedback (
+            id, user_id, mobile, back_type, content, status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{user_id}, #{mobile}, #{back_type}, #{content}, #{status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserFeedback -->
+    <delete id="deleteUserFeedback" parameterType="com.ly.mt.center.data.user.entity.UserFeedback">
+        DELETE FROM user_feedback
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserFeedback -->
+    <update id="updateUserFeedback" parameterType="com.ly.mt.center.data.user.entity.UserFeedback">
+        UPDATE user_feedback
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserFeedback -->
+    <select id="getUserFeedback" parameterType="com.ly.mt.center.data.user.entity.UserFeedback" resultType="com.ly.mt.center.data.user.entity.UserFeedback">
+        SELECT * 
+        FROM user_feedback
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopPurchasesMapper" >
+    <!-- 保存ShopPurchases -->
+    <insert id="insertShopPurchases" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchases">
+        INSERT INTO shop_purchases (
+            id, user_id, seller_id, shop_id, consignee, mobile, province_code, city_code, address, full_address, coupon_id, delivery_type, delivery_fee, amount, discount, actual_amount, remark, status, payed_model, transaction_id, payed_time, sended_time, create_time, modify_time, district_code, address_id
+        ) VALUES (
+            #{id}, #{user_id}, #{seller_id}, #{shop_id}, #{consignee}, #{mobile}, #{province_code}, #{city_code}, #{address}, #{full_address}, #{coupon_id}, #{delivery_type}, #{delivery_fee}, #{amount}, #{discount}, #{actual_amount}, #{remark}, #{status}, #{payed_model}, #{transaction_id}, #{payed_time}, #{sended_time}, #{create_time}, #{modify_time}, #{district_code}, #{address_id}
+        )
+    </insert>
+
+
+    <!-- 删除ShopPurchases -->
+    <delete id="deleteShopPurchases" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchases">
+        DELETE FROM shop_purchases
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopPurchases -->
+    <update id="updateShopPurchases" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchases">
+        UPDATE shop_purchases
+        SET
+        <if test="null != status and '' != status">status = #{status,jdbcType=TINYINT},</if>
+        <if test="null != logistics_code and '' != logistics_code">logistics_code = #{logistics_code,jdbcType=VARCHAR},</if>
+        <if test="null != gy_logistics_code and '' != gy_logistics_code">gy_logistics_code = #{gy_logistics_code,jdbcType=VARCHAR},</if>
+        <if test="null != payed_model and '' != payed_model">payed_model = #{payed_model,jdbcType=VARCHAR},</if>
+        <if test="null != payed_time and '' != payed_time">payed_time = #{payed_time,jdbcType=VARCHAR},</if>
+        <if test="null != transaction_id and '' != transaction_id">transaction_id = #{transaction_id,jdbcType=VARCHAR},</if>
+        modify_time   = #{modify_time,jdbcType=TIMESTAMP}
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopPurchases -->
+    <select id="getShopPurchases" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchases" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesModel">
+        SELECT sp.*,
+        ba.name as province_name,bb.name as city_name, bc.name as district_name
+        FROM shop_purchases sp
+        LEFT JOIN basic_area ba ON sp.province_code = ba.m_id
+        LEFT JOIN basic_area bb ON sp.city_code = bb.m_id
+        LEFT JOIN basic_area bc ON sp.district_code = bc.m_id
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND sp.id = #{id}</if>
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+        LIMIT 1
+    </select>
+
+    <!-- 查询ShopPurchases -->
+    <select id="getShopPurchasesList" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchases" resultType="com.ly.mt.center.data.shop.entity.ShopPurchases">
+        SELECT *
+        FROM shop_purchases
+        WHERE 1 = 1
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+        order by create_time desc
+    </select>
+
+</mapper>

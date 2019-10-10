@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.shopuser.mapper.ShopLicensesServiceMapper" >
+ 
+  <select id="selectByPrimaryKey" resultType="com.ly.mt.core.common.entity.shop.ShopLicenses"
+          parameterType="java.lang.Long" >
+    select 
+     id, shop_id, path, create_time, modify_time
+    from shop_licenses
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_licenses
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.shop.ShopLicenses" >
+    insert into shop_licenses (id, shop_id, path, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.shop.ShopLicenses" >
+    insert into shop_licenses (
+        id,
+        shop_id, 
+        path,
+        create_time,
+        modify_time)
+    VALUES(
+        #{id,jdbcType=BIGINT},
+        #{shopId,jdbcType=BIGINT},
+        #{path,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.shop.ShopLicenses" >
+    update shop_licenses
+    SET
+        shop_id = #{shopId,jdbcType=BIGINT},
+        path = #{path,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.shop.ShopLicenses" >
+    update shop_licenses
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      path = #{path,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

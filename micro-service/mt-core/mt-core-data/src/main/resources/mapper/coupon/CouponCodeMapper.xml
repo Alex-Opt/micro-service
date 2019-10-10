@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.coupon.mapper.CouponCodeMapper">
+    <!-- 更新CouponCode -->
+    <update id="updateCouponCode" parameterType="com.ly.mt.core.data.coupon.entity.CouponCode">
+        UPDATE coupon_code
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != useStatus">use_status = #{useStatus},</if>
+            <if test="null != useTime">use_time = #{useTime},</if>
+        </trim>
+        <where>
+            <if test="null != userId and '' != userId">AND user_id IN (${userId})</if>
+            <if test="null != couponId and '' != couponId">AND coupon_id IN (${couponId})</if>
+        </where>
+    </update>
+
+    <update id="updateCouponCodeBatch">
+        UPDATE coupon_code
+        SET use_status = 1
+        WHERE id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateCouponCodeByUserIdAndCouponId" parameterType="com.ly.mt.core.data.coupon.entity.CouponCode">
+        UPDATE coupon_code
+        SET
+            use_status = 1,
+            use_time = null
+        WHERE user_id =#{userId} AND coupon_id = #{couponId}
+    </update>
+</mapper>

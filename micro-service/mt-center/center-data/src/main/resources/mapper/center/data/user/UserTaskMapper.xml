@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserTaskMapper" >
+    <!-- 保存UserTask -->
+    <insert id="insertUserTask" parameterType="com.ly.mt.center.data.user.entity.UserTask">
+        INSERT INTO user_task (
+            id, task_name, task_desc, task_type, task_work, task_yn, app_type, create_time
+        ) VALUES (
+            #{id}, #{task_name}, #{task_desc}, #{task_type}, #{task_work}, #{task_yn}, #{app_type}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserTask -->
+    <delete id="deleteUserTask" parameterType="com.ly.mt.center.data.user.entity.UserTask">
+        DELETE FROM user_task
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserTask -->
+    <update id="updateUserTask" parameterType="com.ly.mt.center.data.user.entity.UserTask">
+        UPDATE user_task
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserTask -->
+    <select id="getUserTask" parameterType="com.ly.mt.center.data.user.entity.UserTask" resultType="com.ly.mt.center.data.user.entity.UserTask">
+        SELECT * 
+        FROM user_task
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

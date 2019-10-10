@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.cabinet.mapper.CabinetReplenishRewardMapper">
+    <select id="getUserCabinetRewardByUserId" resultType="com.ly.mt.core.data.cabinet.entity.CabinetReplenishReward">
+        SELECT * FROM cabinet_replenish_reward
+        WHERE user_id = #{userId}  AND type = #{type}
+    </select>
+    <update id="updateRewardById" parameterType="com.ly.mt.core.data.cabinet.entity.CabinetReplenishReward">
+        UPDATE cabinet_replenish_reward
+        SET
+        <if test="mayWithdrawalAmount != null">
+            may_withdrawal_amount = #{mayWithdrawalAmount},
+        </if>
+        <if test="pendingSettlementAmount != null">
+            pending_settlement_amount = #{pendingSettlementAmount},
+        </if>
+        <if test="cumulativeWithdrawalAmount != null">
+            cumulative_withdrawal_amount = #{cumulativeWithdrawalAmount},
+        </if>
+            update_time = #{updateTime}
+        WHERE id = #{id}
+    </update>
+</mapper>

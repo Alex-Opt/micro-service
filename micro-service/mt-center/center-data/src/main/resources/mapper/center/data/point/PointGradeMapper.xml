@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.point.mapper.PointGradeMapper" >
+    <select id="getPointGradeByScore" resultType="com.ly.mt.center.data.point.entity.PointGrade" parameterType="com.ly.mt.center.data.point.entity.PointGrade" >
+        SELECT  *
+        FROM  point_grade
+        WHERE   score  &gt;= #{score}
+        ORDER BY score DESC
+    </select>
+</mapper >

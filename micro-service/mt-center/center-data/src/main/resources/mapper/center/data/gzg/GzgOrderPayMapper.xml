@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgOrderPayMapper" >
+
+
+
+
+    <insert id="insertGzgOrderPay" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderPay">
+    insert into gzg_order_pay (id, order_id, pay_id,`state`)
+    values (#{id,jdbcType=BIGINT}, #{order_id,jdbcType=VARCHAR}, #{pay_id,jdbcType=VARCHAR},
+      #{state,jdbcType=VARCHAR})
+  </insert>
+
+    <delete id="deleteGzgOrderPayById" parameterType="java.lang.Long">
+    delete from gzg_order_pay
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <update id="updateGzgOrderPayById" parameterType="com.ly.mt.center.data.gzg.entity.GzgOrderPay">
+    update gzg_order_pay
+    set order_id = #{order_id,jdbcType=VARCHAR},
+      pay_id = #{pay_id,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="getGzgOrderPayById" parameterType="java.lang.Long" resultType="com.ly.mt.center.data.gzg.entity.GzgOrderPay">
+    select id, order_id, pay_id, `state`
+    from gzg_order_pay
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="getGzgOrderPay" resultType="com.ly.mt.center.data.gzg.entity.GzgOrderPay">
+      select id, order_id, pay_id, `state`
+      from gzg_order_pay
+      where
+      order_id = #{order_id,jdbcType=VARCHAR}
+    </select>
+
+</mapper >

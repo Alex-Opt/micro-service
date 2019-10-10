@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.vote.mapper.VoteConfigMapper" >
+    <!-- 保存VoteConfig -->
+    <insert id="insertVoteConfig" parameterType="com.ly.mt.center.data.vote.entity.VoteConfig">
+        INSERT INTO vote_config (
+            id, vote_name, vote_type, vote_num, vote_condition, vote_status, create_time, reserved_one, reserved_two, reserved_three
+        ) VALUES (
+            #{id}, #{vote_name}, #{vote_type}, #{vote_num}, #{vote_condition}, #{vote_status}, #{create_time}, #{reserved_one}, #{reserved_two}, #{reserved_three}
+        )
+    </insert>
+
+
+    <!-- 删除VoteConfig -->
+    <delete id="deleteVoteConfig" parameterType="com.ly.mt.center.data.vote.entity.VoteConfig">
+        DELETE FROM vote_config
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新VoteConfig -->
+    <update id="updateVoteConfig" parameterType="com.ly.mt.center.data.vote.entity.VoteConfig">
+        UPDATE vote_config
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询VoteConfig -->
+    <select id="getVoteConfig" parameterType="com.ly.mt.center.data.vote.entity.VoteConfig" resultType="com.ly.mt.center.data.vote.entity.VoteConfig">
+        SELECT * 
+        FROM vote_config
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

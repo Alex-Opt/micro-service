@@ -1,0 +1,8 @@
+server:
+  port: 7071
+spring:
+  cloud:
+    config:
+      name: center-data,eureka,mq,redis,txc
+      profile: test
+      uri: http://10.11.10.15

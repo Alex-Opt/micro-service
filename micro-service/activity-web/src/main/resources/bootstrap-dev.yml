@@ -1,0 +1,8 @@
+server:
+  port: 8197
+spring:
+  cloud:
+    config:
+      name: eureka,time,db-redis,swagger,oss
+      profile: dev
+      uri: http://39.96.191.19:8082

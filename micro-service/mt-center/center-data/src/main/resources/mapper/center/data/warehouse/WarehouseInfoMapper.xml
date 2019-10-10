@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.warehouse.mapper.WarehouseInfoMapper" >
+    <!-- 保存WarehouseInfo -->
+    <insert id="insertWarehouseInfo" parameterType="com.ly.mt.center.data.warehouse.entity.WarehouseInfo">
+        INSERT INTO warehouse_info (
+            id, name, linkman, phone, mobile, address, remark, gy_code, gy_name, create_time
+        ) VALUES (
+            #{id}, #{name}, #{linkman}, #{phone}, #{mobile}, #{address}, #{remark}, #{gy_code}, #{gy_name}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除WarehouseInfo -->
+    <delete id="deleteWarehouseInfo" parameterType="com.ly.mt.center.data.warehouse.entity.WarehouseInfo">
+        DELETE FROM warehouse_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新WarehouseInfo -->
+    <update id="updateWarehouseInfo" parameterType="com.ly.mt.center.data.warehouse.entity.WarehouseInfo">
+        UPDATE warehouse_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询WarehouseInfo -->
+    <select id="getWarehouseInfo" parameterType="com.ly.mt.center.data.warehouse.entity.WarehouseInfo" resultType="com.ly.mt.center.data.warehouse.entity.WarehouseInfo">
+        SELECT * 
+        FROM warehouse_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

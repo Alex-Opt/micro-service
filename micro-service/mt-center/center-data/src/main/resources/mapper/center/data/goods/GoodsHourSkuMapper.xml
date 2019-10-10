@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.goods.mapper.GoodsHourSkuMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.center.data.goods.entity.GoodsHourSku" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="spu_id" property="spu_id" jdbcType="BIGINT" />
+    <result column="sku_id" property="sku_id" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="modity_time" property="modity_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, spu_id, sku_id, status, create_time, modity_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods_hour_sku
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_hour_sku
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.goods.entity.GoodsHourSku" >
+    insert into goods_hour_sku (id, spu_id, sku_id, 
+      status, create_time, modity_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{spuId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modityTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.goods.entity.GoodsHourSku" >
+    insert into goods_hour_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spuId != null" >
+        spu_id,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modityTime != null" >
+        modity_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="spuId != null" >
+        #{spuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modityTime != null" >
+        #{modityTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.goods.entity.GoodsHourSku" >
+    update goods_hour_sku
+    <set >
+      <if test="spuId != null" >
+        spu_id = #{spuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modityTime != null" >
+        modity_time = #{modityTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.goods.entity.GoodsHourSku" >
+    update goods_hour_sku
+    set spu_id = #{spuId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modity_time = #{modityTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectGoodsHourSkuList"  resultType="com.ly.mt.center.data.goods.entity.GoodsHourSku">
+    SELECT
+      id,spu_id,sku_id,status
+    FROM goods_hour_sku
+    WHERE sku_id IN
+    <foreach item="sku_id" collection="list" index="index" open="(" separator="," close=")">
+      #{sku_id}
+    </foreach>
+  </select>
+
+  <select id="getGoodsHourSku" resultType="com.ly.mt.center.data.goods.entity.GoodsHourSku" parameterType="com.ly.mt.center.data.goods.entity.GoodsHourSku" >
+    select
+    *
+    from goods_hour_sku
+    where sku_id = #{sku_id}
+  </select>
+
+</mapper>

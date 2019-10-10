@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- CONSOLE start -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- CONSOLE end -->
+
+
+    <!-- INFO start -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/apps/logs/info.log</File>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/apps/logs/info.log.%d</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- INFO end -->
+
+
+    <!-- ERROR start -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/apps/logs/error.log</File>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/apps/logs/error.log.%d</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- ERROR end -->
+
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="test,gray,prod">
+        <root level="INFO">
+            <appender-ref ref="INFO"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+    </springProfile>
+    <logger name="com.ly.mt.center.data.activity.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.basic.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.battle.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.coupon.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.goods.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.gy.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.gzg.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.hd.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.load.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.lode.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.notice.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.payment.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.platform.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.point.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.punch.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.rotation.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.runnerprofit.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.share.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.shop.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.trade.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.user.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.vote.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.warehouse.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.bluetooth.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.wxshop.mapper" level="DEBUG"/>
+    <logger name="com.ly.mt.center.data.cabinet.mapper" level="DEBUG"/>
+</configuration>

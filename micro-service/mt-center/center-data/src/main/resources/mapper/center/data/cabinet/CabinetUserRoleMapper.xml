@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetUserRoleMapper" >
+  <sql id="Base_Column_List" >
+    id, user_id, role_id, `status`, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_user_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_user_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetUserRole" >
+    insert into cabinet_user_role (id, user_id, role_id, 
+      `status`, gmt_create, gmt_modify
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetUserRole" >
+    insert into cabinet_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetUserRole" >
+    update cabinet_user_role
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetUserRole" >
+    update cabinet_user_role
+    set user_id = #{userId,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.activity.server.wechat.mapper.WechatHelpMasterMapper" >
+  <sql id="Base_Column_List" >
+    id, wechat_id, wechat_master_id, task_status, task_id, activity_id, user_name, phone, 
+    share_url, share_oss_url, open_id, update_time, create_time
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from wechat_help_master
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpMaster" >
+    insert into wechat_help_master (id, wechat_id, wechat_master_id, 
+      task_status, task_id, activity_id, 
+      user_name, phone, share_url, 
+      share_oss_url, open_id, update_time, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{wechatId,jdbcType=BIGINT}, #{wechatMasterId,jdbcType=BIGINT}, 
+      #{taskStatus,jdbcType=CHAR}, #{taskId,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, 
+      #{userName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR}, 
+      #{shareOssUrl,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpMaster" >
+    insert into wechat_help_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wechatId != null" >
+        wechat_id,
+      </if>
+      <if test="wechatMasterId != null" >
+        wechat_master_id,
+      </if>
+      <if test="taskStatus != null" >
+        task_status,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="shareUrl != null" >
+        share_url,
+      </if>
+      <if test="shareOssUrl != null" >
+        share_oss_url,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="wechatId != null" >
+        #{wechatId,jdbcType=BIGINT},
+      </if>
+      <if test="wechatMasterId != null" >
+        #{wechatMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null" >
+        #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shareOssUrl != null" >
+        #{shareOssUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpMaster" >
+    update wechat_help_master
+    <set >
+      <if test="wechatId != null" >
+        wechat_id = #{wechatId,jdbcType=BIGINT},
+      </if>
+      <if test="wechatMasterId != null" >
+        wechat_master_id = #{wechatMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null" >
+        task_status = #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        share_url = #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shareOssUrl != null" >
+        share_oss_url = #{shareOssUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpMaster" >
+    update wechat_help_master
+    set wechat_id = #{wechatId,jdbcType=BIGINT},
+      wechat_master_id = #{wechatMasterId,jdbcType=BIGINT},
+      task_status = #{taskStatus,jdbcType=CHAR},
+      task_id = #{taskId,jdbcType=BIGINT},
+      activity_id = #{activityId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      share_url = #{shareUrl,jdbcType=VARCHAR},
+      share_oss_url = #{shareOssUrl,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByActivityAndOpenId" parameterType="com.ly.mt.core.common.entity.hd.WechatHelpMaster">
+    update wechat_help_master
+    <set >
+      <if test="wechatId != null" >
+        wechat_id = #{wechatId,jdbcType=BIGINT},
+      </if>
+      <if test="wechatMasterId != null" >
+        wechat_master_id = #{wechatMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null" >
+        task_status = #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="shareUrl != null" >
+        share_url = #{shareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shareOssUrl != null" >
+        share_oss_url = #{shareOssUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where activity_id = #{activityId} and open_id = #{openId}
+  </update>
+  <update id="updateTaskById">
+    update wechat_help_master
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where activity_id = #{activityId} and open_id = #{openId}
+  </update>
+</mapper>

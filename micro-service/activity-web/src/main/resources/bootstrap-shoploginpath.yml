@@ -1,0 +1,5 @@
+#门店需要登录请求的地址
+shop-auth-path:
+  path:
+    - /my/*
+    - /login/*

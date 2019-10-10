@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.hd.mapper.HdShopAttDetailMapper" >
+    <!-- 保存HdShopAttDetail -->
+    <insert id="insertHdShopAttDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttDetail">
+        INSERT INTO hd_shop_att_detail (
+            id, shop_id, activity_id, image_url, activity_manager, manager_phone, shop_att_status, create_time, update_time, user_join_num
+        ) VALUES (
+            #{id}, #{shop_id}, #{activity_id}, #{image_url}, #{activity_manager}, #{manager_phone}, #{shop_att_status}, #{create_time}, #{update_time}, #{user_join_num}
+        )
+    </insert>
+
+
+    <!-- 删除HdShopAttDetail -->
+    <delete id="deleteHdShopAttDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttDetail">
+        DELETE FROM hd_shop_att_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新HdShopAttDetail -->
+    <update id="updateHdShopAttDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttDetail">
+        UPDATE hd_shop_att_detail
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询HdShopAttDetail -->
+    <select id="getHdShopAttDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttDetail" resultType="com.ly.mt.center.data.hd.entity.HdShopAttDetail">
+        SELECT * 
+        FROM hd_shop_att_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

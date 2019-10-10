@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopPurachasesLadderPriceMapper" >
+    <!-- 保存ShopPurachasesLadderPrice -->
+    <insert id="insertShopPurachasesLadderPrice" parameterType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice">
+        INSERT INTO shop_purachases_ladder_price (
+            id, spu_id, sku_id, purachases_num, purachases_money, promotion_money, promotion_rate, promotion_price, create_time
+        ) VALUES (
+            #{id}, #{spu_id}, #{sku_id}, #{purachases_num}, #{purachases_money}, #{promotion_money}, #{promotion_rate}, #{promotion_price}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopPurachasesLadderPrice -->
+    <delete id="deleteShopPurachasesLadderPrice" parameterType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice">
+        DELETE FROM shop_purachases_ladder_price
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopPurachasesLadderPrice -->
+    <update id="updateShopPurachasesLadderPrice" parameterType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice">
+        UPDATE shop_purachases_ladder_price
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopPurachasesLadderPrice -->
+    <select id="getShopPurachasesLadderPrice" parameterType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice" resultType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice">
+        SELECT * 
+        FROM shop_purachases_ladder_price
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <!-- 查询ShopPurachasesLadderPrice List-->
+    <select id="getLadderList" parameterType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice" resultType="com.ly.mt.center.data.shop.entity.ShopPurachasesLadderPrice">
+        SELECT *
+        FROM shop_purachases_ladder_price
+    </select>
+
+</mapper>

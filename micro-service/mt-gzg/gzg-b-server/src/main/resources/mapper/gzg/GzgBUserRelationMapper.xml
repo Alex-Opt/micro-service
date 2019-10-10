@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgBUserRelationMapper">
+    <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgBUserRelation">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="gzg_id" property="gzgId" jdbcType="BIGINT"/>
+        <result column="b_user_id" property="bUserId" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, gzg_id, b_user_id
+  </sql>
+
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="com.ly.mt.core.common.entity.gzg.GzgBUserRelation">
+        select id,gzg_id as gzgId,b_user_id as bUserId from gzg_b_user_relation
+        where b_user_id = #{userId,jdbcType=BIGINT}
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from gzg_b_user_relation
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gzg_b_user_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+    <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgBUserRelation">
+    insert into gzg_b_user_relation (id, gzg_id, b_user_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{gzgId,jdbcType=BIGINT}, #{bUserId,jdbcType=BIGINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgBUserRelation">
+        insert into gzg_b_user_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="gzgId != null">
+                gzg_id,
+            </if>
+            <if test="bUserId != null">
+                b_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="gzgId != null">
+                #{gzgId,jdbcType=BIGINT},
+            </if>
+            <if test="bUserId != null">
+                #{bUserId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgBUserRelation">
+        update gzg_b_user_relation
+        <set>
+            <if test="gzgId != null">
+                gzg_id = #{gzgId,jdbcType=BIGINT},
+            </if>
+            <if test="bUserId != null">
+                b_user_id = #{bUserId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgBUserRelation">
+    update gzg_b_user_relation
+    set gzg_id = #{gzgId,jdbcType=BIGINT},
+      b_user_id = #{bUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <delete id="delByGzglId">
+     delete from gzg_b_user_relation
+    where gzg_id = #{gzgId,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="batchInsert">
+        insert into gzg_b_user_relation ( gzg_id, b_user_id
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.gzgId,jdbcType=BIGINT}, #{item.bUserId,jdbcType=BIGINT}
+            )
+        </foreach>
+
+    </insert>
+
+    <!-- concat(concat('%',#{mobile}),'%') -->
+    <select id="findUserByGzgIdAndLikePhone" resultType="com.ly.mt.core.common.entity.user.User">
+        SELECT u.* FROM gzg_b_user_relation r
+        JOIN `user` u on r.b_user_id = u.id
+        <where>
+            and r.gzg_id = #{gzgId}
+            <if test="mobile != null">
+                and u.mobile like concat(concat('%',#{mobile}),'%')
+            </if>
+        </where>
+    </select>
+    <delete id="delByGzgIdAndUserId">
+     delete from gzg_b_user_relation
+     where gzg_id = #{gzgId,jdbcType=BIGINT} and b_user_id = #{userId}
+    </delete>
+    <select id="findGzgUsers" resultType="com.ly.mt.core.common.entity.user.User">
+        SELECT u.* FROM gzg_b_user_relation ur
+        JOIN `user` u on u.id = ur.b_user_id
+        where ur.gzg_id = #{gzgId}
+    </select>
+</mapper>

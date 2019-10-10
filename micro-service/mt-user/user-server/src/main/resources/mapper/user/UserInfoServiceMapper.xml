@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.user.mapper.UserInfoServiceMapper" >
+<!-- 用户认证start -->
+    <update id="authentication" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        UPDATE user
+        SET user_name = #{userName}, id_card = #{idCard}
+        WHERE id = #{id}
+    </update>
+<!-- 用户认证end -->
+
+
+<!-- 用户修改头像start -->
+    <update id="updateUserAvatarPic" parameterType="com.ly.mt.core.common.entity.basic.BasicFileVo">
+        UPDATE user
+        SET avatar_pic_src = #{url}
+        WHERE id = #{userId}
+    </update>
+<!-- 用户修改头像end -->
+
+
+<!-- 用户绑定手机start -->
+    <update id="updateUserMobile" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        UPDATE user
+        SET mobile = #{mobile}
+        WHERE id = #{id}
+    </update>
+<!-- 用户绑定手机end -->
+
+
+<!-- 修改用户信息start -->
+    <update id="updateUserInfo" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        UPDATE user
+        SET province_code = #{provinceCode}, city_code = #{cityCode}, district_code = #{districtCode},
+            birthday = #{birthday}, sex = #{sex}
+        WHERE id = #{id}
+    </update>
+<!-- 修改用户信息end -->
+
+
+<!-- 修改用户信息start -->
+    <update id="updatePassword" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        UPDATE user
+        SET password = #{password}
+        WHERE mobile = #{mobile}
+    </update>
+<!-- 修改用户信息end -->
+
+    <update id="updateClientId">
+      UPDATE   user  SET client_id = #{clientId} WHERE id=#{userId}
+    </update>
+
+<!-- 根据用户id获取用户信息start -->
+    <select id="getUserById" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo" resultType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        SELECT id,client_id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+               birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+               user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+        FROM user
+        WHERE id = #{id}
+    </select>
+<!-- 根据用户id获取用户信息end -->
+
+
+<!-- 根据用户手机号获取用户信息start -->
+    <select id="getUserByMobile" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo" resultType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        SELECT id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+               birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+               user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+        FROM user
+        WHERE mobile = #{mobile}
+    </select>
+<!-- 根据用户手机号获取用户信息end -->
+
+
+<!-- 补全用户信息start -->
+    <update id="perfectInfo" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        UPDATE user
+        SET login_name = #{loginName}, password = #{password}
+        WHERE id = #{id}
+    </update>
+<!-- 补全用户信息end -->
+    <!-- 根据loginName查询用户数据 -->
+    <select id="queryUserByLoginName"  resultType="com.ly.mt.core.common.entity.user.UserInfoVo" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo" >
+        select  id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, create_time
+        from user where login_name=#{loginName} AND id != #{id}
+    </select>
+    <!-- 修改用户loginName-->
+    <update id="updateLoginName" parameterType="com.ly.mt.core.common.entity.user.UserInfoVo">
+        UPDATE user
+        SET login_name = #{loginName}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据mId查询区域名称 -->
+    <select id="queryAreaByMid" resultType="java.lang.String">
+        select  name
+        from basic_area where m_id=#{loginName}
+    </select>
+
+    <select id="getShopUser"
+            parameterType="com.ly.mt.core.common.entity.shop.ShopInfo"
+            resultType="com.ly.mt.core.common.entity.shop.ShopInfo">
+        select
+        id, user_id, mobile, status, shop_point_grade_id, shop_type, shop_name, e_shop_name,
+        e_shop_url, shop_lon, shop_lat, shop_address, shop_country, shop_province_code, shop_city_code,
+        idcard_front, idcard_back, real_name, idcard, vaild_type, vaild_start_at, vaild_end_at,
+        invite_code, stock_num, create_time2, modify_time
+        from shop_info
+        where  1=1
+        <if test="null != mobile and '' != mobile">
+            and mobile = #{mobile}
+        </if>
+        <if test="null != id and '' != id">
+            and id=#{id}
+        </if>
+    </select>
+</mapper>

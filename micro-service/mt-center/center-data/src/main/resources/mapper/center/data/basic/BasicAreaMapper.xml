@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.basic.mapper.BasicAreaMapper" >
+    <!-- 保存BasicArea -->
+    <insert id="insertBasicArea" parameterType="com.ly.mt.center.data.basic.entity.BasicArea">
+        INSERT INTO basic_area (
+            id, pid, name, m_id, m_name, m_index, code, level, create_time, modify_time, data_source
+        ) VALUES (
+            #{id}, #{pid}, #{name}, #{m_id}, #{m_name}, #{m_index}, #{code}, #{level}, #{create_time}, #{modify_time}, #{data_source}
+        )
+    </insert>
+
+
+    <!-- 删除BasicArea -->
+    <delete id="deleteBasicArea" parameterType="com.ly.mt.center.data.basic.entity.BasicArea">
+        DELETE FROM basic_area
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != m_id and '' != m_id">AND m_id = #{m_id}</if>
+    </delete>
+
+
+    <!-- 更新BasicArea -->
+    <update id="updateBasicArea" parameterType="com.ly.mt.center.data.basic.entity.BasicArea">
+        UPDATE basic_area
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != m_id and '' != m_id">AND m_id = #{m_id}</if>
+    </update>
+
+
+    <!-- 查询BasicArea -->
+    <select id="getBasicArea" parameterType="com.ly.mt.center.data.basic.entity.BasicArea" resultType="com.ly.mt.center.data.basic.entity.BasicArea">
+        SELECT * 
+        FROM basic_area
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != m_id and '' != m_id">AND m_id = #{m_id}</if>
+              <if test="null != pid and '' != ">AND pid = #{pid}</if>
+              <if test="null != name and '' != name">AND name LIKE '${name}%'</if>
+              <if test="null != m_name and '' != m_name">AND m_name LIKE '${m_name}%'</if>
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.trade.mapper.TradeOrdersMapper">
+    <!-- 查询TradeOrders -->
+    <select id="getTradeOrders" parameterType="com.ly.mt.core.data.trade.entity.TradeOrders" resultType="com.ly.mt.core.data.trade.entity.TradeOrders">
+        SELECT *
+        FROM trade_orders
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </select>
+
+
+    <!-- 查询List<TradeOrders> -->
+    <select id="listTradeOrders" parameterType="com.ly.mt.core.data.trade.entity.TradeOrders" resultType="com.ly.mt.core.data.trade.entity.TradeOrders">
+        SELECT *
+        FROM trade_orders
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+            <if test="null != orderStatus and '' != orderStatus">AND order_status = #{orderStatus}</if>
+            <if test="null != orderYn and '' != orderYn">AND order_yn = #{orderYn}</if>
+            <if test="null != isRefund and '' != isRefund">AND is_refund = #{isRefund}</if>
+            <if test="null != pushStatus and '' != pushStatus">AND push_status IN (${pushStatus})</if>
+            <if test="null != distributionId and '' != distributionId">AND distribution_id IN (${distributionId})</if>
+            <if test="null != autoReceiveTime and '' != autoReceiveTime">AND auto_receive_time ${autoReceiveTime}</if>
+            <if test="null != autoCancelTime and '' != autoCancelTime">AND auto_cancel_time ${autoCancelTime}</if>
+        </where>
+    </select>
+
+
+    <!-- 更新TradeOrders -->
+    <update id="updateTradeOrders" parameterType="com.ly.mt.core.data.trade.entity.TradeOrders">
+        UPDATE trade_orders
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != pushStatus">push_status = #{pushStatus},</if>
+            <if test="null != gyShopCode">gy_shop_code = #{gyShopCode},</if>
+            <if test="null != gyWarehouseCode">gy_warehouse_code = #{gyWarehouseCode},</if>
+            <if test="null != shopId">shop_id = #{shopId},</if>
+            <if test="null != sellerId">seller_id = #{sellerId},</if>
+            <if test="null != isAgree">is_agree = #{isAgree},</if>
+            <if test="null != agreeTime">agree_time = #{agreeTime},</if>
+            <if test="null != distributionId">distribution_id = #{distributionId},</if>
+            <if test="null != orderStatus">order_status = #{orderStatus},</if>
+        </trim>
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </update>
+
+
+    <!-- 自动更新完成状态 -->
+    <update id="updateFinishStatus">
+        UPDATE trade_orders
+        SET order_status = 99
+        WHERE order_status = 30
+          AND order_yn = 1
+          AND auto_receive_time &lt;= now()
+    </update>
+
+
+    <!-- 自动更新取消状态 -->
+    <update id="updateCancelStatus" parameterType="List">
+        UPDATE trade_orders
+        SET order_yn = 2
+        WHERE id IN (
+            <foreach collection="list" item="item" separator="," index="index">
+                #{item.id}
+            </foreach>
+        )
+    </update>
+
+    <select id="getWillCancelOrderByTime" resultType="com.ly.mt.core.data.trade.entity.TradeOrders">
+        select * from trade_orders
+        where order_status = 10
+        and auto_cancel_time between #{startTime} and #{endTime}
+    </select>
+
+    <select id="getOrderIdByOrderNo" resultType="java.lang.String">
+        SELECT  id   FROM trade_orders WHERE order_no = #{orderNo}
+    </select>
+</mapper>

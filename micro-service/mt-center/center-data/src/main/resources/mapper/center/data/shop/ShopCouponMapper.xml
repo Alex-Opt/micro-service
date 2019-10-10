@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopCouponMapper" >
+    <!-- 保存ShopCoupon -->
+    <insert id="insertShopCoupon" parameterType="com.ly.mt.center.data.shop.entity.ShopCoupon">
+        INSERT INTO shop_coupon (
+            id, user_id, shop_id, discount_price, discount_rate, start_time, end_time, use_status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{user_id}, #{shop_id}, #{discount_price}, #{discount_rate}, #{start_time}, #{end_time}, #{use_status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopCoupon -->
+    <delete id="deleteShopCoupon" parameterType="com.ly.mt.center.data.shop.entity.ShopCoupon">
+        DELETE FROM shop_coupon
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopCoupon -->
+    <update id="updateShopCoupon" parameterType="com.ly.mt.center.data.shop.entity.ShopCoupon">
+        UPDATE shop_coupon
+        SET
+        <if test="null != use_status and '' != use_status">use_status = #{use_status,jdbcType=INTEGER},</if>
+        modify_time   = #{modify_time,jdbcType=TIMESTAMP}
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopCoupon -->
+    <select id="getShopCoupon" parameterType="com.ly.mt.center.data.shop.entity.ShopCoupon" resultType="com.ly.mt.center.data.shop.entity.ShopCoupon">
+        SELECT * 
+        FROM shop_coupon
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+    <!-- 查询ShopCoupon -->
+    <select id="getShopCouponList" parameterType="com.ly.mt.center.data.shop.entity.ShopCoupon" resultType="com.ly.mt.center.data.shop.entity.ShopCoupon">
+        SELECT *
+        FROM shop_coupon
+        WHERE 1 = 1
+        AND shop_id = #{shop_id}
+        <if test="null != use_status and '' != use_status">AND use_status = #{use_status}</if>
+    </select>
+</mapper>

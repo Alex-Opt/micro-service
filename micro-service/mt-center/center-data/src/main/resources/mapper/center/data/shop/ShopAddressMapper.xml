@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopAddressMapper" >
+    <select id="getShopDefaultAddressByShopId" resultType="com.ly.mt.center.data.shop.entity.ShopAddress" parameterType="java.lang.Long" >
+        SELECT * FROM shop_address  WHERE shop_id = #{shop_id,jdbcType=BIGINT} AND is_default = 1
+    </select>
+
+    <select id="getShopAddress" resultType="com.ly.mt.center.data.shop.entity.ShopAddress" parameterType="com.ly.mt.center.data.shop.entity.ShopAddress" >
+        SELECT * FROM shop_address  WHERE 1=1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+        <if test="null != is_default and '' != is_default">AND is_default = #{is_default}</if>
+    </select>
+
+    <!-- 保存ShopAddress -->
+    <insert id="insertShopAddress" parameterType="com.ly.mt.center.data.shop.entity.ShopAddress">
+        INSERT INTO shop_address (
+            id, user_id, shop_id, user_name, receive_name, receive_phone, province_code, province_name, city_code, city_name, district_code,
+            district_name, user_address, is_default, send_lon, send_lat, valid_status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{user_id}, #{shop_id}, #{user_name}, #{receive_name}, #{receive_phone}, #{province_code}, #{province_name}, #{city_code}, #{city_name}, #{district_code},
+            #{district_name}, #{user_address}, #{is_default}, #{send_lon}, #{send_lat}, #{valid_status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+    <!-- 更新ShopAddress -->
+    <update id="updateShopAddressById" parameterType="com.ly.mt.center.data.shop.entity.ShopAddress">
+        UPDATE shop_address
+        SET
+        <if test="null != receive_name and '' != receive_name">receive_name = #{receive_name,jdbcType=VARCHAR},</if>
+        <if test="null != receive_phone and '' != receive_phone">receive_phone = #{receive_phone,jdbcType=VARCHAR},</if>
+        <if test="null != province_code and '' != province_code">province_code = #{province_code,jdbcType=VARCHAR},</if>
+        <if test="null != province_name and '' != province_name">province_name = #{province_name,jdbcType=VARCHAR},</if>
+        <if test="null != city_code and '' != city_code">city_code = #{city_code,jdbcType=VARCHAR},</if>
+        <if test="null != city_name and '' != city_name">city_name = #{city_name,jdbcType=VARCHAR},</if>
+        <if test="null != district_code and '' != district_code">district_code = #{district_code,jdbcType=VARCHAR},</if>
+        <if test="null != district_name and '' != district_name">district_name = #{district_name,jdbcType=VARCHAR},</if>
+        <if test="null != user_address and '' != user_address">user_address = #{user_address,jdbcType=VARCHAR},</if>
+        <if test="null != is_default and '' != is_default">is_default = #{is_default,jdbcType=TINYINT},</if>
+        <if test="null != send_lon and '' != send_lon">send_lon = #{send_lon,jdbcType=VARCHAR},</if>
+        <if test="null != send_lat and '' != send_lat">send_lat = #{send_lat,jdbcType=VARCHAR},</if>
+        <if test="null != valid_status and '' != valid_status">valid_status = #{valid_status,jdbcType=VARCHAR},</if>
+        modify_time   = #{modify_time,jdbcType=TIMESTAMP}
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </update>
+
+    <!-- 删除ShopAddress -->
+    <delete id="deleteShopAddressById" parameterType="com.ly.mt.center.data.shop.entity.ShopAddress">
+        DELETE FROM shop_address
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+    <select id="getShopAddressList" resultType="com.ly.mt.center.data.shop.entity.ShopAddress" parameterType="com.ly.mt.center.data.shop.entity.ShopAddress" >
+        SELECT * FROM shop_address  WHERE 1=1
+        AND shop_id = #{shop_id}
+    </select>
+</mapper >

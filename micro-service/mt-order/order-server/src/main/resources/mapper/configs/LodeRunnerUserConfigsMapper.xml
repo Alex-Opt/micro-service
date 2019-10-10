@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.configs.mapper.ConfigsMapper">
+
+    <select id="getConfigs" resultType="com.alibaba.fastjson.JSONObject">
+    select id,level,proportion,created_user,create_time,modify_time,updated_user
+    from lode_runner_user_configs
+    </select>
+
+</mapper>

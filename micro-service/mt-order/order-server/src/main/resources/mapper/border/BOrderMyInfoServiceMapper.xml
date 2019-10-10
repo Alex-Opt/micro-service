@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.border.mapper.BOrderMyInfoServiceMapper" >
+    <select id="getShopPurchaseListByPrimaryKey" resultType="com.ly.mt.core.base.entity.shop.ShopPurchases" >
+        SELECT
+            id, user_id, shop_id, consignee, mobile, province_code, city_code, address, full_address,
+            coupon_id, delivery_fee, amount, discount, actual_amount, status, payed_model, transaction_id,
+            payed_time, sended_time, create_time, modify_time,remark
+        FROM shop_purchases
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+        AND shop_id = #{shopId,jdbcType=BIGINT}
+        <if test="id != null">
+          AND  id = #{id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="selectShopStocksByShopId"  parameterType="java.lang.Long" resultType="com.ly.mt.core.base.entity.shop.ShopStocks">
+        SELECT
+            id, shop_id, spu_id, sku_id, nums, delivery_nums, original_price, price, sales, status, create_time, modify_time
+        FROM shop_stocks
+        WHERE shop_id = #{shopId,jdbcType=BIGINT}
+    </select>
+
+
+
+    <select id="selectShopPurchaseItemListByPurchaseId" resultType="com.ly.mt.core.base.entity.shop.ShopPurchasesItems" parameterType="java.lang.Long" >
+        SELECT
+            id, shop_purchases_id, spu_id, sku_id, sku_name, sku_price, sku_num, pomotion_price,freight_price, payment_price, create_time
+        FROM shop_purchases_items
+        WHERE shop_purchases_id = #{shopPurchasesId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectShopPurchaseItemListAndPictureByPurchaseId" resultType="com.ly.mt.core.base.entity.shop.ShopPurchasesItemVo" parameterType="long">
+        SELECT
+            pi.id,
+            pi.shop_purchases_id,
+            pi.spu_id, pi.sku_id,
+            pi.sku_name, pi.sku_name,
+            pi.sku_price, pi.sku_num,
+            pi.pomotion_price,
+            pi.freight_price,
+            pi.payment_price,
+            pi.create_time,
+            sp.picture_url spuPictureUrl,
+            info.name spuName
+            FROM shop_purchases_items  pi
+            LEFT JOIN  goods_spu_info info ON pi.spu_id = info.id
+            LEFT JOIN goods_spu_picture sp ON  pi.spu_id = sp.spu_id
+        WHERE shop_purchases_id = #{shopPurchasesId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="getShopPurchaseDiscountByPurchaseId"  resultType="com.ly.mt.core.base.entity.shop.ShopPurchasesDiscount" >
+        SELECT
+            id, shop_id, user_id, purchases_id, discount_type, discount_price, status, create_time, modify_time
+        FROM shop_purchases_discount
+        WHERE purchases_id = #{shopPurchasesId,jdbcType=BIGINT}
+        AND shop_id=#{shopId,jdbcType=BIGINT}
+        AND user_id =#{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getShopCouponByUserIdAndShopId" resultType="com.ly.mt.core.base.entity.shop.ShopCoupon"  >
+        SELECT
+            id, user_id, shop_id, discount_price, discount_rate, start_time, end_time, use_status, create_time, modify_time
+        FROM shop_coupon
+        WHERE   shop_id=#{shopId,jdbcType=BIGINT}
+        AND user_id =#{userId,jdbcType=BIGINT}
+    </select>
+
+  <select id="getShopDefaultAddressByShopId" parameterType="java.lang.Long" resultType="com.ly.mt.core.base.entity.shop.ShopAddress" >
+    SELECT
+      id, shop_id, user_id, user_name, receive_name, receive_phone, province_code, province_name,
+      city_code, city_name, district_code, district_name, user_address, is_default, send_lon,
+      send_lat, valid_status, create_time, modify_time
+    FROM shop_address
+    WHERE is_default = 1
+    AND  shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+
+    <select id="getShopAddressById" parameterType="java.lang.Long" resultType="com.ly.mt.core.base.entity.shop.ShopAddress" >
+        SELECT
+            id, shop_id, user_id, user_name, receive_name, receive_phone, province_code, province_name,
+            city_code, city_name, district_code, district_name, user_address, is_default, send_lon,
+            send_lat, valid_status, create_time, modify_time
+        FROM shop_address
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateShopAddressByPrimaryKey" parameterType="com.ly.mt.core.base.entity.shop.ShopAddress" >
+        UPDATE shop_address
+        <set >
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveName != null" >
+                receive_name = #{receiveName,jdbcType=VARCHAR},
+            </if>
+            <if test="receivePhone != null" >
+                receive_phone = #{receivePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null" >
+                province_code = #{provinceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null" >
+                province_name = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null" >
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null" >
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtCode != null" >
+                district_code = #{districtCode,jdbcType=VARCHAR},
+            </if>
+            <if test="districtName != null" >
+                district_name = #{districtName,jdbcType=VARCHAR},
+            </if>
+            <if test="userAddress != null" >
+                user_address = #{userAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null" >
+                is_default = #{isDefault,jdbcType=BIT},
+            </if>
+            <if test="sendLon != null" >
+                send_lon = #{sendLon,jdbcType=VARCHAR},
+            </if>
+            <if test="sendLat != null" >
+                send_lat = #{sendLat,jdbcType=VARCHAR},
+            </if>
+            <if test="validStatus != null" >
+                valid_status = #{validStatus,jdbcType=BIT},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+  <select id="getUpdateTimesByUserId" parameterType="java.lang.Long" resultType="com.ly.mt.core.base.entity.user.UserUpdateLoginNameLogs">
+    SELECT
+      id, user_id, login_name, times, create_time
+    FROM
+      user_update_login_name_logs
+    WHERE user_id =#{userId,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateUserInfoByPrimaryKey" parameterType="com.ly.mt.core.base.entity.user.User">
+    UPDATE
+      user
+    <set >
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null">
+        wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE
+      id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryLoginNameExists" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+               login_name
+        FROM
+             user
+        WHERE login_name = #{loginName}
+    </select>
+
+  <insert id="insertUpdateLogs" parameterType="com.ly.mt.core.base.entity.user.UserUpdateLoginNameLogs" >
+    INSERT INTO user_update_login_name_logs (id, user_id, login_name,
+                                             times, create_time)
+    VALUES (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR},
+            #{times,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="getShopInfoByPrimaryKey" resultType="com.ly.mt.core.base.entity.shop.ShopInfo" parameterType="java.lang.Long" >
+    SELECT
+      id, user_id, mobile, status, shop_point_grade_id, shop_type, shop_name, e_shop_name,
+      e_shop_url, shop_lon, shop_lat, shop_address, shop_country, shop_province_code, shop_city_code,
+      idcard_front, idcard_back, real_name, idcard, vaild_type, vaild_start_at, vaild_end_at,
+      invite_code, stock_num, create_time, modify_time, slogan
+    FROM shop_info
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="getUserByByPrimaryKey" resultType="com.ly.mt.core.base.entity.user.User" parameterType="java.lang.Long" >
+    SELECT  id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+            birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+            user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+    FROM user
+    WHERE id = #{id}
+  </select>
+
+  <select id="getShopAddressByUserIdAndShopId" resultType="com.ly.mt.core.base.entity.shop.ShopAddress">
+    SELECT
+      id, shop_id, user_id, user_name, receive_name, receive_phone, province_code, province_name,
+      city_code, city_name, district_code, district_name, user_address, is_default, send_lon,
+      send_lat, valid_status, create_time, modify_time
+    FROM shop_address
+    WHERE user_id= #{userId,jdbcType=BIGINT}
+    AND shop_id =#{shopId,jdbcType=BIGINT}
+    AND valid_status =1
+  </select>
+
+  <insert id="insertShopAddress" parameterType="com.ly.mt.core.base.entity.shop.ShopAddress" >
+      INSERT INTO shop_address (id, shop_id, user_id,
+                                user_name, receive_name, receive_phone,
+                                province_code, province_name, city_code,
+                                city_name, district_code, district_name,
+                                user_address, is_default, send_lon,
+                                send_lat, valid_status, create_time)
+      VALUES (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+              #{userName,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR}, #{receivePhone,jdbcType=VARCHAR},
+              #{provinceCode,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR},
+              #{cityName,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{districtName,jdbcType=VARCHAR},
+              #{userAddress,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}, #{sendLon,jdbcType=VARCHAR},
+              #{sendLat,jdbcType=VARCHAR}, #{validStatus,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+    <update id="updateShopNotDefaultAddress">
+        UPDATE
+            shop_address
+        SET
+            is_default = #{isDefault}
+        WHERE shop_id = #{shopId}
+        AND user_id = #{userId}
+        <if test="id != null">
+           AND id = #{id,jdbcType=BIGINT}
+        </if>
+        and valid_status =1
+    </update>
+
+    <select id="validateMobileIsBind" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+            mobile
+        FROM
+            user
+        WHERE mobile = #{mobile}
+    </select>
+
+    <update id="modifyShopMobile">
+        UPDATE
+            shop_info
+        SET mobile = #{mobile,jdbcType=VARCHAR}
+        WHERE user_id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <select id="countUserNumByMobile" resultType="int">
+        select count(1) from user WHERE  mobile=#{mobile}
+    </select>
+
+    <select id="selectSpuInfoBySpuId" parameterType="long"
+            resultType="com.ly.mt.core.base.entity.shop.ShopStocks">
+      SELECT  id  spuId,name spuName,market_price spuPrice from goods_spu_info WHERE id = #{spuId}
+    </select>
+
+    <select id="selectSpuPictureBySouId" parameterType="long"
+            resultType="com.ly.mt.core.base.entity.shop.ShopStocks">
+       SELECT picture_url  spuPictureUrl FROM goods_spu_picture WHERE  spu_id=#{spuId}
+    </select>
+
+</mapper>

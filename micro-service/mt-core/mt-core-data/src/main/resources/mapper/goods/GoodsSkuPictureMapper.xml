@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.goods.mapper.GoodsSkuPictureMapper">
+    <!-- 查询GoodsSkuPicture -->
+    <select id="getGoodsSkuPicture" parameterType="com.ly.mt.core.data.goods.entity.GoodsSkuPicture" resultType="com.ly.mt.core.data.goods.entity.GoodsSkuPicture">
+        SELECT *
+        FROM goods_sku_picture
+        <where>
+            <if test="null != skuId and '' != skuId">AND sku_id = #{skuId}</if>
+        </where>
+        LIMIT 1
+    </select>
+</mapper>

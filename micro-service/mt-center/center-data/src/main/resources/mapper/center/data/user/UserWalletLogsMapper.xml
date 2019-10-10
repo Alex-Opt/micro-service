@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserWalletLogsMapper" >
+    <!-- 保存UserWalletLogs -->
+    <insert id="insertUserWalletLogs" parameterType="com.ly.mt.center.data.user.entity.UserWalletLogs">
+        INSERT INTO user_wallet_logs (
+            id, user_id, connection_id, task_id, type, amount, description, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{connection_id}, #{task_id}, #{type}, #{amount}, #{description}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserWalletLogs -->
+    <delete id="deleteUserWalletLogs" parameterType="com.ly.mt.center.data.user.entity.UserWalletLogs">
+        DELETE FROM user_wallet_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserWalletLogs -->
+    <update id="updateUserWalletLogs" parameterType="com.ly.mt.center.data.user.entity.UserWalletLogs">
+        UPDATE user_wallet_logs
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserWalletLogs -->
+    <select id="getUserWalletLogs" parameterType="com.ly.mt.center.data.user.entity.UserWalletLogs" resultType="com.ly.mt.center.data.user.entity.UserWalletLogs">
+        SELECT * 
+        FROM user_wallet_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.shopuser.mapper.ShopAddressServiceMapper" >
+  <select id="selectByPrimaryKey" resultType="com.ly.mt.core.common.entity.shop.ShopAddress" parameterType="java.lang.Long" >
+    select 
+	id, shop_id, user_id, user_name, receive_name, receive_phone, province_code, province_name, 
+    city_code, city_name, district_code, district_name, user_address, is_default, send_lon, 
+    send_lat, valid_status, create_time, modify_time
+    from shop_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.shop.ShopAddress" >
+    insert into shop_address (id, shop_id, user_id, 
+      user_name, receive_name, receive_phone, 
+      province_code, province_name, city_code, 
+      city_name, district_code, district_name, 
+      user_address, is_default, send_lon, 
+      send_lat, valid_status, create_time, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{userName,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR}, #{receivePhone,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{districtName,jdbcType=VARCHAR}, 
+      #{userAddress,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}, #{sendLon,jdbcType=VARCHAR}, 
+      #{sendLat,jdbcType=VARCHAR}, #{validStatus,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+ 
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.shop.ShopAddress" >
+    update shop_address
+    <set >
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveName != null" >
+        receive_name = #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null" >
+        receive_phone = #{receivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        district_code = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtName != null" >
+        district_name = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        user_address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="sendLon != null" >
+        send_lon = #{sendLon,jdbcType=VARCHAR},
+      </if>
+      <if test="sendLat != null" >
+        send_lat = #{sendLat,jdbcType=VARCHAR},
+      </if>
+      <if test="validStatus != null" >
+        valid_status = #{validStatus,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.shop.ShopAddress" >
+    update shop_address
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      receive_name = #{receiveName,jdbcType=VARCHAR},
+      receive_phone = #{receivePhone,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      district_code = #{districtCode,jdbcType=VARCHAR},
+      district_name = #{districtName,jdbcType=VARCHAR},
+      user_address = #{userAddress,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=BIT},
+      send_lon = #{sendLon,jdbcType=VARCHAR},
+      send_lat = #{sendLat,jdbcType=VARCHAR},
+      valid_status = #{validStatus,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

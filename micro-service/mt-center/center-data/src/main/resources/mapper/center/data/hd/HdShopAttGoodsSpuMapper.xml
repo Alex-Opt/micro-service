@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.hd.mapper.HdShopAttGoodsSpuMapper" >
+    <!-- 保存HdShopAttGoodsSpu -->
+    <insert id="insertHdShopAttGoodsSpu" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttGoodsSpu">
+        INSERT INTO hd_shop_att_goods_spu (
+            id, shop_att_detail_id, goods_spu_info_id, goods_status, create_time, update_time, shop_id, activity_id
+        ) VALUES (
+            #{id}, #{shop_att_detail_id}, #{goods_spu_info_id}, #{goods_status}, #{create_time}, #{update_time}, #{shop_id}, #{activity_id}
+        )
+    </insert>
+
+
+    <!-- 删除HdShopAttGoodsSpu -->
+    <delete id="deleteHdShopAttGoodsSpu" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttGoodsSpu">
+        DELETE FROM hd_shop_att_goods_spu
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新HdShopAttGoodsSpu -->
+    <update id="updateHdShopAttGoodsSpu" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttGoodsSpu">
+        UPDATE hd_shop_att_goods_spu
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询HdShopAttGoodsSpu -->
+    <select id="getHdShopAttGoodsSpu" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttGoodsSpu" resultType="com.ly.mt.center.data.hd.entity.HdShopAttGoodsSpu">
+        SELECT * 
+        FROM hd_shop_att_goods_spu
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

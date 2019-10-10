@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.shop.mapper.ShopPurchasesDiscountMapper">
+    <!-- 查询List<ShopPurchasesDiscount> -->
+    <select id="listShopPurchasesDiscount" parameterType="com.ly.mt.core.data.shop.entity.ShopPurchasesDiscount" resultType="com.ly.mt.core.data.shop.entity.ShopPurchasesDiscount">
+        SELECT *
+        FROM shop_purchases_discount
+        <where>
+            <if test="null != purchasesId and '' != purchasesId">AND purchases_id = #{purchasesId}</if>
+            <if test="null != discountType and '' != discountType">AND discount_type = #{discountType}</if>
+        </where>
+    </select>
+</mapper>

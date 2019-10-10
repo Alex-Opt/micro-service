@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgHotelMapper" >
+    <!-- 保存GzgHotel -->
+    <insert id="insertGzgHotel" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotel">
+        INSERT INTO gzg_hotel (
+            id, name, address, province_code, city_code, area, hotel_admin_id, bd_id, create_time
+        ) VALUES (
+            #{id}, #{name}, #{address}, #{province_code}, #{city_code}, #{area}, #{hotel_admin_id}, #{bd_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GzgHotel -->
+    <delete id="deleteGzgHotel" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotel">
+        DELETE FROM gzg_hotel
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgHotel -->
+    <update id="updateGzgHotel" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotel">
+        UPDATE gzg_hotel
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgHotel -->
+    <select id="getGzgHotel" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotel" resultType="com.ly.mt.center.data.gzg.entity.GzgHotel">
+        SELECT * 
+        FROM gzg_hotel
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

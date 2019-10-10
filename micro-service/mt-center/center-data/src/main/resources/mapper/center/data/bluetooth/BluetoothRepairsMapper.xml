@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.bluetooth.mapper.BluetoothRepairsMapper" >
+  <sql id="Base_Column_List" >
+    id, user_id, name, mobile, shipping_address, logistics_company, logistics_number, 
+    status, create_time, update_time
+  </sql>
+  <insert id="insertBluetoothRepairs" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothRepairs" >
+    insert into bluetooth_repairs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="shipping_address != null" >
+        shipping_address,
+      </if>
+      <if test="logistics_company != null" >
+        logistics_company,
+      </if>
+      <if test="logistics_number != null" >
+        logistics_number,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+        create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="user_id != null" >
+        #{user_id},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="mobile != null" >
+        #{mobile},
+      </if>
+      <if test="shipping_address != null" >
+        #{shipping_address},
+      </if>
+      <if test="logistics_company != null" >
+        #{logistics_company},
+      </if>
+      <if test="logistics_number != null" >
+        #{logistics_number},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+      NOW()
+    </trim>
+  </insert>
+  <update id="updateBluetoothRepairsByPrimaryKey" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothRepairs" >
+    update bluetooth_repairs
+    <set >
+      <if test="user_id != null" >
+        user_id = #{user_id},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile},
+      </if>
+      <if test="shipping_address != null" >
+        shipping_address = #{shipping_address},
+      </if>
+      <if test="logistics_company != null" >
+        logistics_company = #{logistics_company},
+      </if>
+      <if test="logistics_number != null" >
+        logistics_number = #{logistics_number},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+<!--查询用户最后一次报修记录-->
+  <select id="getRepairByUserId" parameterType="long" resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothRepairs">
+    SELECT
+    <include refid="Base_Column_List" />
+    from bluetooth_repairs
+    WHERE user_id = #{user_id} and (status='0' or status='2')
+    order by update_time desc  limit 1
+  </select>
+</mapper>

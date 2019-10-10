@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.coupon.mapper.CouponCodeMapper" >
+    <!-- 保存CouponCode -->
+    <insert id="insertCouponCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        INSERT INTO coupon_code (
+            id, coupon_id, coupon_code, user_id, pull_status, pull_time, Invalid_time, use_status, use_time, create_time
+        ) VALUES (
+            #{id}, #{coupon_id}, #{coupon_code}, #{user_id}, #{pull_status}, #{pull_time}, #{Invalid_time}, #{use_status}, #{use_time}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除CouponCode -->
+    <delete id="deleteCouponCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        DELETE FROM coupon_code
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新CouponCode -->
+    <update id="updateCouponCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        UPDATE coupon_code
+            <trim prefix="set" suffixOverrides=",">
+                <if test="null != user_id">user_id = #{user_id},</if>
+                <if test="null != pull_status">pull_status = #{pull_status},</if>
+                <if test="null != pull_time">pull_time = #{pull_time},</if>
+                <if test="null != use_status">use_status = #{use_status},</if>
+                <if test="null != use_time">use_time = #{use_time},</if>
+            </trim>
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != coupon_code and '' != coupon_code">AND coupon_code = #{coupon_code}</if>
+    </update>
+
+
+    <!-- 查询CouponCode -->
+    <select id="getCouponCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        SELECT * 
+        FROM coupon_code
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != coupon_id and '' != coupon_id">AND coupon_id = #{coupon_id}</if>
+              <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        LIMIT 1
+    </select>
+
+
+    <!-- 用户兑换兑换码 -->
+    <update id="updateConponCodeByCode" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" >
+        UPDATE coupon_code
+        SET user_id = #{user_id}, pull_status = 2, pull_time = #{pull_time}
+        WHERE coupon_code = #{coupon_code} AND pull_status = 1
+    </update>
+
+    <select id="queryCouponListByUserIdAndCouponIds" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        select  *  from coupon_code
+        where pull_status = 2
+        and user_id = #{userId}
+        and coupon_id in
+        <foreach collection="list" index="index" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="countCouponCodeByUserIdAndCouponIds" resultType="java.util.Map">
+        SELECT coupon_id as couponId, COUNT(coupon_id) AS times
+        FROM coupon_code
+        WHERE pull_status = 2
+        AND user_id = #{userId}
+        AND coupon_id IN
+        <foreach collection="list" index="index" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+        GROUP BY coupon_id
+    </select>
+
+    <select id="getCouponCodeInfoByUserIdAndCouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        select  *  from coupon_code
+        where user_id = #{userId}
+       and coupon_code=#{couponCode}
+    </select>
+
+    <select id="getOneCouponCodeByCode" parameterType="java.lang.String" resultType="com.ly.mt.center.data.coupon.entity.CouponCode">
+        select  *  from coupon_code
+        where  coupon_code = #{code} and pull_status=1
+        order by id asc  limit 1
+    </select>
+
+    <!-- 查询CouponCode -->
+    <select id="getCouponCodeForShop" parameterType="com.ly.mt.center.data.coupon.entity.CouponCode" resultType="com.ly.mt.center.data.coupon.entity.CouponModel">
+        SELECT ci.coupon_name, ci.start_time, ci.end_time, ci.validity_day, ci.discount_rate,
+        cc.id, cc.use_status, cc.Invalid_time, cc.coupon_code
+        FROM coupon_code cc
+        LEFT JOIN coupon_info ci
+        ON ci.id = cc.coupon_id
+        WHERE 1 = 1
+        <if test="null != id and '' != id">AND cc.id = #{id}</if>
+        <if test="null != coupon_id and '' != coupon_id">AND cc.coupon_id = #{coupon_id}</if>
+        <if test="null != user_id and '' != user_id">AND cc.user_id = #{user_id}</if>
+        LIMIT 1
+    </select>
+
+</mapper>

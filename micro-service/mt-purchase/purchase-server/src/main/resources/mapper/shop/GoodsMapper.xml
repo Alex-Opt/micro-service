@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.purchase.server.goods.mapper.GoodsMapper">
+
+    <select id="selectCategroyListByParentId" resultType="com.ly.mt.core.common.entity.purchase.GoodsCategroyInfo" parameterType="long">
+        SELECT
+          `id`,
+          `name`,
+          `parent_id`,
+          `status`,
+          `sort_number`
+        FROM goods_categroy_info
+        WHERE parent_id = #{parentId}
+        ORDER BY sort_number
+    </select>
+
+    <select id="selectListTop5ByCid" resultType="com.ly.mt.core.common.entity.purchase.GoodsSkuInfoVO" parameterType="long">
+        SELECT
+          gci.id       AS cid,
+          gci.name     AS cname,
+          CONCAT(gsi.name,' ',spi.sku_name) AS `name`,
+          gsi.id       AS spu_id,
+          spi.sku_id   AS sku_id,
+          SUM(spi.sku_num) AS sku_num
+        FROM goods_categroy_info AS gci,
+          goods_spu_info AS gsi,
+          shop_purchases_items spi,
+          goods_sku_info AS gski
+        WHERE gci.id = gsi.cid
+            AND gsi.id = spi.spu_id
+            AND spi.sku_id=gski.id
+            AND gsi.spu_status = 1
+            AND gski.sku_status = 1
+            AND gci.id = #{cid}
+        GROUP BY spi.sku_id
+        ORDER BY sku_num DESC
+        LIMIT 0,5
+    </select>
+</mapper>

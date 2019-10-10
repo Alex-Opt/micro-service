@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.record.mapper.RecordImportMapper">
+    <!-- 新增RecordImport -->
+    <insert id="insertRecordImport" parameterType="com.ly.mt.core.data.record.entity.RecordImport">
+        INSERT INTO record_import (
+            id, row_count, import_type, import_id, import_name, import_time, valid_status
+        ) VALUES (
+            #{id}, #{rowCount}, #{importType}, #{importId}, #{importName}, #{importTime}, #{validStatus}
+        )
+    </insert>
+
+
+    <!-- 更新RecordImport -->
+    <update id="updateRecordImport" parameterType="com.ly.mt.core.data.record.entity.RecordImport">
+        UPDATE record_import
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != validStatus">valid_status = #{validStatus},</if>
+            <if test="null != deleteId">delete_id = #{deleteId},</if>
+            <if test="null != deleteTime">delete_time = #{deleteTime},</if>
+        </trim>
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </update>
+
+
+    <!-- 查询List<RecordImport> -->
+    <select id="listRecordImport" parameterType="com.ly.mt.core.data.record.entity.RecordImport" resultType="com.ly.mt.core.data.record.entity.RecordImport">
+        SELECT *
+        FROM record_import
+        <where>
+            <if test="null != importType and '' != importType">AND import_type = #{importType}</if>
+            <if test="null != importId and '' != importId">AND import_id LIKE '%${importId}%'</if>
+            <if test="null != importName and '' != importName">AND import_name LIKE '%${importName}%'</if>
+            <if test="null != validStatus and '' != validStatus">AND valid_status = #{validStatus}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.load.mapper.LoadRunnerPersonnelsMapper" >
+    <!-- 保存LoadRunnerPersonnels -->
+    <insert id="insertLoadRunnerPersonnels" parameterType="com.ly.mt.center.data.load.entity.LoadRunnerPersonnels">
+        INSERT INTO load_runner_personnels (
+            id, user_id, path, status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{user_id}, #{path}, #{status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除LoadRunnerPersonnels -->
+    <delete id="deleteLoadRunnerPersonnels" parameterType="com.ly.mt.center.data.load.entity.LoadRunnerPersonnels">
+        DELETE FROM load_runner_personnels
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新LoadRunnerPersonnels -->
+    <update id="updateLoadRunnerPersonnels" parameterType="com.ly.mt.center.data.load.entity.LoadRunnerPersonnels">
+        UPDATE load_runner_personnels
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询LoadRunnerPersonnels -->
+    <select id="getLoadRunnerPersonnels" parameterType="com.ly.mt.center.data.load.entity.LoadRunnerPersonnels" resultType="com.ly.mt.center.data.load.entity.LoadRunnerPersonnels">
+        SELECT * 
+        FROM load_runner_personnels
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

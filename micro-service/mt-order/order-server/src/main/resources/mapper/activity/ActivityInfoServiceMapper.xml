@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.order.server.activity.mapper.ActivityInfoServiceMapper">
+    <select id="selectByPrimaryKey" resultType="com.ly.mt.core.base.entity.activity.ActivityInfo"
+            parameterType="java.lang.Long">
+        SELECT
+            id,
+            name,
+            start_time,
+            end_time,
+            denomination,
+            discount_rate,
+            coupon_activity_type,
+            use_channel,
+            source,
+            start_fee,
+            max_sell_num,
+            goods_limit_category,
+            status,
+            description,
+            creator,
+            create_time
+        FROM
+            activity_info
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE
+        FROM activity_info
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ly.mt.core.base.entity.activity.ActivityInfo">
+        INSERT INTO activity_info (id, name, start_time,
+                                   end_time, denomination, discount_rate,
+                                   coupon_activity_type, use_channel, source,
+                                   start_fee, max_sell_num, goods_limit_category,
+                                   status, description, creator,
+                                   create_time)
+        VALUES (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP},
+                #{endTime,jdbcType=TIMESTAMP}, #{denomination,jdbcType=DOUBLE}, #{discountRate,jdbcType=DOUBLE},
+                #{couponActivityType,jdbcType=CHAR}, #{useChannel,jdbcType=CHAR}, #{source,jdbcType=CHAR},
+                #{startFee,jdbcType=DOUBLE}, #{maxSellNum,jdbcType=INTEGER}, #{goodsLimitCategory,jdbcType=INTEGER},
+                #{status,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, #{creator,jdbcType=BIGINT},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.base.entity.activity.ActivityInfo">
+        UPDATE activity_info
+        SET NAME                 = #{name,jdbcType=VARCHAR},
+            start_time           = #{startTime,jdbcType=TIMESTAMP},
+            end_time             = #{endTime,jdbcType=TIMESTAMP},
+            denomination         = #{denomination,jdbcType=DOUBLE},
+            discount_rate        = #{discountRate,jdbcType=DOUBLE},
+            coupon_activity_type = #{couponActivityType,jdbcType=CHAR},
+            use_channel          = #{useChannel,jdbcType=CHAR},
+            source               = #{source,jdbcType=CHAR},
+            start_fee            = #{startFee,jdbcType=DOUBLE},
+            max_sell_num         = #{maxSellNum,jdbcType=INTEGER},
+            goods_limit_category = #{goodsLimitCategory,jdbcType=INTEGER},
+            status               = #{status,jdbcType=CHAR},
+            description          = #{description,jdbcType=VARCHAR},
+            creator              = #{creator,jdbcType=BIGINT},
+            create_time          = #{createTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByActivityId" parameterType="long" resultType="com.ly.mt.core.base.entity.activity.ActivityGoodsDetail">
+        SELECT
+            id,
+            activity_id,
+            spu_id,
+            spu_name,
+            max_sell_num,
+            create_time
+        FROM
+            activity_goods_detail
+        WHERE activity_id = #{0}
+    </select>
+    <select id="selectUseCountBySpuIDAndActivityId"
+            parameterType="com.ly.mt.core.base.entity.activity.ActivityUserGradeDetail"
+            resultType="map">
+        SELECT
+            count(0)     scount,
+            sum(spu_num) spuNum
+        FROM
+            activity_user_grade_detail
+        WHERE activity_id = #{activityId}
+          AND spu_id = #{spuId}
+    </select>
+
+    <select id="selectUserGradeByActivityId" parameterType="long"
+            resultType="com.ly.mt.core.base.entity.activity.ActivityUserGrade">
+        SELECT
+            id,
+            activity_id,
+            limit_type,
+            grade_min_id,
+            grade_min_name,
+            grade_max_id,
+            grade_max_name,
+            user_limit_count,
+            total_count,
+            create_time
+        FROM activity_user_grade
+        WHERE activity_id = #{0}
+    </select>
+
+    <select id="selectActivityForFullReductionValid"
+            parameterType="com.ly.mt.core.base.entity.activity.ActivityInfo"
+            resultType="com.ly.mt.core.base.entity.activity.ActivityInfo">
+        SELECT
+            id,
+            name,
+            denomination,
+            discount_rate,
+            start_fee,
+            max_sell_num,
+            goods_limit_category,
+            description,
+            status
+        FROM
+            activity_info
+        WHERE coupon_activity_type = #{couponActivityType}
+          AND status = 1
+          AND NOW() &gt;= start_time
+          AND NOW() &lt;= end_time
+    </select>
+
+    <select id="selectGradeIdByUsrId" parameterType="string" resultType="com.ly.mt.core.base.entity.user.UserPointGrade">
+        SELECT id,user_id,user_score,point_grade_id  FROM user_point_grade WHERE user_id = #{0}
+    </select>
+
+    <!-- 根据spuId查询商品sku价格-->
+    <select id="queryGoodsSkuPriceBySkuId"  resultType="com.ly.mt.core.base.entity.goods.GoodsSkuPrice">
+        select  id, spu_id, sku_id, price_name, sku_price, remark, create_time
+        from goods_sku_price where sku_id = #{skuId,jdbcType=BIGINT}
+    </select>
+</mapper>

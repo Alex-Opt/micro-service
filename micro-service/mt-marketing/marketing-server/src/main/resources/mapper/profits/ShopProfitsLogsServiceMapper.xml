@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.marketing.server.profits.mapper.ShopProfitsLogsServiceMapper" >
+
+    <!-- 分页查询订单奖励-->
+    <select id="getRewardOrder" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsRewardOrderVo">
+        SELECT u.user_name userName, o.order_finish_time orderDate, grab.profit grab, reward.profit reward
+        FROM  trade_orders o
+        LEFT JOIN shop_info s ON s.id = o.shop_id
+        LEFT JOIN user u ON u.id = s.user_id
+        LEFT JOIN shop_profit_logs grab ON grab.order_id = o.order_no AND grab.profit_type = 5
+        LEFT JOIN shop_profit_logs reward ON reward.order_id = o.order_no AND  reward.profit_type = 4
+        WHERE o.order_status = 99
+            AND o.order_type = 1
+        ORDER BY order_finish_time DESC
+    </select>
+
+    <!-- 查询列表 -->
+    <sql id="selectList">
+        order_id orderId, profit , profit_type tp, create_time createTime
+    </sql>
+    <!-- 查询奖励条件-->
+    <sql id="selectRewardWhere">
+        <if test="tp != null">
+            profit_type = #{tp} AND
+        </if>
+        <if test="tp == null">
+            profit_type in (4, 13) AND
+        </if>
+        DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate}, '%Y-%m-%d')
+        AND  DATE_FORMAT(create_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+        AND `status` != 3
+        AND user_id = #{userId}
+    </sql>
+    <!-- 查询抢单奖励列表 -->
+    <select id="selectRewards" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsVo">
+        SELECT <include refid="selectList"/>
+        FROM shop_profit_logs
+        WHERE
+        <include refid="selectRewardWhere"/>
+        ORDER BY  id desc
+    </select>
+    <!-- 查询抢单奖励列表 -->
+    <select id="selectSumRewards" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsVo">
+        SELECT IFNULL(sum(profit), 0 ) profit
+        FROM shop_profit_logs
+        WHERE
+        <include refid="selectRewardWhere"/>
+    </select>
+    <!-- 查询淘金条件-->
+    <sql id="selectLodeWhere">
+        <if test="tp != null">
+            profit_type = #{tp} AND
+        </if>
+        <if test="tp == null">
+            profit_type in (1, 11) AND
+        </if>
+        DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate}, '%Y-%m-%d')
+        AND  DATE_FORMAT(create_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+        AND `status` != 3
+        AND user_id = #{userId}
+    </sql>
+    <!-- 查询淘金列表 -->
+    <select id="selectLodes" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsVo">
+        SELECT <include refid="selectList"/>
+        FROM shop_profit_logs
+        WHERE
+        <include refid="selectLodeWhere"/>
+        ORDER BY  id desc
+    </select>
+    <!-- 查询淘金累计 -->
+    <select id="selectSumLodes" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsVo">
+        SELECT IFNULL(sum(profit), 0 ) profit
+        FROM shop_profit_logs
+        WHERE
+        <include refid="selectLodeWhere"/>
+    </select>
+
+    <select id="selectCycleList" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsCycleVo">
+        SELECT
+        DATE_FORMAT(create_time, '%Y-%m-%d') date, sum(profit) profit
+        FROM
+        shop_profit_logs
+        WHERE `status` = #{status}
+        <if test="tpList != null and tpList.size>0">
+            and profit_type in
+            <foreach collection="tpList" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate}, '%Y-%m-%d')
+        AND  DATE_FORMAT(create_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+        AND user_id = #{userId}
+        GROUP BY DATE_FORMAT(create_time, '%Y-%m-%d');
+    </select>
+
+    <select id="selectList" parameterType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsParamsVo" resultType="com.ly.mt.core.common.entity.marketing.ShopProfitsLogsVo">
+        SELECT <include refid="selectList"/>
+        FROM `shop_profit_logs` where
+         status != 3
+         <if test="tpList != null and tpList.size>0">
+             and profit_type in
+             <foreach collection="tpList" item="item" separator="," open="(" close=")">
+                 #{item}
+             </foreach>
+         </if>
+        AND user_id = #{userId}
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = DATE_FORMAT(#{startDate}, '%Y-%m-%d')
+    </select>
+</mapper>

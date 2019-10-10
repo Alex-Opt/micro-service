@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.bluetooth.mapper.BluetoothFirmwareSettingMapper" >
+    <select id="getBluetoothFirmwareSetting"  resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothFirmwareSetting" parameterType="java.lang.String">
+        SELECT * FROM bluetooth_firmware_setting where type=#{type}
+        <if test="null != terminal_type and '' != terminal_type">
+            and terminal_type=#{terminal_type}
+         </if>
+        ORDER BY modify_time DESC LIMIT 1
+    </select>
+</mapper >

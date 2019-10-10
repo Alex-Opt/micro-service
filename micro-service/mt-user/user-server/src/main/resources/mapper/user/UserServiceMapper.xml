@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.user.server.user.mapper.UserServiceMapper" >
+<!-- 根据用户名/手机号获取用户信息start -->
+    <select id="getUser" parameterType="com.ly.mt.core.common.entity.user.User" resultType="com.ly.mt.core.common.entity.user.User">
+        SELECT  id, user_name, mobile, email, wx_open_id, qq_open_id, login_name, password, id_card, sex,
+                birthday, province_code, city_code, district_code, user_type, nick_name, valid_status,
+                user_status, shop_id, auditor, audit_remark, quick_type, avatar_pic_src, notice_config, create_time
+        FROM user
+        WHERE 1 = 1
+        <if test="null != loginName and '' != loginName">AND login_name = #{loginName}</if>
+        <if test="null != mobile and '' != mobile">AND mobile = #{mobile}</if>
+    </select>
+<!-- 根据用户名/手机号获取用户信息end -->
+
+
+
+<!-- M端H5商城注册start -->
+    <insert id="mH5Regist" parameterType="com.ly.mt.core.common.entity.user.UserMH5RegistVo">
+        INSERT INTO user(
+            id, login_name, password, mobile, create_time, quick_type, user_status
+        ) VALUES (
+            #{id}, #{loginName}, #{password}, #{mobile}, #{createTime}, #{quickType}, #{userStatus}
+        )
+    </insert>
+<!-- M端H5商城注册end -->
+
+
+
+<!-- 活动H5页面注册start -->
+    <insert id="activityH5Regist" parameterType="com.ly.mt.core.common.entity.user.UserActivityH5RegistVo">
+        INSERT INTO user(
+            id, user_name, login_name, password, mobile, user_status, quick_type, create_time
+        ) VALUES (
+            #{id}, #{userName}, #{loginName}, #{password}, #{mobile}, #{userStatus}, #{quickType}, #{createTime}
+        )
+    </insert>
+
+    <insert id="activityH5RegistAddress" parameterType="com.ly.mt.core.common.entity.user.UserAddress">
+        INSERT INTO user_address (
+            id, user_id, user_name, receive_name, receive_phone, user_address, is_default, valid_status, create_time
+        ) VALUES (
+            #{id}, #{userId}, #{userName}, #{receiveName}, #{receivePhone}, #{userAddress}, #{isDefault}, #{validStatus}, #{createTime}
+        )
+    </insert>
+<!-- 活动H5页面注册end -->
+</mapper>

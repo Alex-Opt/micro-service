@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.activity.mapper.ActivityUserGradeDetailMapper" >
+    <!-- 保存ActivityUserGradeDetail -->
+    <insert id="insertActivityUserGradeDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityUserGradeDetail">
+        INSERT INTO activity_user_grade_detail (
+            id, activity_id, grade_id, grade_name, spu_id, spu_num, create_time
+        ) VALUES (
+            #{id}, #{activity_id}, #{grade_id}, #{grade_name}, #{spu_id}, #{spu_num}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ActivityUserGradeDetail -->
+    <delete id="deleteActivityUserGradeDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityUserGradeDetail">
+        DELETE FROM activity_user_grade_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ActivityUserGradeDetail -->
+    <update id="updateActivityUserGradeDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityUserGradeDetail">
+        UPDATE activity_user_grade_detail
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ActivityUserGradeDetail -->
+    <select id="getActivityUserGradeDetail" parameterType="com.ly.mt.center.data.activity.entity.ActivityUserGradeDetail" resultType="com.ly.mt.center.data.activity.entity.ActivityUserGradeDetail">
+        SELECT * 
+        FROM activity_user_grade_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

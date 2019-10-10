@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://www.17sucai.com/preview/776331/2019-07-28/3932/table-basic.html -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title></title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/styleMain.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="/css/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+</head>
+
+<body class="fix-header card-no-border">
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader" style="display: none;">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+    </svg>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" style="">
+        <nav class="navbar top-navbar navbar-toggleable-sm navbar-light">
+            <!-- ============================================================== -->
+            <!-- Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-header">
+                <a class="navbar-brand">
+                    <!-- Logo icon -->
+                    <b>
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <img src="/image/logo-icon.png" alt="homepage" class="dark-logo">
+
+                    </b>
+                    <!--End Logo icon -->
+                    <!-- Logo text -->
+                    <span>
+                            <!-- dark Logo text -->
+                            <img src="/image/logo-text.png" alt="homepage" class="dark-logo">
+                        </span>
+                </a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse">
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav mr-auto mt-md-0 ">
+                    <!-- This is  -->
+                    <!--<li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>-->
+                    <!--<li class="nav-item hidden-sm-down">-->
+                    <!--<form class="app-search p-l-20">-->
+                    <!--<input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>-->
+                    <!--</form>-->
+                    <!--</li>-->
+                </ul>
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav my-lg-0">
+                    <li class="nav-item dropdown">
+                        <img src="/image/1.jpg" alt="user" class="profile-pic m-r-5"><span id="welcome">欢迎您!</span>
+                        <a href="index.html">退出</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+            <div class="scroll-sidebar" style="overflow: hidden; width: auto; height: 100%;">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav active">
+                    <ul id="sidebarnav" class="in">
+                        <li>
+                            <a
+                               class="waves-effect"><i class="fa fa-clock-o m-r-10" aria-hidden="true"></i>店铺审批</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <div class="slimScrollBar"
+                 style="background: rgb(220, 220, 220); width: 5px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; left: 1px; height: 679.6px;"></div>
+            <div class="slimScrollRail"
+                 style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; left: 1px;"></div>
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper" style="min-height: 248px;">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="">
+                    <h3 class="text-themecolor margin-bottom: 25px!important; margin-top: 6px!important;">查询条件</h3>
+                    <table class="">
+                        <tr class="">
+                            <td>
+                            状态:
+                            <select id="authStatus">
+                                <option value="">全部</option>
+                                <option value="0">待审批</option>
+                                <option value="1">已授权</option>
+                                <option value="2">拒绝授权</option>
+                            </select>
+                                <input type="hidden" class=""
+                                       placeholder="城市名称">
+                            <td>
+                            <td class=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;城市市名称:<input type="text" class=""
+                                             placeholder="城市名称"
+                                             id="cityName">
+                        </td>
+                            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;店铺名称:<input type="text" class="width:100px"
+                                            placeholder="店铺名称"
+                                            id="shopName"></td>
+                            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;店铺地址:<input type="text" class="width:100px"
+                                                placeholder="店铺地址"
+                                                id="shopAddress"></td>
+                            <td>
+                               &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn pull-right hidden-sm-down btn-success" onclick="serachShop()">查询</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<div class="col-md-6 col-4 align-self-center">-->
+                    <!--<a class="btn pull-right hidden-sm-down btn-success" onclick="serachShop()">查询</a>-->
+                <!--</div>-->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- column -->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">店铺列表</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>手机号</th>
+                                        <th>门店名称</th>
+                                        <th>主营业务</th>
+                                        <th>城市</th>
+                                        <th>店铺地址</th>
+                                        <th>授权状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="shopTbody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <!--<footer class="footer text-center">-->
+        <!--Copyright © 2019.Company name All rights reserved.-->
+        <!--</footer>-->
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+
+<script>
+    var tokenQJ =$.cookie('tokenQJ');//全局token
+    var userIdQJ=$.cookie('userIdQJ');//全局userId
+    var userName=$.cookie('userName');//全局userName
+    $("#welcome").text("欢迎您:"+userName+"!");
+    $(function () {
+        serachShop();
+    });
+
+    /**
+     * 查询店铺
+     */
+    function serachShop() {
+        var authStatus = $("#authStatus").val();
+        var shopName = $("#shopName").val();
+        var cityName = $("#cityName").val();
+        var shopAddress = $("#shopAddress").val();
+        $.ajax({
+            //请求类型，这里为POST
+            type: 'POST',
+            //你要请求的api的URL
+            url: "bluetooth/web/wxshop/getWxShopList",
+            //是否使用缓存
+            cache: false,
+            //数据类型，这里我用的是json
+            dataType: "json",
+            //必要的时候需要用JSON.stringify() 将JSON对象转换成字符串
+            data: {authStatus: authStatus, cityName: cityName, shopName: shopName, shopAddress: shopAddress}, //data: {key:value},
+            //添加额外的请求头
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", tokenQJ);
+                XMLHttpRequest.setRequestHeader("userId", userIdQJ);
+            },
+            //请求成功的回调函数
+            success: function (data) {
+                //函数参数 "data" 为请求成功服务端返回的数据
+                console.log(data);
+                if (data.code == 0) {
+                    //下面使用each进行遍历
+                    var trs = "";
+                    var result = JSON.parse(data.result);
+                    $.each(result, function (n, value) {
+                        var authStatus = value.authStatus;
+                        var shopId = value.shopId;
+                        var htmlContent;
+                        //状态为未审批
+                        if (authStatus == 0) {
+                            htmlContent = "<td><a class=\"btn btn-danger;color:#FFF\" onclick=\"lookDetail('" + shopId + "')\">编辑</a>&nbsp;&nbsp;<a class=\"btn btn-danger;color:#FFF\" onclick=\"authShop('" + shopId + "')\">授权</a>&nbsp;&nbsp;<a  onclick=\"refuseAuthWxshop('" + shopId + "')\" class=\"btn btn-danger;color:\">驳回</a></td >"
+                            authStatusCn = "待授权";
+                        } else if (authStatus == 1) {
+                            htmlContent = "<td><a class=\"btn btn-danger;color:#FFF\" onclick=\"lookDetail('" + shopId + "')\">编辑</a>&nbsp;&nbsp;<a class=\"btn btn-danger;color:#FFF\" onclick=\"deleteWxshop('" + shopId + "')\">删除</a></td >"
+                            authStatusCn = "已授权";
+                        } else if (authStatus == 2) {
+                            htmlContent = "<td><a class=\"btn btn-danger;color:#FFF\" onclick=\"lookDetail('" + shopId + "')\">编辑</a>&nbsp;&nbsp;<a class=\"btn btn-danger;color:#FFF\" onclick=\"deleteWxshop('" + shopId + "')\">删除</a></td >"
+                            authStatusCn = "已驳回";
+                        }
+                        trs += "<tr id=" + value.shopId + "><td> " + value.name + " </td>" +
+                            "<td>" + value.mobile + "</td>" +
+                            "<td>" + value.shopName + "</td>" +
+                            "<td>" + value.mainBusiness + "</td>" +
+                            "<td>" + value.cityName + "</td>" +
+                            "<td>" + value.shopAddress + "</td>" +
+                            "<td>" + authStatusCn + "</td >" + htmlContent +
+                            "</tr>";
+                    });
+                    $("#shopTbody").empty();
+                    $("#shopTbody").append(trs);
+                } else if(data.code == 3) {
+                    alert("请您登陆后,在操作!");
+                    location.href ="index.html";
+                }else if(data.code == 5) {
+                    alert("您的账号在异地登录,请您重新登录");
+                    location.href = "index.html";
+                }else{
+                    alert(data.msg);
+
+                }
+            },error:function () {
+                alert("网络出错啦，请稍后再试试!");
+            }
+        });
+    }
+    function lookDetail(shopId){
+        var twoUrl = encodeURI("shopDetail.html?shopId=" + shopId); //使用encodeURI编码
+        location.href = twoUrl;
+    }
+    /**
+     * 授权店铺
+     */
+    function authShop(shopId) {
+        $.ajax({
+            //请求类型，这里为POST
+            type: 'POST',
+            //你要请求的api的URL
+            url: "bluetooth/web/wxshop/authWxshop",
+            //是否使用缓存
+            cache: false,
+            //数据类型，这里我用的是json
+            dataType: "json",
+            //必要的时候需要用JSON.stringify() 将JSON对象转换成字符串
+            data: {shopId: shopId}, //data: {key:value},
+            //添加额外的请求头
+            //添加额外的请求头
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", tokenQJ);
+                XMLHttpRequest.setRequestHeader("userId", userIdQJ);
+            },
+            //请求成功的回调函数
+            success: function (data) {
+                //函数参数 "data" 为请求成功服务端返回的数据
+                console.log(data);
+                if (data.code == 0) {
+                    alert("授权成功!");
+                    serachShop();
+                }else if(data.code == 5) {
+                    alert("您的账号在异地登录,请您重新登录");
+                    location.href = "index.html";
+                }else {
+                    alert(data.msg);
+                }
+            },error:function () {
+            alert("网络出错啦，请稍后再试试!");
+        }
+        });
+    }
+
+    /**
+     * 拒绝授权
+     * @param shopId
+     */
+    function refuseAuthWxshop(shopId) {
+        $.ajax({
+            //请求类型，这里为POST
+            type: 'POST',
+            //你要请求的api的URL
+            url:"bluetooth/web/wxshop/refuseAuthWxshop",
+            //是否使用缓存
+            cache: false,
+            //数据类型，这里我用的是json
+            dataType: "json",
+            //必要的时候需要用JSON.stringify() 将JSON对象转换成字符串
+            data: {shopId: shopId}, //data: {key:value},
+            //添加额外的请求头
+            //添加额外的请求头
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", tokenQJ);
+                XMLHttpRequest.setRequestHeader("userId", userIdQJ);
+            },
+            //请求成功的回调函数
+            success: function (data) {
+                //函数参数 "data" 为请求成功服务端返回的数据
+                console.log(data);
+                if (data.code == 0) {
+                    alert("拒绝授权成功!");
+                    serachShop();
+                }else if(data.code == 5) {
+                    alert("您的账号在异地登录,请您重新登录");
+                    location.href = "index.html";
+                }else {
+                    alert(data.msg);
+                }
+            },error:function () {
+                alert("网络出错啦，请稍后再试试!");
+            }
+        });
+    }
+    /**
+     * 删除店铺
+     * @param shopId
+     */
+    function deleteWxshop(shopId) {
+        if (confirm("确定要删除吗？")) {
+            $.ajax({
+                //请求类型，这里为POST
+                type: 'POST',
+                //你要请求的api的URL
+                url: "bluetooth/web/wxshop/deleteWxshop",
+                //是否使用缓存
+                cache: false,
+                //数据类型，这里我用的是json
+                dataType: "json",
+                //必要的时候需要用JSON.stringify() 将JSON对象转换成字符串
+                data: {shopId: shopId}, //data: {key:value},
+                //添加额外的请求头
+                //添加额外的请求头
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("token", tokenQJ);
+                    XMLHttpRequest.setRequestHeader("userId", userIdQJ);
+                },
+                //请求成功的回调函数
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 0) {
+                        alert("删除成功!");
+                        serachShop();
+                    }else if(data.code == 5) {
+                        alert("您的账号在异地登录,请您重新登录");
+                        location.href = "index.html";
+                    }else {
+                        alert(data.msg);
+                    }
+                },error:function () {
+                    alert("网络出错啦，请稍后再试试!");
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

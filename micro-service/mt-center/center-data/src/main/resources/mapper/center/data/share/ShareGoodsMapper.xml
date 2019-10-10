@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.share.mapper.ShareGoodsMapper" >
+    <!-- 保存ShareGoods -->
+    <insert id="insertShareGoods" parameterType="com.ly.mt.center.data.share.entity.ShareGoods">
+        INSERT INTO share_goods (
+            id, spu_id, sku_id, share_type, share_status, create_time
+        ) VALUES (
+            #{id}, #{spu_id}, #{sku_id}, #{share_type}, #{share_status}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShareGoods -->
+    <delete id="deleteShareGoods" parameterType="com.ly.mt.center.data.share.entity.ShareGoods">
+        DELETE FROM share_goods
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShareGoods -->
+    <update id="updateShareGoods" parameterType="com.ly.mt.center.data.share.entity.ShareGoods">
+        UPDATE share_goods
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShareGoods -->
+    <select id="getShareGoods" parameterType="com.ly.mt.center.data.share.entity.ShareGoods" resultType="com.ly.mt.center.data.share.entity.ShareGoods">
+        SELECT * 
+        FROM share_goods
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

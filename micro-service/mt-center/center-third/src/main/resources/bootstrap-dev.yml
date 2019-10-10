@@ -1,0 +1,8 @@
+server:
+  port: 7072
+spring:
+  cloud:
+    config:
+      name: center-third,eureka,time,redis,mq,gy
+      profile: dev
+      uri: http://39.96.191.19:8082

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.basic.mapper.BasicRoleRightMapper">
+    <!-- 新增BasicRoleRight -->
+    <insert id="insertBasicRoleRights" parameterType="List">
+        INSERT INTO basic_role_right (
+            id, role_id, right_id, right_level, right_type
+        ) VALUES
+        <foreach collection="list" item="right" index="index" separator=",">
+        (
+            #{right.id}, #{right.roleId}, #{right.rightId}, #{right.rightLevel}, #{right.rightType}
+        )
+        </foreach>
+    </insert>
+
+
+    <!-- 删除BasicRoleRight -->
+    <delete id="deleteBasicRoleRight" parameterType="com.ly.mt.core.data.basic.entity.BasicRoleRight">
+        DELETE
+        FROM basic_role_right
+        <where>
+            <if test="null != roleId and '' != roleId">AND role_id IN (${roleId})</if>
+            <if test="null != rightId and '' != rightId">AND right_id IN (${rightId})</if>
+        </where>
+    </delete>
+
+
+    <!-- 查询List<BasicRoleRight> -->
+    <select id="listBasicRoleRight" parameterType="com.ly.mt.core.data.basic.entity.BasicRoleRight" resultType="com.ly.mt.core.data.basic.entity.BasicRoleRight">
+        SELECT *
+        FROM basic_role_right
+        <where>
+            <if test="null != roleId and '' != roleId">AND role_id = #{roleId}</if>
+            <if test="null != rightId and '' != rightId">AND right_id = #{rightId}</if>
+            <if test="null != rightLevel and '' != rightLevel">AND right_level = #{rightLevel}</if>
+        </where>
+    </select>
+</mapper>

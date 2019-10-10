@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.trade.mapper.TradeOrderCouponMapper">
+    <!-- 查询List<TradeOrderCoupon> -->
+    <select id="listTradeOrderCoupon" parameterType="com.ly.mt.core.data.trade.entity.TradeOrderCoupon" resultType="com.ly.mt.core.data.trade.entity.TradeOrderCoupon">
+        SELECT *
+        FROM trade_order_coupon
+        <where>
+            <if test="null != orderId and '' != orderId">AND order_id = #{orderId}</if>
+            <if test="null != couponType and '' != couponType">AND coupon_type = #{couponType}</if>
+        </where>
+    </select>
+</mapper>

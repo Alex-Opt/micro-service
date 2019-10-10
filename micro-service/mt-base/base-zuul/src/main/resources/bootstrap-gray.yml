@@ -1,0 +1,76 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}-${spring.cloud.client.ipaddress}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://lykj:lykjMtEureka@10.11.10.1/eureka/,http://lykj:lykjMtEureka@10.11.10.2/eureka/
+spring:
+  cloud:
+    config:
+      name: time,redis
+      profile: gray
+      discovery:
+        enabled: true
+        service-id: base-config
+zuul:
+  ignored-services: "*"
+  routes:
+    base-config:
+      path: /config/**
+      service_id: base-config
+    payment-web:
+      path: /payment/**
+      service_id: payment-web
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    user-web:
+      path: /user/**
+      service_id: user-web
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    order-web:
+      path: /order/**
+      service_id: order-web
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    gzg-b-web:
+      path: /gzgb/**
+      service_id: gzg-b-web
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    activity-web:
+      path: /activity/**
+      service_id: activity-web
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    mt-activity:
+      path: /activity1/**
+      service_id: mt-activity
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    mt-mall:
+      path: /mall/**
+      service_id: mt-mall
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    mt-cabinet:
+      path: /cabinet/**
+      service_id: mt-cabinet
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    blue-tooth:
+      path: /bluetooth/**
+      service_id: mt-bluetooth
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    mt-open:
+      path: /open/**
+      service_id: mt-open
+      sensitiveHeaders: "*"
+      strip-prefix: false
+    mt-home:
+      path: /home/**
+      service_id: mt-home
+      sensitiveHeaders: "*"
+      strip-prefix: false

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gy.mapper.GyShopInfoMapper" >
+    <!-- 保存GyShopInfo -->
+    <insert id="insertGyShopInfo" parameterType="com.ly.mt.center.data.gy.entity.GyShopInfo">
+        INSERT INTO gy_shop_info (
+            id, name, nick_name, code, create_time, modify_time, remark, data_source
+        ) VALUES (
+            #{id}, #{name}, #{nick_name}, #{code}, #{create_time}, #{modify_time}, #{remark}, #{data_source}
+        )
+    </insert>
+
+
+    <!-- 删除GyShopInfo -->
+    <delete id="deleteGyShopInfo" parameterType="com.ly.mt.center.data.gy.entity.GyShopInfo">
+        DELETE FROM gy_shop_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GyShopInfo -->
+    <update id="updateGyShopInfo" parameterType="com.ly.mt.center.data.gy.entity.GyShopInfo">
+        UPDATE gy_shop_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GyShopInfo -->
+    <select id="getGyShopInfo" parameterType="com.ly.mt.center.data.gy.entity.GyShopInfo" resultType="com.ly.mt.center.data.gy.entity.GyShopInfo">
+        SELECT * 
+        FROM gy_shop_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

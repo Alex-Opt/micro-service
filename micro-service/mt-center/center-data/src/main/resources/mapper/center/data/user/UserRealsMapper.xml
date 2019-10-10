@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserRealsMapper" >
+    <!-- 保存UserReals -->
+    <insert id="insertUserReals" parameterType="com.ly.mt.center.data.user.entity.UserReals">
+        INSERT INTO user_reals (
+            user_id, name, idcard_front, idcard_back, idcard, valid_started_at, valid_ended_at, status, create_time, modify_time
+        ) VALUES (
+            #{user_id}, #{name}, #{idcard_front}, #{idcard_back}, #{idcard}, #{valid_started_at}, #{valid_ended_at}, #{status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserReals -->
+    <delete id="deleteUserReals" parameterType="com.ly.mt.center.data.user.entity.UserReals">
+        DELETE FROM user_reals
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserReals -->
+    <update id="updateUserReals" parameterType="com.ly.mt.center.data.user.entity.UserReals">
+        UPDATE user_reals
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserReals -->
+    <select id="getUserReals" parameterType="com.ly.mt.center.data.user.entity.UserReals" resultType="com.ly.mt.center.data.user.entity.UserReals">
+        SELECT * 
+        FROM user_reals
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

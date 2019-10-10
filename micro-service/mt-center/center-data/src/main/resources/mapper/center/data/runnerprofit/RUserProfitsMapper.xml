@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.runnerprofit.mapper.RUserProfitsMapper" >
+  <sql id="Base_Column_List" >
+    id, user_id, total_profit, lode_cash, lode, profit_frozen, lode_frozen, create_time, 
+    modify_time
+  </sql>
+  <sql id="Base_Batch_List">
+     id,user_id, total_profit, lode_frozen, create_time,
+    modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_profits
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_profits
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfits" >
+    insert into user_profits (id, user_id, total_profit, 
+      lode_cash, lode, profit_frozen, 
+      lode_frozen, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{totalProfit,jdbcType=DECIMAL}, 
+      #{lodeCash,jdbcType=DECIMAL}, #{lode,jdbcType=DECIMAL}, #{profitFrozen,jdbcType=DECIMAL}, 
+      #{lodeFrozen,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfits" >
+    insert into user_profits
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="totalProfit != null" >
+        total_profit,
+      </if>
+      <if test="lodeCash != null" >
+        lode_cash,
+      </if>
+      <if test="lode != null" >
+        lode,
+      </if>
+      <if test="profitFrozen != null" >
+        profit_frozen,
+      </if>
+      <if test="lodeFrozen != null" >
+        lode_frozen,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="totalProfit != null" >
+        #{totalProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="lodeCash != null" >
+        #{lodeCash,jdbcType=DECIMAL},
+      </if>
+      <if test="lode != null" >
+        #{lode,jdbcType=DECIMAL},
+      </if>
+      <if test="profitFrozen != null" >
+        #{profitFrozen,jdbcType=DECIMAL},
+      </if>
+      <if test="lodeFrozen != null" >
+        #{lodeFrozen,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!--批量插入或者更新用户受益-->
+  <insert id="insertOrUpdateUserProfits">
+    insert into user_profits
+    <include refid="Base_Batch_List" />
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (#{item.id},#{item.userId}, #{item.totalProfit},
+      #{item.lodeCash}, #{item.lode}, #{item.profitFrozen},
+      #{item.lodeFrozen}, #{item.createTime}, #{item.modifyTime})
+    </foreach>
+    ON DUPLICATE KEY UPDATE
+      user_id = values(user_id), total_profit = values(total_profit), lode_cash = values(lode_cash), lode = values = (lode), profit_frozen = values(profit_frozen),
+      lode_frozen = values(lode_frozen),modify_time = values(modify_time)
+  </insert>
+  <!--单独插入或者更新操作-->
+  <insert id="insertOrUpdateUserProfit">
+    insert into user_profits
+    <include refid="Base_Batch_List" />
+    values
+      (#{id},#{userId}, #{totalProfit},
+      #{lodeFrozen}, #{createTime}, #{modifyTime})
+    ON DUPLICATE KEY UPDATE
+    total_profit = total_profit + #{totalProfit},lode_frozen = lode_frozen + #{lodeFrozen}, modify_time = values(modify_time)
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfits" >
+    update user_profits
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="totalProfit != null" >
+        total_profit = #{totalProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="lodeCash != null" >
+        lode_cash = #{lodeCash,jdbcType=DECIMAL},
+      </if>
+      <if test="lode != null" >
+        lode = #{lode,jdbcType=DECIMAL},
+      </if>
+      <if test="profitFrozen != null" >
+        profit_frozen = #{profitFrozen,jdbcType=DECIMAL},
+      </if>
+      <if test="lodeFrozen != null" >
+        lode_frozen = #{lodeFrozen,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.runnerprofit.entity.RUserProfits" >
+    update user_profits
+    set user_id = #{userId,jdbcType=BIGINT},
+      total_profit = #{totalProfit,jdbcType=DECIMAL},
+      lode_cash = #{lodeCash,jdbcType=DECIMAL},
+      lode = #{lode,jdbcType=DECIMAL},
+      profit_frozen = #{profitFrozen,jdbcType=DECIMAL},
+      lode_frozen = #{lodeFrozen,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

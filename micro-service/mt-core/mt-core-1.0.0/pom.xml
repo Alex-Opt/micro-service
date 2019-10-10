@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mt.core</groupId>
+    <artifactId>mt-core</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>mt-core-1.0.0</name>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 声明版本号，统一管理-->
+        <spring.boot.maven.plugin>1.5.9.RELEASE</spring.boot.maven.plugin>
+        <spring.boot.starter.pagehelper>1.1.2</spring.boot.starter.pagehelper>
+        <spring.boot.starter.data.redis>1.5.9.RELEASE</spring.boot.starter.data.redis>
+
+        <spring.cloud.starter.feign>1.4.0.RELEASE</spring.cloud.starter.feign>
+        <spring.cloud.starter.hystrix>1.4.0.RELEASE</spring.cloud.starter.hystrix>
+
+        <ali.druid>1.0.11</ali.druid>
+        <ali.yun.oss>3.4.2</ali.yun.oss>
+        <ali.yun.core>4.0.3</ali.yun.core>
+        <ali.fastjson>1.2.31</ali.fastjson>
+
+        <springfox.swagger2>2.6.1</springfox.swagger2>
+        <springfox.swagger2.ui>2.6.1</springfox.swagger2.ui>
+
+        <javax.servlet>3.1.0</javax.servlet>
+        <spring.session>1.3.1.RELEASE</spring.session>
+        <mysql.connector.java>5.1.44</mysql.connector.java>
+
+        <dom4j>1.6.1</dom4j>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${spring.boot.starter.pagehelper}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+            <version>${spring.boot.starter.pagehelper}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring.boot.starter.data.redis}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <version>${spring.cloud.starter.feign}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+            <version>${spring.cloud.starter.hystrix}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${ali.druid}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${ali.yun.oss}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>${ali.yun.core}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${ali.fastjson}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.swagger2}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.swagger2.ui}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session</artifactId>
+            <version>${spring.session}</version>
+        </dependency>
+
+        <!-- jwt -->
+        <!-- jwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.java}</version>
+        </dependency>
+
+        <!-- 用于二维码操作使用 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+        <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j}</version>
+        </dependency>
+
+        <!--个推使用依赖  -->
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-http</artifactId>
+            <version>4.1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-fastjson</artifactId>
+            <version>1.0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-base</artifactId>
+            <version>4.0.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-template</artifactId>
+            <version>4.0.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <!--个推使用依赖  -->
+
+        <!--rabbitmq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+            <version>1.5.2.RELEASE</version>
+        </dependency>
+        <!--rabbitmq-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- 私服配置 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-central</id>
+            <name>libs-releases</name>
+            <url>http://116.196.118.85:8082/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>libs-snapshots</name>
+            <url>http://116.196.118.85:8082/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.maven.plugin}</version>
+                <configuration>
+                    <classifier>exe</classifier>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

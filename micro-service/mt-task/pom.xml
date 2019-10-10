@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mt.task</groupId>
+    <artifactId>mt-task</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>mt-task</name>
+    <packaging>war</packaging>
+
+    <parent>
+        <groupId>ly.mt</groupId>
+        <artifactId>ly-mt</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.base</groupId>
+            <artifactId>mt-core-base</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.data</groupId>
+            <artifactId>mt-core-data</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mt.core.aliyun</groupId>
+            <artifactId>mt-core-aliyun</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mt.core.logistics</groupId>
+            <artifactId>mt-core-logistics</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.rest</groupId>
+            <artifactId>mt-core-rest</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+        </dependency>
+    </dependencies>
+</project>

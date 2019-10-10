@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.example.txc.mapper.TxcMapper">
+    <insert id="add1">
+        insert into txc_add1(func_name) VALUE ("add1")
+    </insert>
+
+    <insert id="add2">
+        insert into txc_add2(func_name) VALUE ("add2")
+    </insert>
+</mapper>

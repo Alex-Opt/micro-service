@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.coupon.mapper.CouponGoodsMapper" >
+    <!-- 保存CouponGoods -->
+    <insert id="insertCouponGoods" parameterType="com.ly.mt.center.data.coupon.entity.CouponGoods">
+        INSERT INTO coupon_goods (
+            id, coupon_id, spu_id, create_time
+        ) VALUES (
+            #{id}, #{coupon_id}, #{spu_id}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除CouponGoods -->
+    <delete id="deleteCouponGoods" parameterType="com.ly.mt.center.data.coupon.entity.CouponGoods">
+        DELETE FROM coupon_goods
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新CouponGoods -->
+    <update id="updateCouponGoods" parameterType="com.ly.mt.center.data.coupon.entity.CouponGoods">
+        UPDATE coupon_goods
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询CouponGoods -->
+    <select id="getCouponGoods" parameterType="com.ly.mt.center.data.coupon.entity.CouponGoods" resultType="com.ly.mt.center.data.coupon.entity.CouponGoods">
+        SELECT * 
+        FROM coupon_goods
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

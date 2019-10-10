@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.basic.mapper.CityOneHourMapper" >
+    <!-- 保存CityOneHour -->
+    <insert id="insertCityOneHour" parameterType="com.ly.mt.center.data.basic.entity.CityOneHour">
+        INSERT INTO city_one_hour (
+            id, area_id, name, code, status, create_time
+        ) VALUES (
+            #{id}, #{area_id}, #{name}, #{code}, #{status}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除CityOneHour -->
+    <delete id="deleteCityOneHour" parameterType="com.ly.mt.center.data.basic.entity.CityOneHour">
+        DELETE FROM city_one_hour
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新CityOneHour -->
+    <update id="updateCityOneHour" parameterType="com.ly.mt.center.data.basic.entity.CityOneHour">
+        UPDATE city_one_hour
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询CityOneHour -->
+    <select id="getCityOneHour" parameterType="com.ly.mt.center.data.basic.entity.CityOneHour" resultType="com.ly.mt.center.data.basic.entity.CityOneHour">
+        SELECT * 
+        FROM city_one_hour
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

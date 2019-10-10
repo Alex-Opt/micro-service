@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>order.server</groupId>
+    <artifactId>order-server</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>order-server</name>
+    <packaging>war</packaging>
+
+    <parent>
+        <artifactId>mt-order</artifactId>
+        <groupId>mt.order</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.7.73.ALL</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+
+        <!--个推使用依赖  -->
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-http</artifactId>
+            <version>4.1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-fastjson</artifactId>
+            <version>1.0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-base</artifactId>
+            <version>4.0.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>gexin-rp-sdk-template</artifactId>
+            <version>4.0.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gexin.platform</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <!--个推使用依赖  -->
+
+        <!-- 用于二维码操作使用 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <!-- 用于二维码操作使用 -->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mt.core.txc</groupId>
+            <artifactId>mt-core-txc</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

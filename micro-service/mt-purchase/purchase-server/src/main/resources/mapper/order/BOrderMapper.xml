@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.purchase.server.order.mapper.BOrderMapper" >
+
+    <select id="listShopAddress" resultType="com.ly.mt.core.common.entity.purchase.ShopAddressVO">
+        SELECT
+          receive_name,
+          receive_phone,
+          province_name,
+          city_name,
+          district_name,
+          user_address
+        FROM shop_address
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="listShopCouponByUserId" resultType="com.ly.mt.core.common.entity.purchase.ShopCouponVO">
+        SELECT
+          id,
+          user_id,
+          discount_price,
+          discount_rate
+        FROM shop_coupon
+        WHERE use_status = 1
+            AND end_time > NOW()
+            AND user_id = #{userId}
+    </select>
+
+    <select id="listShopLadderPriceByUserId" resultType="com.ly.mt.core.common.entity.purchase.LadderPriceVO">
+        SELECT
+          MAX(splp.purachases_num) AS purachases_num,
+          a.purchased_num,
+          IF(splp.purachases_num - a.purchased_num &lt;= 0,1,splp.purachases_num - a.purchased_num) AS this_num,
+          MIN(splp.promotion_rate) AS this_promotion_rate
+        FROM (SELECT
+                SUM(spi.sku_num) AS purchased_num
+              FROM shop_purchases AS sp,
+                shop_purchases_items AS spi
+              WHERE sp.id = spi.shop_purchases_id
+                  AND sp.user_id = #{userId}) a,
+          shop_purachases_ladder_price splp
+        GROUP BY this_num
+    </select>
+
+</mapper>

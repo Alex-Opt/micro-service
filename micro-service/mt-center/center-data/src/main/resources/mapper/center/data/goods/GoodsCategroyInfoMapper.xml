@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsCategroyInfoMapper" >
+    <!-- 保存GoodsCategroyInfo -->
+    <insert id="insertGoodsCategroyInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo">
+        INSERT INTO goods_categroy_info (
+            id, parent_id, name, status, lev, sort_number, create_time
+        ) VALUES (
+            #{id}, #{parent_id}, #{name}, #{status}, #{lev}, #{sort_number}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除GoodsCategroyInfo -->
+    <delete id="deleteGoodsCategroyInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo">
+        DELETE FROM goods_categroy_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GoodsCategroyInfo -->
+    <update id="updateGoodsCategroyInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo">
+        UPDATE goods_categroy_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GoodsCategroyInfo -->
+    <select id="getGoodsCategroyInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo" resultType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo">
+        SELECT * 
+        FROM goods_categroy_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+
+    <select id="getGoodsCategroyInfoByParentId"  resultType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsCategroyInfo" >
+        SELECT  *
+        FROM goods_categroy_info
+        WHERE status = 1 AND parent_id = #{parent_id}
+        ORDER BY sort_number ASC
+    </select>
+</mapper>

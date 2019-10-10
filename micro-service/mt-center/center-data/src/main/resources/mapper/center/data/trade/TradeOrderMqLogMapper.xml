@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrderMqLogMapper" >
+    <!-- 保存TradeOrderMqLog -->
+    <insert id="insertTradeOrderMqLog" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderMqLog">
+        INSERT INTO trade_order_mq_log (
+            id, order_id, send_status, create_time
+        ) VALUES (
+            #{id}, #{order_id}, #{send_status}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除TradeOrderMqLog -->
+    <delete id="deleteTradeOrderMqLog" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderMqLog">
+        DELETE FROM trade_order_mq_log
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新TradeOrderMqLog -->
+    <update id="updateTradeOrderMqLog" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderMqLog">
+        UPDATE trade_order_mq_log
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询TradeOrderMqLog -->
+    <select id="getTradeOrderMqLog" parameterType="com.ly.mt.center.data.trade.entity.TradeOrderMqLog" resultType="com.ly.mt.center.data.trade.entity.TradeOrderMqLog">
+        SELECT * 
+        FROM trade_order_mq_log
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

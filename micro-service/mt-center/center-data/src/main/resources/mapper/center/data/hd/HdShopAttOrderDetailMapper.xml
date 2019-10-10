@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.hd.mapper.HdShopAttOrderDetailMapper" >
+    <!-- 保存HdShopAttOrderDetail -->
+    <insert id="insertHdShopAttOrderDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttOrderDetail">
+        INSERT INTO hd_shop_att_order_detail (
+            id, order_id, user_id, shop_att_detail_id, goods_sku_id, goods_spu_id, goods_quantity, goods_price, create_time, uodate_time
+        ) VALUES (
+            #{id}, #{order_id}, #{user_id}, #{shop_att_detail_id}, #{goods_sku_id}, #{goods_spu_id}, #{goods_quantity}, #{goods_price}, #{create_time}, #{uodate_time}
+        )
+    </insert>
+
+
+    <!-- 删除HdShopAttOrderDetail -->
+    <delete id="deleteHdShopAttOrderDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttOrderDetail">
+        DELETE FROM hd_shop_att_order_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新HdShopAttOrderDetail -->
+    <update id="updateHdShopAttOrderDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttOrderDetail">
+        UPDATE hd_shop_att_order_detail
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询HdShopAttOrderDetail -->
+    <select id="getHdShopAttOrderDetail" parameterType="com.ly.mt.center.data.hd.entity.HdShopAttOrderDetail" resultType="com.ly.mt.center.data.hd.entity.HdShopAttOrderDetail">
+        SELECT * 
+        FROM hd_shop_att_order_detail
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

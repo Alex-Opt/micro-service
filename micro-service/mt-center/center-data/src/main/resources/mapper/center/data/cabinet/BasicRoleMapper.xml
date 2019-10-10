@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.mt.center.data.basic.mapper.BasicRoleMapper">
+  <resultMap id="BaseResultMap" type="com.ly.mt.center.data.basic.entity.BasicRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="BIGINT" property="parent_id" />
+    <result column="role_level" jdbcType="BIT" property="role_level" />
+    <result column="role_type" jdbcType="BIT" property="role_type" />
+    <result column="project_type" jdbcType="INTEGER" property="project_type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="create_user" jdbcType="BIGINT" property="create_user" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    <result column="update_user" jdbcType="BIGINT" property="update_user" />
+    <result column="valid_status" jdbcType="BIT" property="valid_status" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ly.mt.center.data.basic.entity.BasicRole">
+    insert into basic_role (id, `name`, parent_id, 
+      role_level, role_type, project_type, 
+      create_time, create_user, update_time, 
+      update_user, valid_status)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parent_id,jdbcType=BIGINT}, 
+      #{role_level,jdbcType=BIT}, #{role_type,jdbcType=BIT}, #{project_type,jdbcType=INTEGER}, 
+      #{create_time,jdbcType=TIMESTAMP}, #{create_user,jdbcType=BIGINT}, #{update_time,jdbcType=TIMESTAMP}, 
+      #{update_user,jdbcType=BIGINT}, #{valid_status,jdbcType=BIT})
+  </insert>
+  <!--根据用户id查询角色类型-->
+  <select id="selectRoleTypeByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+    select role_type from basic_role a left join basic_user_role  b on a.id =b.role_id
+    where b.user_id=#{user_id}
+  </select>
+
+</mapper>

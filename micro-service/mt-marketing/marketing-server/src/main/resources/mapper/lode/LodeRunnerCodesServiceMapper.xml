@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.marketing.server.lode.mapper.LodeRunnerCodesServiceMapper" >
+    <select id="getByUId" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerCodes" resultType="com.ly.mt.core.common.entity.marketing.LodeRunnerCodes">
+      select  shop_id shopId, code, nums from lode_runner_codes where  user_id = #{userId}
+    </select>
+
+    <insert id="save" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerCodes">
+        insert  into lode_runner_codes(user_id, shop_id, code, nums, create_time)
+        values (#{userId}, #{shopId}, #{code}, #{nums}, #{createTime})
+    </insert>
+
+    <select id="getShopId" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerCodes" resultType="java.lang.Long">
+        select id from  shop_info where user_id = #{userId}
+    </select>
+
+    <select id="getCountByCode" parameterType="com.ly.mt.core.common.entity.marketing.LodeRunnerCodes" resultType="java.lang.Integer">
+        select count(user_id) from  lode_runner_codes where code = #{code}
+    </select>
+</mapper>

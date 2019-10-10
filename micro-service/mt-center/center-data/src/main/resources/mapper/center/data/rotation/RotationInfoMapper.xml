@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.rotation.mapper.RotationInfoMapper" >
+    <!-- 保存RotationInfo -->
+    <insert id="insertRotationInfo" parameterType="com.ly.mt.center.data.rotation.entity.RotationInfo">
+        INSERT INTO rotation_info (
+            id, picture_url, remark, sort_number, create_time, modify_time
+        ) VALUES (
+            #{id}, #{picture_url}, #{remark}, #{sort_number}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除RotationInfo -->
+    <delete id="deleteRotationInfo" parameterType="com.ly.mt.center.data.rotation.entity.RotationInfo">
+        DELETE FROM rotation_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新RotationInfo -->
+    <update id="updateRotationInfo" parameterType="com.ly.mt.center.data.rotation.entity.RotationInfo">
+        UPDATE rotation_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询RotationInfo -->
+    <select id="getRotationInfo" parameterType="com.ly.mt.center.data.rotation.entity.RotationInfo" resultType="com.ly.mt.center.data.rotation.entity.RotationInfo">
+        SELECT * 
+        FROM rotation_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询RotationInfo集合 -->
+    <select id="listRotationInfo" resultType="com.ly.mt.center.data.rotation.entity.RotationInfo">
+        SELECT *
+        FROM rotation_info
+    </select>
+</mapper>

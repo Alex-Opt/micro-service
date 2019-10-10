@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsSpuInfoMapper" >
+    <select id="getGoodsSpuInfoById" resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" >
+        SELECT *
+        FROM goods_spu_info
+        WHERE id = #{id}
+    </select>
+    <select id="getGoodsSpuInfoByCategroy"  resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" >
+        SELECT *
+        FROM goods_spu_info
+        WHERE spu_status=1
+        <if test="null != cid and '' != cid">AND cid=#{cid}</if>
+        order by create_time desc,code desc
+    </select>
+
+
+    <select id="queryHourSpu" resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo">
+        SELECT *
+        FROM goods_spu_info
+        WHERE id in (SELECT DISTINCT spu_id FROM goods_hour_sku WHERE status =1 )
+    </select>
+
+    <select id="getGoodsSellerNumberByMonth" resultType="java.lang.String">
+        SELECT sum(sku_num) FROM trade_order_items
+        WHERE spu_id = #{spuId}
+        AND create_time BETWEEN #{earlyMonthStr} AND #{nowTimeStr}
+    </select>
+
+    <select id="getListTop5ByCid" resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" parameterType="long">
+        SELECT
+          gci.id       AS cid,
+          gci.name     AS cname,
+          CONCAT(gsi.name,' ',spi.sku_name) AS `name`,
+          gsi.id       AS spu_id,
+          spi.sku_id   AS sku_id,
+          SUM(spi.sku_num) AS sku_num
+        FROM goods_categroy_info AS gci,
+          goods_spu_info AS gsi,
+          shop_purchases_items spi,
+          goods_sku_info AS gski
+        WHERE gci.id = gsi.cid
+            AND gsi.id = spi.spu_id
+            AND spi.sku_id=gski.id
+            AND gsi.spu_status = 1
+            AND gski.sku_status = 1
+        AND gci.cid=#{cid}
+        GROUP BY spi.sku_id
+        ORDER BY sku_num DESC
+        LIMIT 0,5
+    </select>
+
+    <select id="queryGoodsSpuInfo"  resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo">
+        SELECT *
+        FROM goods_spu_info
+        WHERE spu_status=1
+        order by create_time desc,code desc
+    </select>
+
+    <select id="getSpuListForShop"  resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" >
+        SELECT *
+        FROM goods_spu_info
+        WHERE spu_status=1
+        <if test="null != cid and '' != cid">AND cid=#{cid}</if>
+        order by create_time desc
+    </select>
+
+    <select id="getGoodsSpuInfoBySpuIdList"  resultType="com.ly.mt.center.data.goods.entity.GoodsSpuInfo" >
+        SELECT *
+        FROM goods_spu_info
+        WHERE spu_status=1
+        and id in
+        <foreach collection="list" open="(" close=")" separator="," item="item" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper >

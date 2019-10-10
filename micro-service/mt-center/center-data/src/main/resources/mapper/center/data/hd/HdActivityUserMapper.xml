@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.hd.mapper.HdActivityUserMapper" >
+    <!-- 保存HdActivityUser -->
+    <insert id="insertHdActivityUser" parameterType="com.ly.mt.center.data.hd.entity.HdActivityUser">
+        INSERT INTO hd_activity_user (
+            id, hd_shop_att_detail_id, user_id, sex, phone, age, user_status, create_time, update_time
+        ) VALUES (
+            #{id}, #{hd_shop_att_detail_id}, #{user_id}, #{sex}, #{phone}, #{age}, #{user_status}, #{create_time}, #{update_time}
+        )
+    </insert>
+
+
+    <!-- 删除HdActivityUser -->
+    <delete id="deleteHdActivityUser" parameterType="com.ly.mt.center.data.hd.entity.HdActivityUser">
+        DELETE FROM hd_activity_user
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新HdActivityUser -->
+    <update id="updateHdActivityUser" parameterType="com.ly.mt.center.data.hd.entity.HdActivityUser">
+        UPDATE hd_activity_user
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询HdActivityUser -->
+    <select id="getHdActivityUser" parameterType="com.ly.mt.center.data.hd.entity.HdActivityUser" resultType="com.ly.mt.center.data.hd.entity.HdActivityUser">
+        SELECT * 
+        FROM hd_activity_user
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

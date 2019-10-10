@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgCityMapper" >
+    <!-- 保存GzgCity -->
+    <insert id="insertGzgCity" parameterType="com.ly.mt.center.data.gzg.entity.GzgCity">
+        INSERT INTO gzg_city (
+            id, gzg_city, gzg_city_state
+        ) VALUES (
+            #{id}, #{gzg_city}, #{gzg_city_state}
+        )
+    </insert>
+
+
+    <!-- 删除GzgCity -->
+    <delete id="deleteGzgCity" parameterType="com.ly.mt.center.data.gzg.entity.GzgCity">
+        DELETE FROM gzg_city
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgCity -->
+    <update id="updateGzgCity" parameterType="com.ly.mt.center.data.gzg.entity.GzgCity">
+        UPDATE gzg_city
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgCity -->
+    <select id="getGzgCity" parameterType="com.ly.mt.center.data.gzg.entity.GzgCity" resultType="com.ly.mt.center.data.gzg.entity.GzgCity">
+        SELECT * 
+        FROM gzg_city
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

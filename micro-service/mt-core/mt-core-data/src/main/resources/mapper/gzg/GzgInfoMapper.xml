@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.gzg.mapper.GzgInfoMapper">
+    <!-- 查询GzgInfo -->
+    <select id="getGzgInfo" parameterType="com.ly.mt.core.data.gzg.entity.GzgInfo" resultType="com.ly.mt.core.data.gzg.entity.GzgInfo">
+        SELECT *
+        FROM gzg_info
+        <where>
+            <if test="null != code and '' != code">AND code = #{code}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 根据cabinetPlanId统计GzgInfo条数 -->
+    <select id="getCountByCabinetPlans" parameterType="List" resultType="Map">
+        SELECT plan_id AS planId, COUNT(id) AS count
+        FROM gzg_info
+        WHERE plan_id IN (
+            <foreach collection="list" item="plan" index="index" separator=",">
+                #{plan.id}
+            </foreach>
+        )
+        GROUP BY plan_id
+    </select>
+</mapper>

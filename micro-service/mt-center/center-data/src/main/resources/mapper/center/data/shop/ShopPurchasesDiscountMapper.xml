@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopPurchasesDiscountMapper" >
+    <!-- 保存ShopPurchasesDiscount -->
+    <insert id="insertShopPurchasesDiscount" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount">
+        INSERT INTO shop_purchases_discount (
+            id, shop_id, user_id, purchases_id, shop_coupon_id, discount_type, discount_price, status, create_time, modify_time, discount_rate, remarks
+        ) VALUES (
+            #{id}, #{shop_id}, #{user_id}, #{purchases_id}, #{shop_coupon_id}, #{discount_type}, #{discount_price}, #{status}, #{create_time}, #{modify_time},#{discount_rate}, #{remarks}
+        )
+    </insert>
+
+
+    <!-- 删除ShopPurchasesDiscount -->
+    <delete id="deleteShopPurchasesDiscount" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount">
+        DELETE FROM shop_purchases_discount
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopPurchasesDiscount -->
+    <update id="updateShopPurchasesDiscount" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount">
+        UPDATE shop_purchases_discount
+        SET
+        <if test="null != status and '' != status">status = #{status,jdbcType=INTEGER},</if>
+        modify_time   = #{modify_time,jdbcType=TIMESTAMP}
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopPurchasesDiscount -->
+    <select id="getShopPurchasesDiscount" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount">
+        SELECT * 
+        FROM shop_purchases_discount
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != purchases_id and '' != purchases_id">AND purchases_id = #{purchases_id}</if>
+        LIMIT 1
+    </select>
+
+    <!-- 查询ShopPurchasesDiscount -->
+    <select id="getShopTotalDiscount" parameterType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount" resultType="java.lang.String">
+        SELECT SUM(discount_price)
+        FROM shop_purchases_discount
+        WHERE 1 = 1
+        AND status = 1
+        <if test="null != shop_id and '' != shop_id">AND shop_id = #{shop_id}</if>
+    </select>
+
+    <select id="getShopPurchasesDiscountList" resultType="com.ly.mt.center.data.shop.entity.ShopPurchasesDiscount">
+        SELECT *
+        FROM shop_purchases_discount
+        WHERE 1 = 1
+        <if test="null != purchases_id and '' != purchases_id">AND purchases_id = #{purchases_id}</if>
+    </select>
+</mapper>

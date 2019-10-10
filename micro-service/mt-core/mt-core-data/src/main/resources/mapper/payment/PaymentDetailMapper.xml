@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.payment.mapper.PaymentDetailMapper">
+    <!-- 查询PaymentDetail -->
+    <select id="getPaymentDetail" parameterType="com.ly.mt.core.data.payment.entity.PaymentDetail" resultType="com.ly.mt.core.data.payment.entity.PaymentDetail">
+        SELECT *
+        FROM payment_detail
+        <where>
+            <if test="null != orderNo and '' != orderNo">AND order_no = #{orderNo}</if>
+            <if test="null != tradeStatus and '' != tradeStatus">AND trade_status = #{tradeStatus}</if>
+        </where>
+    </select>
+</mapper>

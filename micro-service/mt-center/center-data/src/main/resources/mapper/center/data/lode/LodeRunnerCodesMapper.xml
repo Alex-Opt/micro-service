@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.lode.mapper.LodeRunnerCodesMapper" >
+    <!-- 保存LodeRunnerCodes -->
+    <insert id="insertLodeRunnerCodes" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerCodes">
+        INSERT INTO lode_runner_codes (
+            user_id, shop_id, code, nums, create_time, modify_time
+        ) VALUES (
+            #{user_id}, #{shop_id}, #{code}, #{nums}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除LodeRunnerCodes -->
+    <delete id="deleteLodeRunnerCodes" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerCodes">
+        DELETE FROM lode_runner_codes
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新LodeRunnerCodes -->
+    <update id="updateLodeRunnerCodes" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerCodes">
+        UPDATE lode_runner_codes
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询LodeRunnerCodes -->
+    <select id="getLodeRunnerCodesByCode" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerCodes" resultType="com.ly.mt.center.data.lode.entity.LodeRunnerCodes">
+        SELECT * 
+        FROM lode_runner_codes
+        WHERE 1 = 1
+              <if test="null != code and '' != code">AND code = #{code}</if>
+        LIMIT 1
+    </select>
+
+    <update id="addInviteNum" parameterType="com.ly.mt.center.data.lode.entity.LodeRunnerCodes">
+        UPDATE lode_runner_codes SET  nums = nums +1 where  user_id= #{user_id} AND shop_id=#{shop_id}
+    </update>
+</mapper>

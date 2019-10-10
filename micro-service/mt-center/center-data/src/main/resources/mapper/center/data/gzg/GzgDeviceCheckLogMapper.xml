@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgDeviceCheckLogMapper" >
+    <!-- 保存GzgDeviceCheckLog -->
+    <insert id="insertGzgDeviceCheckLog" parameterType="com.ly.mt.center.data.gzg.entity.GzgDeviceCheckLog">
+        INSERT INTO gzg_device_check_log (
+            id, content, gmt_create, gmt_modify
+        ) VALUES (
+            #{id}, #{content}, #{gmt_create}, #{gmt_modify}
+        )
+    </insert>
+
+
+    <!-- 删除GzgDeviceCheckLog -->
+    <delete id="deleteGzgDeviceCheckLog" parameterType="com.ly.mt.center.data.gzg.entity.GzgDeviceCheckLog">
+        DELETE FROM gzg_device_check_log
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgDeviceCheckLog -->
+    <update id="updateGzgDeviceCheckLog" parameterType="com.ly.mt.center.data.gzg.entity.GzgDeviceCheckLog">
+        UPDATE gzg_device_check_log
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgDeviceCheckLog -->
+    <select id="getGzgDeviceCheckLog" parameterType="com.ly.mt.center.data.gzg.entity.GzgDeviceCheckLog" resultType="com.ly.mt.center.data.gzg.entity.GzgDeviceCheckLog">
+        SELECT * 
+        FROM gzg_device_check_log
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

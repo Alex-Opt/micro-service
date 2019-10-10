@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.basic.mapper.BasicAreaMapper">
+    <!-- 查询BasicArea -->
+    <select id="getBasicArea" parameterType="com.ly.mt.core.data.basic.entity.BasicArea" resultType="com.ly.mt.core.data.basic.entity.BasicArea">
+        SELECT *
+        FROM basic_area
+        <where>
+            <if test="null != mId and '' != mId">AND m_id = #{mId}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <!-- 查询List<BasicArea> -->
+    <select id="listBasicArea" parameterType="com.ly.mt.core.data.basic.entity.BasicArea" resultType="com.ly.mt.core.data.basic.entity.BasicArea">
+        SELECT *
+        FROM basic_area
+        <where>
+            <if test="null != mPid and '' != mPid">AND m_pid = #{mPid}</if>
+        </where>
+    </select>
+</mapper>

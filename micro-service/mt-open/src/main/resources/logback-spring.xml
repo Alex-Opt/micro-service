@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- CONSOLE start -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- CONSOLE end -->
+
+
+    <!-- INFO start -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/apps/logs/info.log</File>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/apps/logs/info.log.%d</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- INFO start -->
+
+
+    <!-- ERROR start -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/apps/logs/error.log</File>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/apps/logs/error.log.%d</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- ERROR end -->
+
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="test,gray,prod">
+        <root level="INFO">
+            <appender-ref ref="INFO"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+    </springProfile>
+</configuration>

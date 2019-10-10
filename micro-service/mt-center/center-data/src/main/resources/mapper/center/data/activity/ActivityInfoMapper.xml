@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.activity.mapper.ActivityInfoMapper" >
+    <!-- 保存ActivityInfo -->
+    <insert id="insertActivityInfo" parameterType="com.ly.mt.center.data.activity.entity.ActivityInfo">
+        INSERT INTO activity_info (
+            id, name, start_time, end_time, denomination, discount_rate, coupon_activity_type, use_channel, source, start_fee, max_sell_num, goods_limit_category, status, description, creator, create_time
+        ) VALUES (
+            #{id}, #{name}, #{start_time}, #{end_time}, #{denomination}, #{discount_rate}, #{coupon_activity_type}, #{use_channel}, #{source}, #{start_fee}, #{max_sell_num}, #{goods_limit_category}, #{status}, #{description}, #{creator}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ActivityInfo -->
+    <delete id="deleteActivityInfo" parameterType="com.ly.mt.center.data.activity.entity.ActivityInfo">
+        DELETE FROM activity_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ActivityInfo -->
+    <update id="updateActivityInfo" parameterType="com.ly.mt.center.data.activity.entity.ActivityInfo">
+        UPDATE activity_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ActivityInfo -->
+    <select id="getActivityInfo" parameterType="com.ly.mt.center.data.activity.entity.ActivityInfo" resultType="com.ly.mt.center.data.activity.entity.ActivityInfo">
+        SELECT * 
+        FROM activity_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+
+
+    <!--根据商品spuId查询优惠活动数据 -->
+    <select id="getActivityInfoBySpuId"  resultType="com.ly.mt.center.data.activity.entity.ActivityInfo">
+        SELECT id, coupon_activity_type, NAME, denomination, discount_rate, start_fee, goods_limit_category,start_fee
+        FROM activity_info
+        WHERE goods_limit_category = - 1 AND STATUS = '1' AND start_time &lt; NOW() AND end_time &gt; NOW()
+        UNION ALL (
+        SELECT info.id, info.coupon_activity_type, info. NAME, info.denomination, info.discount_rate, info.start_fee, info.goods_limit_category,info.start_fee
+        FROM activity_info info
+        INNER JOIN activity_goods_detail goods  ON goods.activity_id = info.id
+        WHERE info.goods_limit_category = 1 AND info. STATUS = '1' AND info.start_time &lt; NOW() AND info.end_time &gt; NOW() AND goods.spu_id = #{spuId})
+    </select>
+</mapper>

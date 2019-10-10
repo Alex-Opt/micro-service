@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.goods.mapper.GoodsBrandInfoMapper" >
+    <!-- 保存GoodsBrandInfo -->
+    <insert id="insertGoodsBrandInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsBrandInfo">
+        INSERT INTO goods_brand_info (
+            id, brand_name, brand_name_en, brand_logo_url, status, create_time, remark
+        ) VALUES (
+            #{id}, #{brand_name}, #{brand_name_en}, #{brand_logo_url}, #{status}, #{create_time}, #{remark}
+        )
+    </insert>
+
+
+    <!-- 删除GoodsBrandInfo -->
+    <delete id="deleteGoodsBrandInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsBrandInfo">
+        DELETE FROM goods_brand_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GoodsBrandInfo -->
+    <update id="updateGoodsBrandInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsBrandInfo">
+        UPDATE goods_brand_info
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GoodsBrandInfo -->
+    <select id="getGoodsBrandInfo" parameterType="com.ly.mt.center.data.goods.entity.GoodsBrandInfo" resultType="com.ly.mt.center.data.goods.entity.GoodsBrandInfo">
+        SELECT * 
+        FROM goods_brand_info
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserPointDataMapper" >
+    <!-- 查询用户打卡记录-->
+    <select id="getUserPointDataByUserId" resultType="com.ly.mt.center.data.user.entity.UserPointData" parameterType="com.ly.mt.center.data.user.entity.UserPointData" >
+        SELECT  *
+        FROM user_point_data
+        WHERE user_id = #{user_id}
+        ORDER BY  create_time desc
+    </select>
+    <!-- 查看用户今天的打卡记录-->
+    <select id="getUserPointDataByUserIdAndToday" resultType="com.ly.mt.center.data.user.entity.UserPointData">
+        SELECT  *
+        FROM user_point_data
+        WHERE user_id = #{userId} AND  create_time &gt;#{todayStartTime} AND create_time  &lt;#{todayEndTime}
+    </select>
+    <insert id="insertUserPointData" parameterType="com.ly.mt.center.data.user.entity.UserPointData" >
+        insert into user_point_data (id, user_id, point_config_id, score, create_time)
+        values (#{id}, #{user_id}, #{point_config_id}, #{score}, #{create_time})
+    </insert>
+</mapper >

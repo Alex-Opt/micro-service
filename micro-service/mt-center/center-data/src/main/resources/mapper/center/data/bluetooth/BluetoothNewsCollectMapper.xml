@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.bluetooth.mapper.BluetoothNewsCollectMapper">
+    <delete id="deleteBluetoothNewsCollect" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothNewsCollect">
+        delete from bluetooth_news_collect where 1=1
+        <if test="null != user_id and '' != user_id">AND user_id = #{user_id}</if>
+        <if test="null != news_id and '' != news_id">AND news_id = #{news_id}</if>
+    </delete>
+    <insert id="insertBluetoothNewsCollect" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothNewsCollect">
+        INSERT INTO bluetooth_news_collect(id,news_id,user_id, create_time, update_time )
+        VALUES (#{id}, #{news_id}, #{user_id}, NOW(), NOW())
+    </insert>
+
+    <!--查询用户是否收藏-->
+    <select id="selectBluetoothNewsCollect" resultType="com.ly.mt.center.data.bluetooth.entity.BluetoothNewsCollect" parameterType="com.ly.mt.center.data.bluetooth.entity.BluetoothNewsCollect">
+        select * from bluetooth_news_collect b
+        where b.user_id=#{user_id} and  b.news_id=#{news_id}
+    </select>
+</mapper>

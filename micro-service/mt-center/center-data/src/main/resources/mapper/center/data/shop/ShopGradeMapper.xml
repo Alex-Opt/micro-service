@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopGradeMapper" >
+    <!-- 保存ShopGrade -->
+    <insert id="insertShopGrade" parameterType="com.ly.mt.center.data.shop.entity.ShopGrade">
+        INSERT INTO shop_grade (
+            id, title, icon, purchases_money, purchases_num, promotion_money, promotion_rate, create_time
+        ) VALUES (
+            #{id}, #{title}, #{icon}, #{purchases_money}, #{purchases_num}, #{promotion_money}, #{promotion_rate}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopGrade -->
+    <delete id="deleteShopGrade" parameterType="com.ly.mt.center.data.shop.entity.ShopGrade">
+        DELETE FROM shop_grade
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopGrade -->
+    <update id="updateShopGrade" parameterType="com.ly.mt.center.data.shop.entity.ShopGrade">
+        UPDATE shop_grade
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopGrade -->
+    <select id="getShopGrade" parameterType="com.ly.mt.center.data.shop.entity.ShopGrade" resultType="com.ly.mt.center.data.shop.entity.ShopGrade">
+        SELECT * 
+        FROM shop_grade
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

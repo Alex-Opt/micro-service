@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.shop.mapper.ShopStocksMapper" >
+    <!-- 保存ShopStocks -->
+    <insert id="insertShopStocks" parameterType="com.ly.mt.center.data.shop.entity.ShopStocks">
+        INSERT INTO shop_stocks (
+            id, shop_id, spu_id, sku_id, sku_name, nums, delivery_nums, original_price, price, sales, status, create_time, modify_time
+        ) VALUES (
+            #{id}, #{shop_id}, #{spu_id}, #{sku_id}, #{sku_name}, #{nums}, #{delivery_nums}, #{original_price}, #{price}, #{sales}, #{status}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除ShopStocks -->
+    <delete id="deleteShopStocks" parameterType="com.ly.mt.center.data.shop.entity.ShopStocks">
+        DELETE FROM shop_stocks
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ShopStocks -->
+    <update id="updateShopStocks" parameterType="com.ly.mt.center.data.shop.entity.ShopStocks">
+        UPDATE shop_stocks
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ShopStocks -->
+    <select id="getShopStocks" parameterType="com.ly.mt.center.data.shop.entity.ShopStocks" resultType="com.ly.mt.center.data.shop.entity.ShopStocks">
+        SELECT * 
+        FROM shop_stocks
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

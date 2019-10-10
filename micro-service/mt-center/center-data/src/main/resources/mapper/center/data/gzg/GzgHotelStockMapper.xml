@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.gzg.mapper.GzgHotelStockMapper" >
+    <!-- 保存GzgHotelStock -->
+    <insert id="insertGzgHotelStock" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotelStock">
+        INSERT INTO gzg_hotel_stock (
+            id, hotel_id, sku_id, sku_name, sku_code, total_num, sell_out_num, return_num, surplus_num
+        ) VALUES (
+            #{id}, #{hotel_id}, #{sku_id}, #{sku_name}, #{sku_code}, #{total_num}, #{sell_out_num}, #{return_num}, #{surplus_num}
+        )
+    </insert>
+
+
+    <!-- 删除GzgHotelStock -->
+    <delete id="deleteGzgHotelStock" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotelStock">
+        DELETE FROM gzg_hotel_stock
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新GzgHotelStock -->
+    <update id="updateGzgHotelStock" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotelStock">
+        UPDATE gzg_hotel_stock
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询GzgHotelStock -->
+    <select id="getGzgHotelStock" parameterType="com.ly.mt.center.data.gzg.entity.GzgHotelStock" resultType="com.ly.mt.center.data.gzg.entity.GzgHotelStock">
+        SELECT * 
+        FROM gzg_hotel_stock
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

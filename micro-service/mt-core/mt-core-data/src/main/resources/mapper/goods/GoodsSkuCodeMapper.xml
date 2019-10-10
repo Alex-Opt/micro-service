@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.goods.mapper.GoodsSkuCodeMapper">
+    <!-- 新增GoodsSkuCode -->
+    <insert id="insertGoodsSkuCodes" parameterType="List">
+        INSERT INTO goods_sku_code (
+            id, sku_id, bar_code, parent_code, code, check_num,
+            create_time, modify_time
+        ) VALUES
+        <foreach collection="list" item="code" index="index" separator=",">(
+            #{code.id}, #{code.skuId}, #{code.barCode}, #{code.parentCode}, #{code.code}, #{code.checkNum},
+            #{code.createTime}, #{code.modifyTime}
+        )</foreach>
+    </insert>
+
+
+    <!-- 查询GoodsSkuInfo -->
+    <select id="getGoodsSkuCode" parameterType="com.ly.mt.core.data.goods.entity.GoodsSkuCode" resultType="com.ly.mt.core.data.goods.entity.GoodsSkuCode">
+        SELECT *
+        FROM goods_sku_code
+        <where>
+            <if test="null != skuId and '' != skuId">AND sku_id = #{skuId}</if>
+        </where>
+        LIMIT 1
+    </select>
+</mapper>

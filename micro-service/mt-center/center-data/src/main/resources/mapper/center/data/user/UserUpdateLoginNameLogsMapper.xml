@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserUpdateLoginNameLogsMapper" >
+    <!-- 保存UserUpdateLoginNameLogs -->
+    <insert id="insertUserUpdateLoginNameLogs" parameterType="com.ly.mt.center.data.user.entity.UserUpdateLoginNameLogs">
+        INSERT INTO user_update_login_name_logs (
+            id, user_id, login_name, times, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{login_name}, #{times}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserUpdateLoginNameLogs -->
+    <delete id="deleteUserUpdateLoginNameLogs" parameterType="com.ly.mt.center.data.user.entity.UserUpdateLoginNameLogs">
+        DELETE FROM user_update_login_name_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserUpdateLoginNameLogs -->
+    <update id="updateUserUpdateLoginNameLogs" parameterType="com.ly.mt.center.data.user.entity.UserUpdateLoginNameLogs">
+        UPDATE user_update_login_name_logs
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserUpdateLoginNameLogs -->
+    <select id="getUserUpdateLoginNameLogs" parameterType="com.ly.mt.center.data.user.entity.UserUpdateLoginNameLogs" resultType="com.ly.mt.center.data.user.entity.UserUpdateLoginNameLogs">
+        SELECT * 
+        FROM user_update_login_name_logs
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

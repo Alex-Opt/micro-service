@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.trade.mapper.TradeOrderItemsMapper">
+    <!-- 查询List<TradeOrderItems> -->
+    <select id="listTradeOrderItems" parameterType="com.ly.mt.core.data.trade.entity.TradeOrderItems" resultType="com.ly.mt.core.data.trade.entity.TradeOrderItems">
+        SELECT *
+        FROM trade_order_items
+        <where>
+            <if test="null != orderId and '' != orderId">AND order_id = #{orderId}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.order.server.user.mapper.UserProfitLogsMapper" >
+
+    <insert id="addBatchUserProfitLogs">
+        insert into user_profit_logs
+        (
+        id,
+        order_id,
+        user_id,
+        provider_id,
+        profit_type,
+        profit,
+        status,
+        create_time,
+        modify_time
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.orderId,jdbcType=BIGINT},
+            #{item.userId,jdbcType=BIGINT},
+            #{item.providerId,jdbcType=BIGINT},
+            #{item.profitType,jdbcType=INTEGER},
+            #{item.profit,jdbcType=DOUBLE},
+            #{item.status,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.modifyTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+</mapper>

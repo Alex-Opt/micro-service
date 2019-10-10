@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.center.data.cabinet.mapper.CabinetStorePropertyMapper" >
+  <sql id="Base_Column_List" >
+    id, store_type, forcast_flow, decorate_type, is_chain, per_capita_expense, cabinet_store_id, 
+    gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cabinet_store_property
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cabinet_store_property
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreProperty" >
+    insert into cabinet_store_property (id, store_type, forcast_flow, 
+      decorate_type, is_chain, per_capita_expense, 
+      cabinet_store_id, gmt_create, gmt_modify
+      )
+    values (#{id,jdbcType=VARCHAR}, #{store_type,jdbcType=INTEGER}, #{forcast_flow,jdbcType=INTEGER},
+      #{decorate_type,jdbcType=INTEGER}, #{is_chain,jdbcType=INTEGER}, #{per_capita_expense,jdbcType=INTEGER},
+      #{cabinet_store_id,jdbcType=VARCHAR}, #{gmt_create,jdbcType=TIMESTAMP}, #{gmt_modify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreProperty" >
+    insert into cabinet_store_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="store_type != null" >
+        store_type,
+      </if>
+      <if test="forcast_flow != null" >
+        forcast_flow,
+      </if>
+      <if test="decorate_type != null" >
+        decorate_type,
+      </if>
+      <if test="is_chain != null" >
+        is_chain,
+      </if>
+      <if test="per_capita_expense != null" >
+        per_capita_expense,
+      </if>
+      <if test="cabinet_store_id != null" >
+        cabinet_store_id,
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create,
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify,
+      </if>
+      <if test="use_area != null">
+        use_area
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="store_type != null" >
+        #{store_type,jdbcType=INTEGER},
+      </if>
+      <if test="forcast_flow != null" >
+        #{forcast_flow,jdbcType=INTEGER},
+      </if>
+      <if test="decorate_type != null" >
+        #{decorate_type,jdbcType=INTEGER},
+      </if>
+      <if test="is_chain != null" >
+        #{is_chain,jdbcType=INTEGER},
+      </if>
+      <if test="per_capita_expense != null" >
+        #{per_capita_expense,jdbcType=INTEGER},
+      </if>
+      <if test="cabinet_store_id != null" >
+        #{cabinet_store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="gmt_create != null" >
+        #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="use_area != null">
+        #{use_area}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreProperty" >
+    update cabinet_store_property
+    <set >
+      <if test="store_type != null" >
+        store_type = #{store_type,jdbcType=INTEGER},
+      </if>
+      <if test="forcast_flow != null" >
+        forcast_flow = #{forcast_flow,jdbcType=INTEGER},
+      </if>
+      <if test="decorate_type != null" >
+        decorate_type = #{decorate_type,jdbcType=INTEGER},
+      </if>
+      <if test="is_chain != null" >
+        is_chain = #{is_chain,jdbcType=INTEGER},
+      </if>
+      <if test="per_capita_expense != null" >
+        per_capita_expense = #{per_capita_expense,jdbcType=INTEGER},
+      </if>
+      <if test="cabinet_store_id != null" >
+        cabinet_store_id = #{cabinet_store_id,jdbcType=VARCHAR},
+      </if>
+      <if test="gmt_create != null" >
+        gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmt_modify != null" >
+        gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="use_area != null">
+        use_area=#{use_area}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.center.data.cabinet.entity.CabinetStoreProperty" >
+    update cabinet_store_property
+    set store_type = #{store_type,jdbcType=INTEGER},
+      forcast_flow = #{forcast_flow,jdbcType=INTEGER},
+      decorate_type = #{decorate_type,jdbcType=INTEGER},
+      is_chain = #{is_chain,jdbcType=INTEGER},
+      per_capita_expense = #{per_capita_expense,jdbcType=INTEGER},
+      cabinet_store_id = #{cabinet_store_id,jdbcType=VARCHAR},
+      gmt_create = #{gmt_create,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmt_modify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByStoreId" parameterType="java.lang.String" resultType="com.ly.mt.center.data.cabinet.entity.CabinetStoreProperty">
+    select <include refid="Base_Column_List"/> from cabinet_store_property where cabinet_store_id=#{storeId}
+  </select>
+</mapper>

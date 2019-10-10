@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: base-eureka
+  security:
+    basic:
+      enabled: true
+    user:
+      name: lykj
+      password: lykjMtEureka

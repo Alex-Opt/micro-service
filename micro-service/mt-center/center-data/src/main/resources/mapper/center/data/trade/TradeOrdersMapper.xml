@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.trade.mapper.TradeOrdersMapper" >
+    <insert id="insertTradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        INSERT INTO trade_orders (
+            id, order_no, buyer_id, buyer_memo, shop_id, gy_warehouse_code,gy_shop_code, seller_id,
+            order_old_money, order_money, order_discount_money, distribution_id, logistics_code,
+            gy_logistics_code, freight, order_status, order_source, cancle_time, order_yn,
+            is_refund, refund_time, payment_type, push_status, order_type, address_id,
+            auto_receive_time, auto_cancel_time, order_snapshoot_key, locked, lock_time,
+            delivery_time, create_time, pay_time, order_finish_time, remark
+        ) VALUES (
+            #{id}, #{order_no}, #{buyer_id}, #{buyer_memo}, #{shop_id}, #{gy_warehouse_code},#{gy_shop_code}, #{seller_id},
+            #{order_old_money}, #{order_money}, #{order_discount_money}, #{distribution_id}, #{logistics_code},
+            #{gy_logistics_code}, #{freight}, #{order_status}, #{order_source}, #{cancle_time}, #{order_yn},
+            #{is_refund}, #{refund_time}, #{payment_type}, #{push_status}, #{order_type}, #{address_id},
+            #{auto_receive_time}, #{auto_cancel_time}, #{order_snapshoot_key}, #{locked}, #{lock_time},
+            #{delivery_time}, #{create_time}, #{pay_time}, #{order_finish_time}, #{remark}
+        )
+    </insert>
+
+
+
+    <update id="updateTradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        UPDATE trade_orders
+            <trim prefix="set" suffixOverrides=",">
+                <if test="null != order_status">order_status = #{order_status},</if>
+                <if test="null != payment_type">payment_type = #{payment_type},</if>
+            </trim>
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+              <if test="null != order_no and '' != order_no">AND order_no = #{order_no}</if>
+    </update>
+
+
+
+    <select id="getTradeOrders" resultType="com.ly.mt.center.data.trade.entity.TradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        SELECT *
+        FROM trade_orders
+        WHERE 1 = 1
+              <if test="null != id ">AND id = #{id}</if>
+              <if test="null != order_no ">AND order_no = #{order_no}</if>
+        LIMIT 1
+    </select>
+
+    <select id="listTradeOrders" resultType="com.ly.mt.center.data.trade.entity.TradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        SELECT *
+        FROM trade_orders
+        WHERE 1 = 1
+        <if test="null != order_no">AND order_no = #{order_no}</if>
+    </select>
+
+    <select id="getTradeOrdersBySource" resultType="com.ly.mt.center.data.trade.entity.TradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        SELECT id,order_no,buyer_id,third_code,order_money,freight,order_status,create_time
+        FROM trade_orders
+        WHERE order_status &gt; 10 and  order_source = #{order_source} and create_time &gt; #{create_time}
+    </select>
+
+    <update id="updateTradeOrdersPaymentType" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        UPDATE trade_orders
+        SET  freight = #{freight},payment_type = #{payment_type}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getTradeOrdersByOrderNo" resultType="com.ly.mt.center.data.trade.entity.TradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        SELECT *
+        FROM trade_orders
+        WHERE   order_no = #{order_no}
+    </select>
+
+    <select id="getTradeOrdersByOrderSource" resultType="com.ly.mt.center.data.trade.entity.TradeOrders" parameterType="com.ly.mt.center.data.trade.entity.TradeOrders">
+        SELECT  *
+        FROM trade_orders
+        WHERE order_status &gt; 10 and  order_source = #{order_source} and buyer_id = #{buyer_id}  order by create_time desc
+    </select>
+</mapper >

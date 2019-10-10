@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.activity.mapper.ActivitySignUpCabinetMapper" >
+    <!-- 保存ActivitySignUpCabinet -->
+    <insert id="insertActivitySignUpCabinet" parameterType="com.ly.mt.center.data.activity.entity.ActivitySignUpCabinet">
+        INSERT INTO activity_sign_up_cabinet (
+            id, user_name, mobile, province_name, city_name, area_name, shop_name, create_time
+        ) VALUES (
+            #{id}, #{user_name}, #{mobile}, #{province_name}, #{city_name}, #{area_name}, #{shop_name}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除ActivitySignUpCabinet -->
+    <delete id="deleteActivitySignUpCabinet" parameterType="com.ly.mt.center.data.activity.entity.ActivitySignUpCabinet">
+        DELETE FROM activity_sign_up_cabinet
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新ActivitySignUpCabinet -->
+    <update id="updateActivitySignUpCabinet" parameterType="com.ly.mt.center.data.activity.entity.ActivitySignUpCabinet">
+        UPDATE activity_sign_up_cabinet
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询ActivitySignUpCabinet -->
+    <select id="getActivitySignUpCabinet" parameterType="com.ly.mt.center.data.activity.entity.ActivitySignUpCabinet" resultType="com.ly.mt.center.data.activity.entity.ActivitySignUpCabinet">
+        SELECT * 
+        FROM activity_sign_up_cabinet
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

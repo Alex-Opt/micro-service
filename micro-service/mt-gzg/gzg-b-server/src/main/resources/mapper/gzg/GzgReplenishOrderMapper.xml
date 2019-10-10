@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgReplenishOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gzg_order_id" property="gzgOrderId" jdbcType="BIGINT" />
+    <result column="gzg_order_itme_id" property="gzgOrderItmeId" jdbcType="BIGINT" />
+    <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
+    <result column="gzg_id" property="gzgId" jdbcType="BIGINT" />
+    <result column="cabinet_no" property="cabinetNo" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gzg_order_id, gzg_order_itme_id, hotel_id, gzg_id,cabinet_no, state, create_time
+  </sql>
+  <sql id="BaseColumnList">
+    id, gzg_order_id as gzgOrderId, gzg_order_itme_id as gzgOrderItmeId, hotel_id as hotelId,
+     gzg_id as gzgId,cabinet_no as cabinetNo, state, create_time as createTime
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder">
+    select <include refid="BaseColumnList"/> from gzg_replenish_order where id=#{replenishOrderId}
+  </select>
+  <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from gzg_replenish_order where state=#{status}
+  </select>
+  <select id="selectByGzgCode" parameterType="java.lang.Long" resultType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder">
+    select <include refid="BaseColumnList"/> from gzg_replenish_order where gzg_id=#{gzgId}
+  </select>
+  <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from gzg_replenish_order where gzg_order_id=#{gzgOrderId}
+  </select>
+  <select id="selectByGzgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from gzg_replenish_order where gzg_id=#{gzgId}
+  </select>
+  <select id="selectByGzgCodeAndCabinetNo" resultType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder">
+    select <include refid="Base_Column_List"/> from gzg_replenish_order
+    <!-- where gzgCode = #{,jdbcType=BIGINT} -->
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gzg_replenish_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gzg_replenish_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder" >
+    insert into gzg_replenish_order (id, gzg_order_id, gzg_order_itme_id, 
+      hotel_id, gzg_id,cabinet_no, state,
+      create_time)
+    values (#{id}, #{gzgOrderId}, #{gzgOrderItmeId},
+      #{hotelId}, #{gzgId}, #{cabinetNo},#{state},
+      #{createTime})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder" >
+    insert into gzg_replenish_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gzgOrderId != null" >
+        gzg_order_id,
+      </if>
+      <if test="gzgOrderItmeId != null" >
+        gzg_order_itme_id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="gzgId != null" >
+        gzg_id,
+      </if>
+      <if test="cabinetNo != null" >
+        cabinet_no,
+      </if>
+      <if test="state != null" >
+        `state`,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gzgOrderId != null" >
+        #{gzgOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="gzgOrderItmeId != null" >
+        #{gzgOrderItmeId,jdbcType=BIGINT},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="gzgId != null" >
+        #{gzgId,jdbcType=BIGINT},
+      </if>
+      <if test="cabinetNo != null" >
+        #{cabinetNo},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder" >
+    update gzg_replenish_order
+    <set >
+      <if test="gzgOrderId != null" >
+        gzg_order_id = #{gzgOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="gzgOrderItmeId != null" >
+        gzg_order_itme_id = #{gzgOrderItmeId,jdbcType=BIGINT},
+      </if>
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="gzgId != null" >
+        gzg_id = #{gzgId,jdbcType=BIGINT},
+      </if>
+      <if test="cabinetNo != null" >
+        cabinet_no = #{cabinetNo},
+      </if>
+      <if test="state != null" >
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgReplenishOrder" >
+    update gzg_replenish_order
+    set gzg_order_id = #{gzgOrderId,jdbcType=BIGINT},
+      gzg_order_itme_id = #{gzgOrderItmeId,jdbcType=BIGINT},
+      hotel_id = #{hotelId,jdbcType=BIGINT},
+      gzg_id = #{gzgId,jdbcType=BIGINT},
+      cabinet_no = #{cabinetNo},
+      `state` = #{state,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

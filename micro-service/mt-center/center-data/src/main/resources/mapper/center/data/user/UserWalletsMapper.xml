@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserWalletsMapper" >
+    <!-- 保存UserWallets -->
+    <insert id="insertUserWallets" parameterType="com.ly.mt.center.data.user.entity.UserWallets">
+        INSERT INTO user_wallets (
+            user_id, amount, freeze_amount, total_amount, lode_runner_amount, personal_amount, create_time, modify_time
+        ) VALUES (
+            #{user_id}, #{amount}, #{freeze_amount}, #{total_amount}, #{lode_runner_amount}, #{personal_amount}, #{create_time}, #{modify_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserWallets -->
+    <delete id="deleteUserWallets" parameterType="com.ly.mt.center.data.user.entity.UserWallets">
+        DELETE FROM user_wallets
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserWallets -->
+    <update id="updateUserWallets" parameterType="com.ly.mt.center.data.user.entity.UserWallets">
+        UPDATE user_wallets
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserWallets -->
+    <select id="getUserWallets" parameterType="com.ly.mt.center.data.user.entity.UserWallets" resultType="com.ly.mt.center.data.user.entity.UserWallets">
+        SELECT * 
+        FROM user_wallets
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

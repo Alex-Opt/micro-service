@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.purchase.server.shop.mapper.ShopGradeMapper">
+
+    <select id="listAll" resultType="com.ly.mt.core.common.entity.purchase.ShopGradeVO">
+        SELECT `id`, `title`, `purchases_money`, `purchases_num`, `promotion_money`, `promotion_rate`
+        FROM shop_grade
+    </select>
+</mapper>

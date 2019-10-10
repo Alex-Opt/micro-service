@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.gzg.b.server.gzgb.mapper.GzgHotelStockMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.mt.core.common.entity.gzg.GzgHotelStock" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hotel_id" property="hotelId" jdbcType="BIGINT" />
+    <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="total_num" property="totalNum" jdbcType="INTEGER" />
+    <result column="sell_out_num" property="sellOutNum" jdbcType="INTEGER" />
+    <result column="return_num" property="returnNum" jdbcType="INTEGER" />
+    <result column="surplus_num" property="surplusNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hotel_id, sku_id, sku_name, sku_code, total_num, sell_out_num, return_num, surplus_num
+  </sql>
+  <sql id="BaseColumnList">
+    id,
+    hotel_id as hotelId,sku_id as skuId,sku_name as skuName,sku_code as skuCode,total_num as totalNum,
+    sell_out_num as sellOutNum,return_num as returnNum,surplus_num as surplusNum
+  </sql>
+  <select id="findByHIdAndSId" resultType="com.ly.mt.core.common.entity.gzg.GzgHotelStock">
+    select <include refid="BaseColumnList"/> from gzg_hotel_stock where hotel_id=#{hotelId} and sku_id=#{skuId}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gzg_hotel_stock
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gzg_hotel_stock
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotelStock" >
+    insert into gzg_hotel_stock (id, hotel_id, sku_id, 
+      sku_name, sku_code, total_num, 
+      sell_out_num, return_num, surplus_num
+      )
+    values (#{id,jdbcType=BIGINT}, #{hotelId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, 
+      #{skuName,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, #{totalNum,jdbcType=INTEGER}, 
+      #{sellOutNum,jdbcType=INTEGER}, #{returnNum,jdbcType=INTEGER}, #{surplusNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotelStock" >
+    insert into gzg_hotel_stock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="skuName != null" >
+        sku_name,
+      </if>
+      <if test="skuCode != null" >
+        sku_code,
+      </if>
+      <if test="totalNum != null" >
+        total_num,
+      </if>
+      <if test="sellOutNum != null" >
+        sell_out_num,
+      </if>
+      <if test="returnNum != null" >
+        return_num,
+      </if>
+      <if test="surplusNum != null" >
+        surplus_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuName != null" >
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="sellOutNum != null" >
+        #{sellOutNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnNum != null" >
+        #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="surplusNum != null" >
+        #{surplusNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotelStock" >
+    update gzg_hotel_stock
+    <set >
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="skuName != null" >
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        total_num = #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="sellOutNum != null" >
+        sell_out_num = #{sellOutNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnNum != null" >
+        return_num = #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="surplusNum != null" >
+        surplus_num = #{surplusNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ly.mt.core.common.entity.gzg.GzgHotelStock" >
+    update gzg_hotel_stock
+    set hotel_id = #{hotelId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT},
+      sku_name = #{skuName,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      total_num = #{totalNum,jdbcType=INTEGER},
+      sell_out_num = #{sellOutNum,jdbcType=INTEGER},
+      return_num = #{returnNum,jdbcType=INTEGER},
+      surplus_num = #{surplusNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByHotelId" resultType="java.lang.Long">
+    select sku_id from gzg_hotel_stock where hotel_id = #{hotelId}
+  </select>
+  <select id="findByHotelIdAndSkuId" resultType="com.ly.mt.core.common.entity.gzg.GzgHotelStock">
+    select * from gzg_hotel_stock where hotel_id = #{hotelId} and sku_id = #{skuId}
+  </select>
+    <select id="findAllByHotelId" resultType="com.ly.mt.core.common.entity.gzg.GzgHotelStock">
+      select * from gzg_hotel_stock where hotel_id = #{hotelId}
+    </select>
+</mapper>

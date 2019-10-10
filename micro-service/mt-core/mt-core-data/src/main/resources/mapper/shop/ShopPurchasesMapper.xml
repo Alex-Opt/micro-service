@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.shop.mapper.ShopPurchasesMapper">
+    <!-- 更新ShopPurchases -->
+    <update id="updateShopPurchases" parameterType="com.ly.mt.core.data.shop.entity.ShopPurchases">
+        UPDATE shop_purchases
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != pushStatus">push_status = #{pushStatus},</if>
+            <if test="null != status">status = #{status},</if>
+        </trim>
+        <where>
+            <if test="null != id and '' != id">AND id = #{id}</if>
+        </where>
+    </update>
+
+
+    <!-- 自动更新完成状态 -->
+    <update id="updateFinishStatus">
+        UPDATE shop_purchases
+        SET status = 99, modify_time = now()
+        WHERE status = 30
+          AND sended_time &lt;= #{time}
+    </update>
+
+    <!-- 自动更新取消状态 -->
+    <update id="updateCancelStatus">
+        UPDATE shop_purchases
+        SET status = 15, modify_time = now()
+        WHERE id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <!-- 根据快递方式查询符合条件的订单 -->
+    <select id="getPurchasesList" resultType="com.ly.mt.core.data.shop.entity.ShopPurchases">
+        SELECT sp.*
+        FROM shop_purchases sp
+        WHERE sp.status=20
+          AND sp.push_status IS NULL
+        HAVING 0 = (SELECT COUNT(1) FROM shop_purchases_refund spr WHERE spr.id = sp.id)
+    </select>
+
+    <select id="getShopPurchasesForTask" parameterType="java.lang.String" resultType="com.ly.mt.core.data.shop.entity.ShopPurchases">
+        SELECT
+            id, coupon_id
+        FROM shop_purchases
+        WHERE status = 10
+          AND create_time &lt;= #{time}
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.ly.mt.center.data.user.mapper.UserMakeMoneyMonthsMapper" >
+    <!-- 保存UserMakeMoneyMonths -->
+    <insert id="insertUserMakeMoneyMonths" parameterType="com.ly.mt.center.data.user.entity.UserMakeMoneyMonths">
+        INSERT INTO user_make_money_months (
+            id, user_id, month_profit, friend_amount, friend_order, invite, create_time
+        ) VALUES (
+            #{id}, #{user_id}, #{month_profit}, #{friend_amount}, #{friend_order}, #{invite}, #{create_time}
+        )
+    </insert>
+
+
+    <!-- 删除UserMakeMoneyMonths -->
+    <delete id="deleteUserMakeMoneyMonths" parameterType="com.ly.mt.center.data.user.entity.UserMakeMoneyMonths">
+        DELETE FROM user_make_money_months
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </delete>
+
+
+    <!-- 更新UserMakeMoneyMonths -->
+    <update id="updateUserMakeMoneyMonths" parameterType="com.ly.mt.center.data.user.entity.UserMakeMoneyMonths">
+        UPDATE user_make_money_months
+        SET 
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+    </update>
+
+
+    <!-- 查询UserMakeMoneyMonths -->
+    <select id="getUserMakeMoneyMonths" parameterType="com.ly.mt.center.data.user.entity.UserMakeMoneyMonths" resultType="com.ly.mt.center.data.user.entity.UserMakeMoneyMonths">
+        SELECT * 
+        FROM user_make_money_months
+        WHERE 1 = 1
+              <if test="null != id and '' != id">AND id = #{id}</if>
+        LIMIT 1
+    </select>
+</mapper>

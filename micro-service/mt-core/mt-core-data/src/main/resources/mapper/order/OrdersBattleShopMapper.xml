@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.mt.core.data.order.mapper.OrderBattleShopMapper">
+    <!-- 更新OrdersBattleShop -->
+    <update id="updateOrderBattleShop" parameterType="com.ly.mt.core.data.order.entity.OrderBattleShop">
+        UPDATE orders_battle_shop
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null != status">status = #{status},</if>
+        </trim>
+        <where>
+            <if test="null != ordersBattleId and '' != ordersBattleId">AND orders_battle_id = #{ordersBattleId}</if>
+            <if test="null != shopId and '' != shopId">AND shop_id = #{shopId}</if>
+            <if test="null != userId and '' != userId">AND user_id = #{userId}</if>
+        </where>
+    </update>
+</mapper>
