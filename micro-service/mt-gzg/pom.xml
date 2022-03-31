@@ -27,7 +27,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- 声明版本号，统一管理-->
-        <spring.boot>1.5.9.RELEASE</spring.boot>
+        <spring.boot>2.5.12</spring.boot>
         <spring.cloud>1.4.0.RELEASE</spring.cloud>
         <spring.bus>1.3.1.RELEASE</spring.bus>
         <spring.mapper>1.1.3</spring.mapper>
