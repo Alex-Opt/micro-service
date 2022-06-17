@@ -26,7 +26,7 @@
         <ali.druid>1.0.11</ali.druid>
         <ali.yun.oss>3.4.2</ali.yun.oss>
         <ali.yun.core>4.0.3</ali.yun.core>
-        <ali.fastjson>1.2.31</ali.fastjson>
+        <ali.fastjson>1.2.83</ali.fastjson>
 
         <springfox.swagger2>2.6.1</springfox.swagger2>
         <springfox.swagger2.ui>2.6.1</springfox.swagger2.ui>
