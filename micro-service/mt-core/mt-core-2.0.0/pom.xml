@@ -20,7 +20,7 @@
         <spring.cloud>1.4.0.RELEASE</spring.cloud>
         <spring.session>1.3.1.RELEASE</spring.session>
         <spring.pagehelper>1.1.2</spring.pagehelper>
-        <ali.fastjson>1.2.31</ali.fastjson>
+        <ali.fastjson>1.2.83</ali.fastjson>
         <ali.txc>2.0.72</ali.txc>
         <ali.logger>0.2.0</ali.logger>
         <ali.diamond>edas-3.7.3</ali.diamond>
